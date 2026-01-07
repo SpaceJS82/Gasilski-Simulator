@@ -1,13 +1,17 @@
 package si.um.feri.gasilci.map;
 
+import java.io.InputStream;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+
 import si.um.feri.gasilci.config.GeoapifyConfig;
 import si.um.feri.gasilci.util.HttpUtil;
-import java.io.InputStream;
-import java.util.Map;
-import java.util.concurrent.*;
 
 public class TileLoader {
     private final ExecutorService executor;
@@ -31,17 +35,16 @@ public class TileLoader {
         executor.submit(() -> {
             try {
                 String url = GeoapifyConfig.getTileUrl(zoom, x, y);
-                InputStream stream = HttpUtil.getStream(url);
-                byte[] bytes = stream.readAllBytes();
-                stream.close();
-
-                final Pixmap pixmap = new Pixmap(bytes, 0, bytes.length);
-                Gdx.app.postRunnable(() -> {
-                    Texture texture = new Texture(pixmap);
-                    pixmap.dispose();
-                    tileCache.put(key, texture);
-                    loading.remove(key);
-                });
+                try (InputStream stream = HttpUtil.getStream(url)) {
+                    byte[] bytes = stream.readAllBytes();
+                    final Pixmap pixmap = new Pixmap(bytes, 0, bytes.length);
+                    Gdx.app.postRunnable(() -> {
+                        Texture texture = new Texture(pixmap);
+                        pixmap.dispose();
+                        tileCache.put(key, texture);
+                        loading.remove(key);
+                    });
+                }
             } catch (Exception e) {
                 loading.remove(key);
             }

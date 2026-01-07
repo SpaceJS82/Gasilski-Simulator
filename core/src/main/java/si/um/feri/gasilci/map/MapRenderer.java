@@ -1,15 +1,26 @@
 package si.um.feri.gasilci.map;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import si.um.feri.gasilci.config.GeoapifyConfig;
-import si.um.feri.gasilci.util.MapUtil;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
-import java.util.HashMap;
-import java.util.Map;
+import si.um.feri.gasilci.assets.RegionNames;
+import si.um.feri.gasilci.config.GeoapifyConfig;
+import si.um.feri.gasilci.data.PointsLoader;
+import si.um.feri.gasilci.data.PointsLoader.Point;
+import si.um.feri.gasilci.services.RoutingService;
+import si.um.feri.gasilci.services.RoutingService.LatLon;
+import si.um.feri.gasilci.util.MapUtil;
 
 public class MapRenderer {
     private static final int GRID_WIDTH = 16;
@@ -21,8 +32,17 @@ public class MapRenderer {
     private Texture placeholderTexture;
     private final int startTileX;
     private final int startTileY;
+    private final ShapeRenderer shapeRenderer;
+    private final TextureAtlas atlas;
+    private final TextureRegion fireIcon;
+    private final TextureRegion stationIcon;
+    private List<Point> firePoints;
+    private Point stationPoint;
+    private final RoutingService routingService = new RoutingService();
+    private List<float[]> routeWorldPoints = new ArrayList<>();
 
-    public MapRenderer() {
+    public MapRenderer(TextureAtlas atlas) {
+        this.atlas = atlas;
         tileLoader = new TileLoader(tileCache);
         createPlaceholderTexture();
 
@@ -33,6 +53,17 @@ public class MapRenderer {
         startTileX = centerTileX - GRID_WIDTH / 2;
         startTileY = centerTileY - GRID_HEIGHT / 2;
         loadAllTiles();
+
+        shapeRenderer = new ShapeRenderer();
+        // atlas is provided via constructor now; resolve regions via RegionNames
+        TextureRegion fire = atlas.findRegion(RegionNames.FIRE_PRIMARY);
+        fireIcon = (fire != null) ? fire : atlas.findRegion(RegionNames.FIRE_FALLBACK);
+        TextureRegion tr = atlas.findRegion(RegionNames.STATION_PRIMARY);
+        stationIcon = (tr != null) ? tr : atlas.findRegion(RegionNames.STATION_FALLBACK);
+        // Load points from JSON
+        firePoints = PointsLoader.loadFires("data/fires.json");
+        // For now show all fires (initial requirement: 3 static fires)
+        stationPoint = PointsLoader.loadStation("data/station.json");
     }
 
     private void createPlaceholderTexture() {
@@ -72,6 +103,46 @@ public class MapRenderer {
                 }
             }
         }
+
+        // Draw markers (icons) on top of tiles within the batch
+        // Responsive icon sizes: start larger, but get slightly smaller when zooming in
+        float stationBase = 0.25f; // base fraction of a tile at zoom=1
+        float fireBase = 0.18f;
+        // Map zoom range is clamped to [0.1, 1.0]. We want factor=1 at 1.0 and 0.5 at 0.1.
+        float t = (camera.zoom - 0.1f) / 0.9f; // [0,1]
+        t = Math.max(0f, Math.min(1f, t));
+        float sizeFactor = 0.5f + 0.5f * t;
+        float stationSize = stationBase * sizeFactor;
+        float fireSize = fireBase * sizeFactor;
+
+        // Station icon
+        float[] sWorld = latLonToWorld(stationPoint.lat, stationPoint.lon);
+        if (stationIcon != null) {
+            batch.draw(stationIcon, sWorld[0] - stationSize/2f, sWorld[1] - stationSize/2f, stationSize, stationSize);
+        }
+        // Fire icons
+        if (fireIcon != null) {
+            for (Point p : firePoints) {
+                float[] w = latLonToWorld(p.lat, p.lon);
+                batch.draw(fireIcon, w[0] - fireSize/2f, w[1] - fireSize/2f, fireSize, fireSize);
+            }
+        }
+
+        // Route overlay (polyline) with ShapeRenderer
+        batch.end();
+        shapeRenderer.setProjectionMatrix(camera.combined);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        // Route polyline (yellow)
+        if (!routeWorldPoints.isEmpty()) {
+            shapeRenderer.setColor(Color.YELLOW);
+            for (int i = 0; i < routeWorldPoints.size() - 1; i++) {
+                float[] a = routeWorldPoints.get(i);
+                float[] b = routeWorldPoints.get(i + 1);
+                shapeRenderer.rectLine(a[0], a[1], b[0], b[1], 0.03f);
+            }
+        }
+        shapeRenderer.end();
+        batch.begin();
     }
 
     private int[] latLonToTile() {
@@ -85,5 +156,39 @@ public class MapRenderer {
             texture.dispose();
         }
         tileCache.clear();
+        shapeRenderer.dispose();
+        // atlas lifecycle handled by AssetManager outside
+    }
+
+    private float[] latLonToWorld(double lat, double lon) {
+        double[] tile = MapUtil.latLonToTileDouble(lat, lon, MAP_ZOOM);
+        float worldX = (float)(tile[0] - startTileX);
+        float worldY = (float)((startTileY + GRID_HEIGHT) - tile[1]);
+        return new float[]{worldX, worldY};
+    }
+
+    public void onMapClick(float worldX, float worldY) {
+        // Find nearest fire within radius
+        float radius = 0.25f;
+        Point nearest = null;
+        float bestDist2 = radius * radius;
+        for (Point p : firePoints) {
+            float[] w = latLonToWorld(p.lat, p.lon);
+            float dx = w[0] - worldX;
+            float dy = w[1] - worldY;
+            float d2 = dx*dx + dy*dy;
+            if (d2 <= bestDist2) {
+                bestDist2 = d2;
+                nearest = p;
+            }
+        }
+        if (nearest == null) return;
+        try {
+            List<LatLon> latlons = routingService.getRouteLatLon(stationPoint.lat, stationPoint.lon, nearest.lat, nearest.lon, "drive");
+            routeWorldPoints.clear();
+            for (LatLon ll : latlons) {
+                routeWorldPoints.add(latLonToWorld(ll.lat, ll.lon));
+            }
+        } catch (Exception ignored) { }
     }
 }

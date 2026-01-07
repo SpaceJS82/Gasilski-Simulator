@@ -1,0 +1,5 @@
+{
+  "mode": "drive",
+  "note": "Routes are calculated dynamically from station to selected fire using Geoapify Routing API.",
+  "routes": []
+}

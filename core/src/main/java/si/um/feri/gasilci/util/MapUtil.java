@@ -9,4 +9,12 @@ public class MapUtil {
             tileY
         };
     }
+
+    public static double[] latLonToTileDouble(double lat, double lon, int zoom) {
+        double n = Math.pow(2.0, zoom);
+        double x = (lon + 180.0) / 360.0 * n;
+        double latRad = Math.toRadians(lat);
+        double y = (1.0 - Math.log(Math.tan(latRad) + 1.0 / Math.cos(latRad)) / Math.PI) / 2.0 * n;
+        return new double[]{x, y};
+    }
 }
