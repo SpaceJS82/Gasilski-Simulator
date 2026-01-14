@@ -3,6 +3,7 @@ package si.um.feri.gasilci.data;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.JsonReader;
@@ -23,17 +24,19 @@ public class PointsLoader {
         }
     }
 
-    public static List<Point> loadFires(String internalPath) {
+    public static List<FirePoint> loadFires(String internalPath) {
         FileHandle file = Gdx.files.internal(internalPath);
         JsonValue root = new JsonReader().parse(file);
-        List<Point> result = new ArrayList<>();
+        List<FirePoint> result = new ArrayList<>();
 
         for (JsonValue fire : root.get("fires")) {
             String id = fire.getString("id");
             String name = fire.getString("name", id);
             double lat = fire.getDouble("lat");
             double lon = fire.getDouble("lon");
-            result.add(new Point(id, name, lat, lon));
+            int severity = fire.getInt("severity", 1);
+            String accessibility = fire.getString("accessibility", "good");
+            result.add(new FirePoint(id, name, lat, lon, severity, accessibility));
         }
         return result;
     }
@@ -50,9 +53,9 @@ public class PointsLoader {
     }
 
     // WIP
-    public static List<Point> pickRandom(List<Point> points, int count) {
+    public static List<FirePoint> pickRandom(List<FirePoint> points, int count) {
         if (points.size() <= count) return points;
-        List<Point> copy = new ArrayList<>(points);
+        List<FirePoint> copy = new ArrayList<>(points);
         Collections.shuffle(copy);
         return new ArrayList<>(copy.subList(0, count));
     }

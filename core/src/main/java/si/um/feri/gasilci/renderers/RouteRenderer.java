@@ -18,6 +18,10 @@ public class RouteRenderer {
         this.routeWorldPoints = new ArrayList<>(worldPoints);
     }
 
+    public void clearRoute() {
+        this.routeWorldPoints.clear();
+    }
+
     public void render(OrthographicCamera camera) {
         if (routeWorldPoints.isEmpty()) {
             return;

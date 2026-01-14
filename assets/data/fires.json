@@ -4,19 +4,25 @@
       "id": "fire1",
       "name": "Krekova ulica",
       "lat": 46.5604,
-      "lon": 15.6522
+      "lon": 15.6522,
+      "severity": 2,
+      "accessibility": "good"
     },
     {
       "id": "fire2",
       "name": "Europark Maribor",
       "lat": 46.5397,
-      "lon": 15.6554
+      "lon": 15.6554,
+      "severity": 1,
+      "accessibility": "good"
     },
     {
       "id": "fire3",
       "name": "Ljudski vrt",
       "lat": 46.5614,
-      "lon": 15.6472
+      "lon": 15.6472,
+      "severity": 3,
+      "accessibility": "medium"
     }
   ]
 }

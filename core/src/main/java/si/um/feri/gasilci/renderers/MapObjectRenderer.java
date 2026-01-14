@@ -1,28 +1,75 @@
 package si.um.feri.gasilci.renderers;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Array;
+
 import si.um.feri.gasilci.assets.RegionNames;
+import si.um.feri.gasilci.data.FirePoint;
 import si.um.feri.gasilci.data.PointsLoader.Point;
 
 public class MapObjectRenderer {
-    private final TextureRegion fireIcon;
+    private final Animation<TextureRegion> fireAnimation;
     private final TextureRegion stationIcon;
     private final MapTileRenderer mapTileRenderer;
+    private final RouteRenderer routeRenderer;
+    private final TextureAtlas atlas;
+    private float stateTime;
+    private final List<FireExtinguishingAnimation> activeExtinguishAnimations;
 
-    public MapObjectRenderer(TextureAtlas atlas, MapTileRenderer mapTileRenderer) {
+    public MapObjectRenderer(TextureAtlas atlas, MapTileRenderer mapTileRenderer, RouteRenderer routeRenderer) {
         this.mapTileRenderer = mapTileRenderer;
-        TextureRegion fire = atlas.findRegion(RegionNames.FIRE_PRIMARY);
+        this.routeRenderer = routeRenderer;
+        this.atlas = atlas;
+        this.stateTime = 0;
+        this.activeExtinguishAnimations = new ArrayList<>();
+        
+        // Load fire animation frames (flame4-1 to flame4-5)
+        Array<TextureRegion> fireFrames = new Array<>();
+        for (int i = 1; i <= 5; i++) {
+            TextureRegion region = atlas.findRegion("images/flame4-" + i);
+            if (region != null) {
+                fireFrames.add(region);
+            }
+        }
+        fireAnimation = new Animation<>(0.1f, fireFrames, Animation.PlayMode.LOOP);
+        
         TextureRegion tr = atlas.findRegion(RegionNames.STATION_PRIMARY);
-
-        fireIcon = (fire != null) ? fire : atlas.findRegion(RegionNames.FIRE_FALLBACK);
         stationIcon = (tr != null) ? tr : atlas.findRegion(RegionNames.STATION_FALLBACK);
     }
 
-    public void render(SpriteBatch batch, OrthographicCamera camera, List<Point> fires, Point station) {
+    public void update(float delta) {
+        stateTime += delta;
+        
+        // Update extinguishing animations
+        Iterator<FireExtinguishingAnimation> iterator = activeExtinguishAnimations.iterator();
+        while (iterator.hasNext()) {
+            FireExtinguishingAnimation anim = iterator.next();
+            anim.update(delta);
+            if (anim.isComplete()) {
+                iterator.remove();
+            }
+        }
+    }
+
+    public void startExtinguishAnimation(FirePoint firePoint) {
+        // Check if animation already exists for this fire
+        for (FireExtinguishingAnimation anim : activeExtinguishAnimations) {
+            if (anim.isComplete() == false) {
+                return; // Don't add duplicate
+            }
+        }
+        activeExtinguishAnimations.add(new FireExtinguishingAnimation(atlas, firePoint, mapTileRenderer, routeRenderer));
+    }
+
+    public void render(SpriteBatch batch, OrthographicCamera camera, List<FirePoint> fires, Point station) {
         float stationBase = 0.5f;
         float fireBase = 0.25f;
         float t = (camera.zoom - 0.1f) / 0.9f;
@@ -37,12 +84,20 @@ public class MapObjectRenderer {
             batch.draw(stationIcon, sWorld[0] - stationSize/2f, sWorld[1] - stationSize/2f, stationSize, stationSize);
         }
 
-        // Draw fire icons
-        if (fires != null && fireIcon != null) {
-            for (Point p : fires) {
-                float[] w = mapTileRenderer.latLonToWorld(p.lat, p.lon);
-                batch.draw(fireIcon, w[0] - fireSize/2f, w[1] - fireSize/2f, fireSize, fireSize);
+        // Draw fire animations (only active fires)
+        if (fires != null && fireAnimation != null) {
+            TextureRegion currentFrame = fireAnimation.getKeyFrame(stateTime);
+            for (FirePoint p : fires) {
+                if (p.isActive()) {
+                    float[] w = mapTileRenderer.latLonToWorld(p.lat, p.lon);
+                    batch.draw(currentFrame, w[0] - fireSize/2f, w[1] - fireSize/2f, fireSize, fireSize);
+                }
             }
+        }
+        
+        // Draw extinguishing animations
+        for (FireExtinguishingAnimation anim : activeExtinguishAnimations) {
+            anim.render(batch);
         }
     }
 }

@@ -2,17 +2,24 @@ package si.um.feri.gasilci;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+
 import si.um.feri.gasilci.assets.Assets;
 import si.um.feri.gasilci.config.GameConfig;
-import si.um.feri.gasilci.renderers.MapObjectRenderer;
+import si.um.feri.gasilci.data.FirePoint;
 import si.um.feri.gasilci.input.MapInputProcessor;
+import si.um.feri.gasilci.renderers.MapObjectRenderer;
 import si.um.feri.gasilci.renderers.MapTileRenderer;
 import si.um.feri.gasilci.renderers.RouteRenderer;
+import si.um.feri.gasilci.ui.FirePopupWindow;
 
 public class GasilskiSimulator extends ApplicationAdapter {
     private SpriteBatch batch;
@@ -23,6 +30,9 @@ public class GasilskiSimulator extends ApplicationAdapter {
     private MapObjectRenderer gameObjectRenderer;
     private RouteRenderer routeRenderer;
     private GameWorld gameWorld;
+    private Stage uiStage;
+    private Skin skin;
+    private FirePopupWindow currentPopup;
 
     @Override
     public void create() {
@@ -33,7 +43,11 @@ public class GasilskiSimulator extends ApplicationAdapter {
         mapTileRenderer = new MapTileRenderer();
         routeRenderer = new RouteRenderer();
         gameWorld = new GameWorld(mapTileRenderer, routeRenderer);
-        gameObjectRenderer = new MapObjectRenderer(assets.getAtlas(), mapTileRenderer);
+        gameObjectRenderer = new MapObjectRenderer(assets.getAtlas(), mapTileRenderer, routeRenderer);
+
+        // Setup UI
+        skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
+        uiStage = new Stage(new ScreenViewport());
 
         // Position camera at fire station
         float[] stationPos = gameWorld.getStationWorldPosition();
@@ -45,13 +59,50 @@ public class GasilskiSimulator extends ApplicationAdapter {
         camera.update();
 
         MapInputProcessor inputProcessor = new MapInputProcessor(camera);
-        inputProcessor.setClickListener((worldX, worldY) -> gameWorld.handleMapClick(worldX, worldY));
-        Gdx.input.setInputProcessor(inputProcessor);
+        inputProcessor.setClickListener((worldX, worldY, screenX, screenY) -> 
+            gameWorld.handleMapClick(worldX, worldY, screenX, screenY));
+        
+        // Setup fire click listener
+        gameWorld.setFireClickListener((fire, screenX, screenY) -> showFirePopup(fire, screenX, screenY));
+        
+        // Use InputMultiplexer to handle both UI and map input
+        InputMultiplexer multiplexer = new InputMultiplexer();
+        multiplexer.addProcessor(uiStage);
+        multiplexer.addProcessor(inputProcessor);
+        Gdx.input.setInputProcessor(multiplexer);
+    }
+    
+    private void showFirePopup(FirePoint fire, float screenX, float screenY) {
+        // Close existing popup
+        if (currentPopup != null) {
+            currentPopup.remove();
+        }
+        
+        // Convert fire world position to screen coordinates
+        float[] fireWorld = mapTileRenderer.latLonToWorld(fire.lat, fire.lon);
+        com.badlogic.gdx.math.Vector3 fireScreenPos = new com.badlogic.gdx.math.Vector3(fireWorld[0], fireWorld[1], 0);
+        camera.project(fireScreenPos, viewport.getScreenX(), viewport.getScreenY(), viewport.getScreenWidth(), viewport.getScreenHeight());
+        
+        // Create and show new popup
+        currentPopup = new FirePopupWindow(fire, skin);
+        currentPopup.setOnPutOut(() -> {
+            gameObjectRenderer.startExtinguishAnimation(fire);
+            currentPopup = null;
+        });
+        currentPopup.show(fireScreenPos.x, fireScreenPos.y, uiStage.getWidth(), uiStage.getHeight());
+        uiStage.addActor(currentPopup);
     }
 
     @Override
     public void render() {
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
+        
+        float delta = Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f);
+        
+        // Update animations
+        gameObjectRenderer.update(delta);
+        
+        // Render game world
         camera.update();
         viewport.apply();
         batch.setProjectionMatrix(camera.combined);
@@ -60,12 +111,19 @@ public class GasilskiSimulator extends ApplicationAdapter {
         gameObjectRenderer.render(batch, camera, gameWorld.getFires(), gameWorld.getStation());
         batch.end();
         routeRenderer.render(camera);
+        
+        // Render UI
+        uiStage.act(delta);
+        uiStage.draw();
     }
 
     @Override
     public void resize(int width, int height) {
         // Save current camera position
         float camX = camera.position.x;
+        
+        // Update UI stage
+        uiStage.getViewport().update(width, height, true);
         float camY = camera.position.y;
         viewport.update(width, height, false);
 
@@ -77,6 +135,8 @@ public class GasilskiSimulator extends ApplicationAdapter {
     @Override
     public void dispose() {
         batch.dispose();
+        uiStage.dispose();
+        skin.dispose();
         mapTileRenderer.dispose();
         routeRenderer.dispose();
         assets.dispose();

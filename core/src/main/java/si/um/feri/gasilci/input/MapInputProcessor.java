@@ -66,7 +66,7 @@ public class MapInputProcessor extends InputAdapter {
             if (isClick && clickListener != null) {
                 Vector3 world = new Vector3(screenX, screenY, 0);
                 camera.unproject(world);
-                clickListener.onMapClick(world.x, world.y);
+                clickListener.onMapClick(world.x, world.y, screenX, screenY);
             }
             return true;
         }

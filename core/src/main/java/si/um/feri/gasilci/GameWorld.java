@@ -2,7 +2,9 @@ package si.um.feri.gasilci;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import si.um.feri.gasilci.config.GameConfig;
+import si.um.feri.gasilci.data.FirePoint;
 import si.um.feri.gasilci.data.PointsLoader;
 import si.um.feri.gasilci.data.PointsLoader.Point;
 import si.um.feri.gasilci.renderers.MapTileRenderer;
@@ -11,11 +13,16 @@ import si.um.feri.gasilci.services.RoutingService;
 import si.um.feri.gasilci.services.RoutingService.LatLon;
 
 public class GameWorld {
-    private final List<Point> firePoints;
+    private final List<FirePoint> firePoints;
     private final Point stationPoint;
     private final RoutingService routingService;
     private final MapTileRenderer mapTileRenderer;
     private final RouteRenderer routeRenderer;
+    private FireClickListener fireClickListener;
+
+    public interface FireClickListener {
+        void onFireClicked(FirePoint fire, float screenX, float screenY);
+    }
 
     public GameWorld(MapTileRenderer mapTileRenderer, RouteRenderer routeRenderer) {
         this.mapTileRenderer = mapTileRenderer;
@@ -33,7 +40,7 @@ public class GameWorld {
         return new float[]{GameConfig.WORLD_WIDTH / 2, GameConfig.WORLD_HEIGHT / 2};
     }
 
-    public List<Point> getFires() {
+    public List<FirePoint> getFires() {
         return firePoints;
     }
 
@@ -41,12 +48,18 @@ public class GameWorld {
         return stationPoint;
     }
 
-    public void handleMapClick(float worldX, float worldY) {
+    public void setFireClickListener(FireClickListener listener) {
+        this.fireClickListener = listener;
+    }
+
+    public void handleMapClick(float worldX, float worldY, float screenX, float screenY) {
         float radius = 0.25f;
-        Point nearest = null;
+        FirePoint nearest = null;
         float bestDist2 = radius * radius;
 
-        for (Point p : firePoints) {
+        for (FirePoint p : firePoints) {
+            if (!p.isActive()) continue;
+            
             float[] w = mapTileRenderer.latLonToWorld(p.lat, p.lon);
             float dx = w[0] - worldX;
             float dy = w[1] - worldY;
@@ -59,6 +72,11 @@ public class GameWorld {
 
         if (nearest == null) {
             return;
+        }
+
+        // Notify listener about fire click
+        if (fireClickListener != null) {
+            fireClickListener.onFireClicked(nearest, screenX, screenY);
         }
 
         try {
