@@ -84,14 +84,14 @@ public class MapInputProcessor extends InputAdapter {
         camera.zoom += amountY * 0.1f;
 
         float minZoom = 0.1f;
-        float maxZoom = 0.6f;
+        float maxZoom = 1f;
         if (camera.zoom < minZoom) camera.zoom = minZoom;
         if (camera.zoom > maxZoom) camera.zoom = maxZoom;
 
         float zoomDiff = camera.zoom - oldZoom;
         camera.position.x += (mousePos.x - camera.position.x) * (zoomDiff / oldZoom);
         camera.position.y += (mousePos.y - camera.position.y) * (zoomDiff / oldZoom);
-
+        clampCamera();
         return true;
     }
 
@@ -99,9 +99,9 @@ public class MapInputProcessor extends InputAdapter {
         float cameraHalfWidth = camera.viewportWidth * camera.zoom / 2;
         float cameraHalfHeight = camera.viewportHeight * camera.zoom / 2;
         float MAP_MIN_X = 0;
-        float MAP_MAX_X = 16;
+        float MAP_MAX_X = 32;
         float MAP_MIN_Y = 0;
-        float MAP_MAX_Y = 9;
+        float MAP_MAX_Y = 18;
 
         float minX = MAP_MIN_X + cameraHalfWidth;
         float maxX = MAP_MAX_X - cameraHalfWidth;

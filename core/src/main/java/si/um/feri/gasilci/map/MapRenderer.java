@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import si.um.feri.gasilci.assets.RegionNames;
+import si.um.feri.gasilci.config.GameConfig;
 import si.um.feri.gasilci.config.GeoapifyConfig;
 import si.um.feri.gasilci.data.PointsLoader;
 import si.um.feri.gasilci.data.PointsLoader.Point;
@@ -23,8 +24,8 @@ import si.um.feri.gasilci.services.RoutingService.LatLon;
 import si.um.feri.gasilci.util.MapUtil;
 
 public class MapRenderer {
-    private static final int GRID_WIDTH = 16;
-    private static final int GRID_HEIGHT = 9;
+    private static final int GRID_WIDTH = 32;
+    private static final int GRID_HEIGHT = 18;
     private static final int MAP_ZOOM = 17; //lower further away, higher closer
 
     private final Map<String, Texture> tileCache = new HashMap<>();
@@ -64,6 +65,13 @@ public class MapRenderer {
         firePoints = PointsLoader.loadFires("data/fires.json");
         // For now show all fires (initial requirement: 3 static fires)
         stationPoint = PointsLoader.loadStation("data/station.json");
+    }
+
+    public float[] getStationWorldPosition() {
+        if (stationPoint != null) {
+            return latLonToWorld(stationPoint.lat, stationPoint.lon);
+        }
+        return new float[]{GameConfig.WORLD_WIDTH / 2, GameConfig.WORLD_HEIGHT / 2};
     }
 
     private void createPlaceholderTexture() {
@@ -106,8 +114,8 @@ public class MapRenderer {
 
         // Draw markers (icons) on top of tiles within the batch
         // Responsive icon sizes: start larger, but get slightly smaller when zooming in
-        float stationBase = 0.25f; // base fraction of a tile at zoom=1
-        float fireBase = 0.18f;
+        float stationBase = 0.5f; // base fraction of a tile at zoom=1
+        float fireBase = 0.25f;
         // Map zoom range is clamped to [0.1, 1.0]. We want factor=1 at 1.0 and 0.5 at 0.1.
         float t = (camera.zoom - 0.1f) / 0.9f; // [0,1]
         t = Math.max(0f, Math.min(1f, t));
@@ -167,7 +175,16 @@ public class MapRenderer {
         return new float[]{worldX, worldY};
     }
 
+    private double[] worldToLatLon(float worldX, float worldY) {
+        double tileX = worldX + startTileX;
+        double tileY = (startTileY + GRID_HEIGHT) - worldY;
+        return MapUtil.tileToLatLon(tileX, tileY, MAP_ZOOM);
+    }
+
     public void onMapClick(float worldX, float worldY) {
+        // Display clicked coordinates
+        double[] latLon = worldToLatLon(worldX, worldY);
+
         // Find nearest fire within radius
         float radius = 0.25f;
         Point nearest = null;

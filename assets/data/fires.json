@@ -12,6 +12,11 @@
       "lat": 46.5397,
       "lon": 15.6554
     },
-    { "id": "fire3", "name": "Ljudski vrt", "lat": 46.5614, "lon": 15.6472 }
+    {
+      "id": "fire3",
+      "name": "Ljudski vrt",
+      "lat": 46.5614,
+      "lon": 15.6472
+    }
   ]
 }
