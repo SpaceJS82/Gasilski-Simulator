@@ -4,380 +4,387 @@ size: 1024, 512
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
-fighter-holding-hydrant-1
+images/fighter-holding-hydrant-1
   rotate: false
-  xy: 343, 308
+  xy: 938, 454
   size: 40, 56
   orig: 40, 56
   offset: 0, 0
   index: -1
-fighter-holding-hydrant-2
+images/fighter-holding-hydrant-2
   rotate: false
-  xy: 343, 308
+  xy: 938, 454
   size: 40, 56
   orig: 40, 56
   offset: 0, 0
   index: -1
-fighter-holding-hydrant-3
+images/fighter-holding-hydrant-3
   rotate: false
-  xy: 343, 308
+  xy: 938, 454
   size: 40, 56
   orig: 40, 56
   offset: 0, 0
   index: -1
-fighter-holding-hydrant-6
+images/fighter-holding-hydrant-6
   rotate: false
-  xy: 343, 308
+  xy: 938, 454
   size: 40, 56
   orig: 40, 56
   offset: 0, 0
   index: -1
-fighter-holding-hydrant-4
+images/fighter-holding-hydrant-4
   rotate: false
-  xy: 778, 451
+  xy: 896, 453
   size: 40, 57
   orig: 40, 57
   offset: 0, 0
   index: -1
-fighter-holding-hydrant-5
+images/fighter-holding-hydrant-5
   rotate: false
-  xy: 778, 451
+  xy: 896, 453
   size: 40, 57
   orig: 40, 57
   offset: 0, 0
   index: -1
-flame1-1
+images/fire-station
   rotate: false
-  xy: 598, 503
+  xy: 2, 270
+  size: 256, 240
+  orig: 256, 240
+  offset: 0, 0
+  index: -1
+images/flame1-1
+  rotate: false
+  xy: 795, 287
   size: 9, 5
   orig: 9, 5
   offset: 0, 0
   index: -1
-flame1-2
+images/flame1-2
   rotate: false
-  xy: 811, 444
+  xy: 639, 214
   size: 7, 5
   orig: 7, 5
   offset: 0, 0
   index: -1
-flame1-3
+images/flame1-3
   rotate: false
-  xy: 650, 351
+  xy: 896, 446
   size: 8, 5
   orig: 8, 5
   offset: 0, 0
   index: -1
-flame1-4
+images/flame1-4
   rotate: false
-  xy: 343, 301
+  xy: 1007, 505
   size: 8, 5
   orig: 8, 5
   offset: 0, 0
   index: -1
-flame1-5
+images/flame1-5
   rotate: false
-  xy: 778, 366
+  xy: 648, 216
   size: 7, 4
   orig: 7, 4
   offset: 0, 0
   index: -1
-flame2-1
+images/flame2-1
   rotate: false
-  xy: 271, 56
+  xy: 60, 42
   size: 22, 10
   orig: 22, 10
   offset: 0, 0
   index: -1
-flame2-2
+images/flame2-2
   rotate: false
-  xy: 213, 17
+  xy: 320, 129
   size: 21, 10
   orig: 21, 10
   offset: 0, 0
   index: -1
-flame2-3
+images/flame2-3
   rotate: false
-  xy: 385, 333
+  xy: 2, 2
   size: 22, 11
   orig: 22, 11
   offset: 0, 0
   index: -1
-flame2-4
+images/flame2-4
   rotate: false
-  xy: 877, 497
+  xy: 26, 2
   size: 21, 11
   orig: 21, 11
   offset: 0, 0
   index: -1
-flame2-5
+images/flame2-5
   rotate: false
-  xy: 820, 463
+  xy: 813, 338
   size: 21, 9
   orig: 21, 9
   offset: 0, 0
   index: -1
-flame3-1
+images/flame3-1
   rotate: false
-  xy: 613, 283
+  xy: 593, 149
   size: 27, 7
   orig: 27, 7
   offset: 0, 0
   index: -1
-flame3-2
+images/flame3-2
   rotate: false
-  xy: 241, 54
+  xy: 30, 40
   size: 28, 12
   orig: 28, 12
   offset: 0, 0
   index: -1
-flame3-3
+images/flame3-3
   rotate: false
-  xy: 848, 495
+  xy: 291, 126
   size: 27, 13
   orig: 27, 13
   offset: 0, 0
   index: -1
-flame3-4
+images/flame3-4
   rotate: false
-  xy: 778, 372
+  xy: 813, 362
   size: 28, 13
   orig: 28, 13
   offset: 0, 0
   index: -1
-flame3-5
+images/flame3-5
   rotate: false
-  xy: 412, 353
+  xy: 813, 349
   size: 27, 11
   orig: 27, 11
   offset: 0, 0
   index: -1
-flame4-1
+images/flame4-1
   rotate: false
-  xy: 213, 29
+  xy: 2, 15
   size: 24, 14
   orig: 24, 14
   offset: 0, 0
   index: -1
-flame4-2
+images/flame4-2
   rotate: false
-  xy: 820, 490
+  xy: 263, 121
   size: 26, 18
   orig: 26, 18
   offset: 0, 0
   index: -1
-flame4-3
+images/flame4-3
   rotate: false
-  xy: 385, 346
+  xy: 980, 492
   size: 25, 18
   orig: 25, 18
   offset: 0, 0
   index: -1
-flame4-4
+images/flame4-4
   rotate: false
-  xy: 213, 45
+  xy: 2, 31
   size: 26, 21
   orig: 26, 21
   offset: 0, 0
   index: -1
-flame4-5
+images/flame4-5
   rotate: false
-  xy: 820, 474
+  xy: 980, 476
   size: 22, 14
   orig: 22, 14
   offset: 0, 0
   index: -1
-stream-1
+images/stream-1
   rotate: false
-  xy: 300, 299
+  xy: 853, 445
   size: 41, 65
   orig: 41, 65
   offset: 0, 0
   index: -1
-stream-2
+images/stream-2
   rotate: false
-  xy: 167, 5
+  xy: 593, 158
   size: 44, 61
   orig: 44, 61
   offset: 0, 0
   index: -1
-stream-3
+images/stream-3
   rotate: false
-  xy: 778, 387
+  xy: 813, 377
   size: 31, 62
   orig: 31, 62
   offset: 0, 0
   index: -1
-stream-4
+images/stream-4
   rotate: false
-  xy: 613, 292
+  xy: 758, 228
   size: 35, 64
   orig: 35, 64
   offset: 0, 0
   index: -1
-truck-down-1
+images/truck-down-1
   rotate: false
-  xy: 167, 68
+  xy: 153, 115
   size: 53, 153
   orig: 53, 153
   offset: 0, 0
   index: -1
-truck-down-2
+images/truck-down-2
   rotate: false
-  xy: 222, 68
+  xy: 208, 115
   size: 53, 153
   orig: 53, 153
   offset: 0, 0
   index: -1
-truck-down-3
+images/truck-down-3
   rotate: false
-  xy: 277, 68
+  xy: 263, 141
   size: 53, 153
   orig: 53, 153
   offset: 0, 0
   index: -1
-truck-down-4
+images/truck-down-4
   rotate: false
-  xy: 448, 284
+  xy: 428, 142
   size: 53, 152
   orig: 53, 152
   offset: 0, 0
   index: -1
-truck-down-5
+images/truck-down-5
   rotate: false
-  xy: 503, 283
+  xy: 318, 141
   size: 53, 153
   orig: 53, 153
   offset: 0, 0
   index: -1
-truck-down-6
+images/truck-down-6
   rotate: false
-  xy: 558, 283
+  xy: 373, 141
   size: 53, 153
   orig: 53, 153
   offset: 0, 0
   index: -1
-truck-left-1
+images/truck-left-1
   rotate: false
-  xy: 153, 366
+  xy: 411, 440
   size: 146, 70
   orig: 146, 70
   offset: 0, 0
   index: -1
-truck-left-2
+images/truck-left-2
   rotate: false
-  xy: 153, 438
+  xy: 2, 126
   size: 148, 70
   orig: 148, 70
   offset: 0, 0
   index: -1
-truck-left-3
+images/truck-left-3
   rotate: false
-  xy: 2, 151
+  xy: 558, 369
   size: 145, 69
   orig: 145, 69
   offset: 0, 0
   index: -1
-truck-left-4
+images/truck-left-4
   rotate: false
-  xy: 303, 438
+  xy: 2, 54
   size: 146, 70
   orig: 146, 70
   offset: 0, 0
   index: -1
-truck-left-5
+images/truck-left-5
   rotate: false
-  xy: 2, 438
+  xy: 2, 198
   size: 149, 70
   orig: 149, 70
   offset: 0, 0
   index: -1
-truck-left-6
+images/truck-left-6
   rotate: false
-  xy: 301, 366
+  xy: 559, 440
   size: 145, 70
   orig: 145, 70
   offset: 0, 0
   index: -1
-truck-right-1
+images/truck-right-1
   rotate: false
-  xy: 2, 222
+  xy: 260, 296
   size: 146, 70
   orig: 146, 70
   offset: 0, 0
   index: -1
-truck-right-2
+images/truck-right-2
   rotate: false
-  xy: 2, 294
+  xy: 260, 368
   size: 148, 70
   orig: 148, 70
   offset: 0, 0
   index: -1
-truck-right-3
+images/truck-right-3
   rotate: false
-  xy: 150, 223
+  xy: 706, 441
   size: 145, 69
   orig: 145, 69
   offset: 0, 0
   index: -1
-truck-right-4
+images/truck-right-4
   rotate: false
-  xy: 152, 294
+  xy: 410, 368
   size: 146, 70
   orig: 146, 70
   offset: 0, 0
   index: -1
-truck-right-5
+images/truck-right-5
   rotate: false
-  xy: 2, 366
+  xy: 260, 440
   size: 149, 70
   orig: 149, 70
   offset: 0, 0
   index: -1
-truck-right-6
+images/truck-right-6
   rotate: false
-  xy: 451, 438
+  xy: 408, 296
   size: 145, 70
   orig: 145, 70
   offset: 0, 0
   index: -1
-truck-up-1
+images/truck-up-1
   rotate: false
-  xy: 112, 4
+  xy: 648, 222
   size: 53, 145
   orig: 53, 145
   offset: 0, 0
   index: -1
-truck-up-2
+images/truck-up-2
   rotate: false
-  xy: 57, 3
+  xy: 593, 221
   size: 53, 146
   orig: 53, 146
   offset: 0, 0
   index: -1
-truck-up-3
+images/truck-up-3
   rotate: false
-  xy: 613, 358
+  xy: 483, 144
   size: 53, 150
   orig: 53, 150
   offset: 0, 0
   index: -1
-truck-up-4
+images/truck-up-4
   rotate: false
-  xy: 668, 363
+  xy: 703, 222
   size: 53, 145
   orig: 53, 145
   offset: 0, 0
   index: -1
-truck-up-5
+images/truck-up-5
   rotate: false
-  xy: 2, 2
+  xy: 538, 147
   size: 53, 147
   orig: 53, 147
   offset: 0, 0
   index: -1
-truck-up-6
+images/truck-up-6
   rotate: false
-  xy: 723, 363
+  xy: 758, 294
   size: 53, 145
   orig: 53, 145
   offset: 0, 0

@@ -2,6 +2,7 @@ package si.um.feri.gasilci.assets;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class Assets {
     private final AssetManager assetManager = new AssetManager();
@@ -20,6 +21,10 @@ public class Assets {
 
     public AssetManager getAssetManager() {
         return assetManager;
+    }
+
+    public Skin getSkin() {
+        return assetManager.get(AssetDescriptors.UI_SKIN);
     }
 
     public void dispose() {
