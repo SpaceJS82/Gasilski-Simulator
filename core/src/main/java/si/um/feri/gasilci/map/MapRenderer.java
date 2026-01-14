@@ -25,7 +25,7 @@ import si.um.feri.gasilci.util.MapUtil;
 public class MapRenderer {
     private static final int GRID_WIDTH = 16;
     private static final int GRID_HEIGHT = 9;
-    private static final int MAP_ZOOM = 15;
+    private static final int MAP_ZOOM = 17; //lower further away, higher closer
 
     private final Map<String, Texture> tileCache = new HashMap<>();
     private final TileLoader tileLoader;

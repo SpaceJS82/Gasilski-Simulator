@@ -29,17 +29,11 @@ public class GasilskiSimulator extends ApplicationAdapter {
         camera = new OrthographicCamera();
         viewport = new FitViewport(GameConfig.WORLD_WIDTH, GameConfig.WORLD_HEIGHT, camera);
         camera.position.set(GameConfig.WORLD_WIDTH / 2, GameConfig.WORLD_HEIGHT / 2, 0);
-        // Start more zoomed-in (about 4 scroll steps): 1.0 - 0.4 = 0.6
         camera.zoom = 0.6f;
         camera.update();
         mapRenderer = new MapRenderer(assets.getAtlas());
         MapInputProcessor inputProcessor = new MapInputProcessor(camera);
-        inputProcessor.setClickListener(new MapClickListener() {
-            @Override
-            public void onMapClick(float worldX, float worldY) {
-                mapRenderer.onMapClick(worldX, worldY);
-            }
-        });
+        inputProcessor.setClickListener((worldX, worldY) -> mapRenderer.onMapClick(worldX, worldY));
         Gdx.input.setInputProcessor(inputProcessor);
     }
 
