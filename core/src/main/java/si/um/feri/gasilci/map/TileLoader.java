@@ -40,6 +40,7 @@ public class TileLoader {
                     final Pixmap pixmap = new Pixmap(bytes, 0, bytes.length);
                     Gdx.app.postRunnable(() -> {
                         Texture texture = new Texture(pixmap);
+                        texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
                         pixmap.dispose();
                         tileCache.put(key, texture);
                         loading.remove(key);

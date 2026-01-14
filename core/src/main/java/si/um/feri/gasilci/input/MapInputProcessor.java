@@ -84,7 +84,7 @@ public class MapInputProcessor extends InputAdapter {
         camera.zoom += amountY * 0.1f;
 
         float minZoom = 0.1f;
-        float maxZoom = 1.0f;
+        float maxZoom = 0.6f;
         if (camera.zoom < minZoom) camera.zoom = minZoom;
         if (camera.zoom > maxZoom) camera.zoom = maxZoom;
 
