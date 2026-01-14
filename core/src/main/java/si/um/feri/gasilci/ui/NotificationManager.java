@@ -1,6 +1,5 @@
 package si.um.feri.gasilci.ui;
 
-
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -12,16 +11,17 @@ public class NotificationManager {
     private final Skin skin;
     private Window popup;
     private float displayTime = 0;
-    private static final float DISPLAY_DURATION = 4f;
+    private boolean persistent = false;
 
     public NotificationManager(Skin skin) {
         this.stage = new Stage(new ScreenViewport());
         this.skin = skin;
     }
 
-    public void showFireNotification(String address) {
+    public void showFireNotification(String address, boolean persistent) {
         if (popup != null) popup.remove();
 
+        this.persistent = persistent;
         popup = new Window("New Fire!", skin);
         popup.add(new Label("Fire at: " + address, skin)).pad(10);
         popup.pack();
@@ -30,11 +30,15 @@ public class NotificationManager {
             stage.getHeight() - popup.getHeight() - 20
         );
         stage.addActor(popup);
-        displayTime = DISPLAY_DURATION;
+        displayTime = persistent ? Float.MAX_VALUE : 4f;
+    }
+
+    public void showFireNotification(String address) {
+        showFireNotification(address, false);
     }
 
     public void update(float delta) {
-        if (displayTime > 0) {
+        if (!persistent && displayTime > 0) {
             displayTime -= delta;
             if (displayTime <= 0 && popup != null) {
                 popup.remove();
@@ -48,6 +52,16 @@ public class NotificationManager {
         stage.draw();
     }
 
+    public void resize(int width, int height) {
+        stage.getViewport().update(width, height, true);
+        if (popup != null) {
+            popup.setPosition(
+                (stage.getWidth() - popup.getWidth()) / 2,
+                stage.getHeight() - popup.getHeight() - 20
+            );
+        }
+    }
+
     public Stage getStage() {
         return stage;
     }
@@ -56,4 +70,3 @@ public class NotificationManager {
         stage.dispose();
     }
 }
-
