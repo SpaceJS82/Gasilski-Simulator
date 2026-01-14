@@ -9,15 +9,20 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import si.um.feri.gasilci.assets.Assets;
 import si.um.feri.gasilci.config.GameConfig;
+import si.um.feri.gasilci.renderers.MapObjectRenderer;
 import si.um.feri.gasilci.input.MapInputProcessor;
-import si.um.feri.gasilci.map.MapRenderer;
+import si.um.feri.gasilci.renderers.MapTileRenderer;
+import si.um.feri.gasilci.renderers.RouteRenderer;
 
 public class GasilskiSimulator extends ApplicationAdapter {
     private SpriteBatch batch;
     private OrthographicCamera camera;
     private Viewport viewport;
-    private MapRenderer mapRenderer;
     private Assets assets;
+    private MapTileRenderer mapTileRenderer;
+    private MapObjectRenderer gameObjectRenderer;
+    private RouteRenderer routeRenderer;
+    private GameWorld gameWorld;
 
     @Override
     public void create() {
@@ -25,34 +30,36 @@ public class GasilskiSimulator extends ApplicationAdapter {
         assets = new Assets();
         assets.load();
         camera = new OrthographicCamera();
-        mapRenderer = new MapRenderer(assets.getAtlas());
+        mapTileRenderer = new MapTileRenderer();
+        routeRenderer = new RouteRenderer();
+        gameWorld = new GameWorld(mapTileRenderer, routeRenderer);
+        gameObjectRenderer = new MapObjectRenderer(assets.getAtlas(), mapTileRenderer);
 
-        // Position camera at fire station BEFORE creating viewport
-        float[] stationPos = mapRenderer.getStationWorldPosition();
+        // Position camera at fire station
+        float[] stationPos = gameWorld.getStationWorldPosition();
         camera.position.set(stationPos[0], stationPos[1], 0);
         camera.zoom = 0.3f;
 
-        // Create viewport AFTER setting camera position
+        // Create viewport after setting camera position
         viewport = new FitViewport(GameConfig.WORLD_WIDTH, GameConfig.WORLD_HEIGHT, camera);
-
         camera.update();
 
         MapInputProcessor inputProcessor = new MapInputProcessor(camera);
-        inputProcessor.setClickListener((worldX, worldY) -> mapRenderer.onMapClick(worldX, worldY));
+        inputProcessor.setClickListener((worldX, worldY) -> gameWorld.handleMapClick(worldX, worldY));
         Gdx.input.setInputProcessor(inputProcessor);
     }
 
     @Override
     public void render() {
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
-
         camera.update();
         viewport.apply();
         batch.setProjectionMatrix(camera.combined);
-
         batch.begin();
-        mapRenderer.render(batch, camera);
+        mapTileRenderer.render(batch);
+        gameObjectRenderer.render(batch, camera, gameWorld.getFires(), gameWorld.getStation());
         batch.end();
+        routeRenderer.render(camera);
     }
 
     @Override
@@ -60,8 +67,7 @@ public class GasilskiSimulator extends ApplicationAdapter {
         // Save current camera position
         float camX = camera.position.x;
         float camY = camera.position.y;
-
-        viewport.update(width, height, false); // false = don't center camera
+        viewport.update(width, height, false);
 
         // Restore camera position
         camera.position.set(camX, camY, 0);
@@ -71,7 +77,8 @@ public class GasilskiSimulator extends ApplicationAdapter {
     @Override
     public void dispose() {
         batch.dispose();
-        mapRenderer.dispose();
+        mapTileRenderer.dispose();
+        routeRenderer.dispose();
         assets.dispose();
     }
 }

@@ -3,7 +3,6 @@ package si.um.feri.gasilci.data;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.JsonReader;
@@ -28,6 +27,7 @@ public class PointsLoader {
         FileHandle file = Gdx.files.internal(internalPath);
         JsonValue root = new JsonReader().parse(file);
         List<Point> result = new ArrayList<>();
+
         for (JsonValue fire : root.get("fires")) {
             String id = fire.getString("id");
             String name = fire.getString("name", id);
@@ -49,6 +49,7 @@ public class PointsLoader {
         return new Point(id, name, lat, lon);
     }
 
+    // WIP
     public static List<Point> pickRandom(List<Point> points, int count) {
         if (points.size() <= count) return points;
         List<Point> copy = new ArrayList<>(points);

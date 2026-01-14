@@ -34,17 +34,16 @@ public class MapInputProcessor extends InputAdapter {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        // Start dragging on first actual movement
         if (!isDragging) {
             float dx0 = screenX - downPos.x;
             float dy0 = screenY - downPos.y;
+
             if (Math.abs(dx0) > 2 || Math.abs(dy0) > 2) {
                 isDragging = true;
             } else {
-                return true; // swallow tiny movement
+                return true;
             }
         }
-
         float deltaX = screenX - lastTouchPos.x;
         float deltaY = screenY - lastTouchPos.y;
 
@@ -59,12 +58,11 @@ public class MapInputProcessor extends InputAdapter {
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         if (button == Input.Buttons.LEFT) {
-            boolean wasDragging = isDragging;
             isDragging = false;
-            // treat as click if finger/mouse didn't move much
             float dx = screenX - downPos.x;
             float dy = screenY - downPos.y;
             boolean isClick = Math.abs(dx) <= 2 && Math.abs(dy) <= 2;
+
             if (isClick && clickListener != null) {
                 Vector3 world = new Vector3(screenX, screenY, 0);
                 camera.unproject(world);

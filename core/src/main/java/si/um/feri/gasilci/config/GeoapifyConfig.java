@@ -6,8 +6,6 @@ public class GeoapifyConfig {
     public static final String ROUTING_API_URL = "https://api.geoapify.com/v1/routing";
     public static final String MAP_STYLE = "maptiler-3d";
 
-    public static final int TILE_SCALE = 2; // 1=256px, 2=512px (retina)
-
     public static final double MARIBOR_LAT = 46.547798;
     public static final double MARIBOR_LON = 15.646747;
 
@@ -16,9 +14,7 @@ public class GeoapifyConfig {
     }
 
     public static String getTileUrl(int z, int x, int y) {
-        // Use retina tiles for sharper rendering (@2x → 512px)
-        String suffix = TILE_SCALE == 2 ? "@2x" : "";
-        return String.format("%s/%s/%d/%d/%d%s.png?apiKey=%s", MAP_TILES_BASE_URL, MAP_STYLE, z, x, y, suffix, getApiKey());
+        return String.format("%s/%s/%d/%d/%d%s.png?apiKey=%s", MAP_TILES_BASE_URL, MAP_STYLE, z, x, y, "@2x", getApiKey());
     }
 
     public static String getRoutingUrl(double fromLat, double fromLon, double toLat, double toLon, String mode) {

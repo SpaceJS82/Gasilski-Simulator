@@ -11,7 +11,6 @@ public class Assets {
         assetManager.load(AssetDescriptors.GAME_ATLAS);
         assetManager.load(AssetDescriptors.UI_SKIN);
         assetManager.load(AssetDescriptors.FONT);
-        // audio can be loaded later as needed
         assetManager.finishLoading();
     }
 
