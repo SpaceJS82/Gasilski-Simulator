@@ -3,10 +3,12 @@ package si.um.feri.gasilci;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import si.um.feri.gasilci.config.GameConfig;
 import si.um.feri.gasilci.data.FirePoint;
 import si.um.feri.gasilci.data.PointsLoader;
 import si.um.feri.gasilci.data.PointsLoader.Point;
+import si.um.feri.gasilci.entities.DispatchManager;
 import si.um.feri.gasilci.renderers.MapTileRenderer;
 import si.um.feri.gasilci.renderers.RouteRenderer;
 import si.um.feri.gasilci.services.RoutingService;
@@ -19,15 +21,24 @@ public class GameWorld {
     private final MapTileRenderer mapTileRenderer;
     private final RouteRenderer routeRenderer;
     private FireClickListener fireClickListener;
+    private DispatchManager dispatchManager;
+
 
     public interface FireClickListener {
         void onFireClicked(FirePoint fire, float screenX, float screenY);
     }
 
-    public GameWorld(MapTileRenderer mapTileRenderer, RouteRenderer routeRenderer) {
+    public GameWorld(MapTileRenderer mapTileRenderer, RouteRenderer routeRenderer, TextureAtlas atlas) {
         this.mapTileRenderer = mapTileRenderer;
         this.routeRenderer = routeRenderer;
         this.routingService = new RoutingService();
+        this.dispatchManager = new DispatchManager(atlas, getStationWorldPosition());
+        this.dispatchManager.setArrivalListener((truck, fire) -> {
+            // Fire extinguishing starts here when truck arrives
+            if (fireClickListener != null) {
+                fireClickListener.onFireClicked(fire, 0, 0); // Trigger extinguish animation
+            }
+        });
 
         firePoints = PointsLoader.loadFires("data/fires.json");
         stationPoint = PointsLoader.loadStation("data/station.json");
@@ -59,7 +70,7 @@ public class GameWorld {
 
         for (FirePoint p : firePoints) {
             if (!p.isActive()) continue;
-            
+
             float[] w = mapTileRenderer.latLonToWorld(p.lat, p.lon);
             float dx = w[0] - worldX;
             float dy = w[1] - worldY;
@@ -74,19 +85,31 @@ public class GameWorld {
             return;
         }
 
-        // Notify listener about fire click
-        if (fireClickListener != null) {
-            fireClickListener.onFireClicked(nearest, screenX, screenY);
-        }
+        if (nearest == null) return;
+
+        final FirePoint targetFire = nearest;
 
         try {
-            List<LatLon> latlons = routingService.getRouteLatLon(stationPoint.lat, stationPoint.lon, nearest.lat, nearest.lon, "drive");
-            List<float[]> routeWorldPoints = new ArrayList<>();
+            List<LatLon> latlons = routingService.getRouteLatLon(
+                stationPoint.lat, stationPoint.lon,
+                targetFire.lat, targetFire.lon, "drive");
 
+            List<float[]> routeWorldPoints = new ArrayList<>();
             for (LatLon ll : latlons) {
                 routeWorldPoints.add(mapTileRenderer.latLonToWorld(ll.lat, ll.lon));
             }
+
             routeRenderer.setRoute(routeWorldPoints);
+            dispatchManager.dispatchTruck(targetFire, routeWorldPoints);
+
         } catch (Exception ignored) { }
+    }
+
+    public void update(float delta) {
+        dispatchManager.update(delta);
+    }
+
+    public DispatchManager getDispatchManager() {
+        return dispatchManager;
     }
 }

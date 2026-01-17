@@ -3,6 +3,7 @@ package si.um.feri.gasilci.renderers;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -14,6 +15,7 @@ import com.badlogic.gdx.utils.Array;
 import si.um.feri.gasilci.assets.RegionNames;
 import si.um.feri.gasilci.data.FirePoint;
 import si.um.feri.gasilci.data.PointsLoader.Point;
+import si.um.feri.gasilci.entities.Truck;
 
 public class MapObjectRenderer {
     private final Animation<TextureRegion> fireAnimation;
@@ -30,7 +32,7 @@ public class MapObjectRenderer {
         this.atlas = atlas;
         this.stateTime = 0;
         this.activeExtinguishAnimations = new ArrayList<>();
-        
+
         // Load fire animation frames (flame4-1 to flame4-5)
         Array<TextureRegion> fireFrames = new Array<>();
         for (int i = 1; i <= 5; i++) {
@@ -40,14 +42,14 @@ public class MapObjectRenderer {
             }
         }
         fireAnimation = new Animation<>(0.1f, fireFrames, Animation.PlayMode.LOOP);
-        
+
         TextureRegion tr = atlas.findRegion(RegionNames.STATION_PRIMARY);
         stationIcon = (tr != null) ? tr : atlas.findRegion(RegionNames.STATION_FALLBACK);
     }
 
     public void update(float delta) {
         stateTime += delta;
-        
+
         // Update extinguishing animations
         Iterator<FireExtinguishingAnimation> iterator = activeExtinguishAnimations.iterator();
         while (iterator.hasNext()) {
@@ -68,6 +70,29 @@ public class MapObjectRenderer {
         }
         activeExtinguishAnimations.add(new FireExtinguishingAnimation(atlas, firePoint, mapTileRenderer, routeRenderer));
     }
+
+    public void renderTrucks(SpriteBatch batch, Map<Truck, FirePoint> trucks) {
+        for (Truck truck : trucks.keySet()) {
+            TextureRegion frame = truck.getCurrentFrame();
+            if (frame == null) continue;
+
+            float width = frame.getRegionWidth() / 400f;  // Scale to world units
+            float height = frame.getRegionHeight() / 400f;
+
+            batch.draw(
+                frame,
+                truck.getX() - width / 2,  // Position at center
+                truck.getY() - height / 2,
+                width / 2,   // Origin X (center)
+                height / 2,  // Origin Y (center)
+                width,
+                height,
+                1f, 1f,      // Scale
+                truck.getRotation()  // Rotation in degrees
+            );
+        }
+    }
+
 
     public void render(SpriteBatch batch, OrthographicCamera camera, List<FirePoint> fires, Point station) {
         float stationBase = 0.5f;
@@ -94,7 +119,9 @@ public class MapObjectRenderer {
                 }
             }
         }
-        
+
+
+
         // Draw extinguishing animations
         for (FireExtinguishingAnimation anim : activeExtinguishAnimations) {
             anim.render(batch);
