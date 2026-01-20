@@ -15,11 +15,13 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import si.um.feri.gasilci.assets.Assets;
 import si.um.feri.gasilci.config.GameConfig;
 import si.um.feri.gasilci.data.FirePoint;
+import si.um.feri.gasilci.data.FireStation;
 import si.um.feri.gasilci.input.MapInputProcessor;
 import si.um.feri.gasilci.renderers.MapObjectRenderer;
 import si.um.feri.gasilci.renderers.MapTileRenderer;
 import si.um.feri.gasilci.renderers.RouteRenderer;
 import si.um.feri.gasilci.ui.FirePopupWindow;
+import si.um.feri.gasilci.ui.StationPopupWindow;
 
 public class GasilskiSimulator extends ApplicationAdapter {
     private SpriteBatch batch;
@@ -33,6 +35,7 @@ public class GasilskiSimulator extends ApplicationAdapter {
     private Stage uiStage;
     private Skin skin;
     private FirePopupWindow currentPopup;
+    private StationPopupWindow currentStationPopup;
 
     @Override
     public void create() {
@@ -64,6 +67,9 @@ public class GasilskiSimulator extends ApplicationAdapter {
 
         // Setup fire click listener
         gameWorld.setFireClickListener((fire, screenX, screenY) -> showFirePopup(fire, screenX, screenY));
+        
+        // Setup station click listener
+        gameWorld.setStationClickListener((station, screenX, screenY) -> showStationPopup(station, screenX, screenY));
 
         // Use InputMultiplexer to handle both UI and map input
         InputMultiplexer multiplexer = new InputMultiplexer();
@@ -73,9 +79,12 @@ public class GasilskiSimulator extends ApplicationAdapter {
     }
 
     private void showFirePopup(FirePoint fire, float screenX, float screenY) {
-        // Close existing popup
+        // Close existing popups
         if (currentPopup != null) {
             currentPopup.remove();
+        }
+        if (currentStationPopup != null) {
+            currentStationPopup.remove();
         }
 
         // Convert fire world position to screen coordinates
@@ -84,13 +93,36 @@ public class GasilskiSimulator extends ApplicationAdapter {
         camera.project(fireScreenPos, viewport.getScreenX(), viewport.getScreenY(), viewport.getScreenWidth(), viewport.getScreenHeight());
 
         // Create and show new popup
-        currentPopup = new FirePopupWindow(fire, skin);
+        int availableTrucks = gameWorld.getDispatchManager().getStation().getAvailableTrucks();
+        currentPopup = new FirePopupWindow(fire, skin, availableTrucks);
         currentPopup.setOnPutOut(() -> {
+            int numTrucks = currentPopup.getSelectedTrucks();
+            gameWorld.dispatchToFire(fire, numTrucks);
             gameObjectRenderer.startExtinguishAnimation(fire);
             currentPopup = null;
         });
         currentPopup.show(fireScreenPos.x, fireScreenPos.y, uiStage.getWidth(), uiStage.getHeight());
         uiStage.addActor(currentPopup);
+    }
+
+    private void showStationPopup(FireStation station, float screenX, float screenY) {
+        // Close existing popups
+        if (currentPopup != null) {
+            currentPopup.remove();
+        }
+        if (currentStationPopup != null) {
+            currentStationPopup.remove();
+        }
+
+        // Convert station world position to screen coordinates
+        float[] stationWorld = mapTileRenderer.latLonToWorld(station.lat, station.lon);
+        com.badlogic.gdx.math.Vector3 stationScreenPos = new com.badlogic.gdx.math.Vector3(stationWorld[0], stationWorld[1], 0);
+        camera.project(stationScreenPos, viewport.getScreenX(), viewport.getScreenY(), viewport.getScreenWidth(), viewport.getScreenHeight());
+
+        // Create and show station popup
+        currentStationPopup = new StationPopupWindow(station, skin);
+        currentStationPopup.show(stationScreenPos.x, stationScreenPos.y, uiStage.getWidth(), uiStage.getHeight());
+        uiStage.addActor(currentStationPopup);
     }
 
     @Override

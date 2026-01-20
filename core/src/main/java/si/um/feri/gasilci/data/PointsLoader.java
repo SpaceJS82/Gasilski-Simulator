@@ -41,7 +41,7 @@ public class PointsLoader {
         return result;
     }
 
-    public static Point loadStation(String internalPath) {
+    public static FireStation loadStation(String internalPath) {
         FileHandle file = Gdx.files.internal(internalPath);
         JsonValue root = new JsonReader().parse(file);
         JsonValue st = root.get("station");
@@ -49,7 +49,8 @@ public class PointsLoader {
         String name = st.getString("name", id);
         double lat = st.getDouble("lat");
         double lon = st.getDouble("lon");
-        return new Point(id, name, lat, lon);
+        int totalTrucks = st.getInt("totalTrucks", 5); // Default 5 trucks
+        return new FireStation(id, name, lat, lon, totalTrucks);
     }
 
     // WIP
