@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -53,5 +54,21 @@ public class TileLoaderService {
 
     public void dispose() {
         executor.shutdown();
+        try {
+            // Wait for existing tasks to complete
+            if (!executor.awaitTermination(2, TimeUnit.SECONDS)) {
+                // Force shutdown if tasks don't complete in time
+                executor.shutdownNow();
+                // Wait a bit for tasks to respond to being cancelled
+                if (!executor.awaitTermination(1, TimeUnit.SECONDS)) {
+                    System.err.println("TileLoaderService: Executor did not terminate");
+                }
+            }
+        } catch (InterruptedException e) {
+            // Re-cancel if current thread is interrupted
+            executor.shutdownNow();
+            // Preserve interrupt status
+            Thread.currentThread().interrupt();
+        }
     }
 }

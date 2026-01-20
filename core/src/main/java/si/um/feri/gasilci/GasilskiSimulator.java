@@ -182,6 +182,17 @@ public class GasilskiSimulator extends ApplicationAdapter {
 
     @Override
     public void dispose() {
+        // Close any open popups
+        if (currentPopup != null) {
+            currentPopup.remove();
+            currentPopup = null;
+        }
+        if (currentStationPopup != null) {
+            currentStationPopup.remove();
+            currentStationPopup = null;
+        }
+        
+        // Dispose all resources
         batch.dispose();
         uiStage.dispose();
         skin.dispose();
@@ -189,6 +200,9 @@ public class GasilskiSimulator extends ApplicationAdapter {
         routeRenderer.dispose();
         assets.dispose();
         notificationManager.dispose();
+        
+        // Log for debugging
+        System.out.println("GasilskiSimulator: All resources disposed");
     }
 
 }
