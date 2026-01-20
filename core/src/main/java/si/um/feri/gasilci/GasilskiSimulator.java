@@ -70,8 +70,43 @@ public class GasilskiSimulator extends ApplicationAdapter {
         camera.update();
 
         MapInputProcessor inputProcessor = new MapInputProcessor(camera);
-        inputProcessor.setClickListener((worldX, worldY, screenX, screenY) ->
-            gameWorld.handleMapClick(worldX, worldY, screenX, screenY));
+        inputProcessor.setClickListener((worldX, worldY, screenX, screenY) -> {
+            // Check if click is outside popups, then close them
+            boolean clickedInsidePopup = false;
+            
+            if (currentPopup != null) {
+                float px = currentPopup.getX();
+                float py = currentPopup.getY();
+                float pw = currentPopup.getWidth();
+                float ph = currentPopup.getHeight();
+                if (screenX >= px && screenX <= px + pw && screenY >= py && screenY <= py + ph) {
+                    clickedInsidePopup = true;
+                }
+            }
+            
+            if (currentStationPopup != null && !clickedInsidePopup) {
+                float px = currentStationPopup.getX();
+                float py = currentStationPopup.getY();
+                float pw = currentStationPopup.getWidth();
+                float ph = currentStationPopup.getHeight();
+                if (screenX >= px && screenX <= px + pw && screenY >= py && screenY <= py + ph) {
+                    clickedInsidePopup = true;
+                }
+            }
+            
+            // Close popups only if clicked outside
+            if (!clickedInsidePopup) {
+                if (currentPopup != null) {
+                    currentPopup.remove();
+                    currentPopup = null;
+                }
+                if (currentStationPopup != null) {
+                    currentStationPopup.remove();
+                    currentStationPopup = null;
+                }
+                gameWorld.handleMapClick(worldX, worldY, screenX, screenY);
+            }
+        });
 
         // Setup fire click listener
         gameWorld.setFireClickListener((fire, screenX, screenY) -> showFirePopup(fire, screenX, screenY));
