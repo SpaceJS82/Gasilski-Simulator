@@ -11,9 +11,7 @@ import si.um.feri.gasilci.data.FireStation;
 
 public class DispatchManager {
 
-    public interface ArrivalListener {
-        void onTruckArrived(Truck truck, FirePoint fire, int numTrucks);
-    }
+
 
     public interface ExtinguishCompleteListener {
         void onExtinguishComplete(FirePoint fire);
@@ -53,6 +51,10 @@ public class DispatchManager {
         this.extinguishCompleteListener = listener;
     }
 
+    public interface ArrivalListener {
+        void onTruckArrived(Truck truck, FirePoint fire, int numTrucks);
+    }
+
     public void dispatchTrucks(FirePoint fire, List<float[]> route, int numTrucks) {
         if (!station.canDispatch(numTrucks)) {
             return;
@@ -63,14 +65,18 @@ public class DispatchManager {
 
         List<Truck> trucks = new ArrayList<>();
         for (int i = 0; i < numTrucks; i++) {
-            Truck truck = new Truck(atlas, stationPos[0], stationPos[1]);
+            float offsetX = (i % 2) * 0.15f - 0.075f;
+            float offsetY = (i / 2) * 0.15f;
+            Truck truck = new Truck(atlas, stationPos[0] + offsetX, stationPos[1] + offsetY);
             truck.setRoute(route);
+            truck.setStartDelay(i * 0.5f); // First truck (i=0) has 0 delay
             trucks.add(truck);
         }
-        
+
         TruckMission mission = new TruckMission(trucks, fire);
         activeMissions.add(mission);
     }
+
 
     public void update(float delta) {
         List<TruckMission> completed = new ArrayList<>();
@@ -95,22 +101,29 @@ public class DispatchManager {
             }
 
             // Update extinguishing progress
+            // Update extinguishing progress
             if (mission.arrived) {
                 mission.missionStartTime += delta;
                 boolean extinguished = mission.targetFire.updateExtinguishing(delta);
-                
+
                 if (extinguished) {
                     mission.targetFire.putOut();
                     station.returnTrucks(mission.trucks.size());
-                    station.addResponseTime(mission.missionStartTime / 60f); // Convert to minutes
-                    
+                    station.addResponseTime(mission.missionStartTime / 60f);
+
+                    // Hide all trucks in the mission
+                    for (Truck truck : mission.trucks) {
+                        truck.hide();
+                    }
+
                     if (extinguishCompleteListener != null) {
                         extinguishCompleteListener.onExtinguishComplete(mission.targetFire);
                     }
-                    
+
                     completed.add(mission);
                 }
             }
+
         }
 
         activeMissions.removeAll(completed);
@@ -120,7 +133,9 @@ public class DispatchManager {
         Map<Truck, FirePoint> result = new java.util.HashMap<>();
         for (TruckMission mission : activeMissions) {
             for (Truck truck : mission.trucks) {
-                result.put(truck, mission.targetFire);
+                if (truck.isVisible()) {
+                    result.put(truck, mission.targetFire);
+                }
             }
         }
         return result;

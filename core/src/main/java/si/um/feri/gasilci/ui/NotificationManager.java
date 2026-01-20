@@ -1,5 +1,6 @@
 package si.um.feri.gasilci.ui;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -35,6 +36,23 @@ public class NotificationManager {
 
     public void showFireNotification(String address) {
         showFireNotification(address, false);
+    }
+
+    public void showExtinguishedNotification(String address) {
+        if (popup != null) popup.remove();
+
+        this.persistent = false;
+        popup = new Window("Fire Extinguished!", skin);
+        Label label = new Label("Extinguished: " + address, skin);
+        label.setColor(Color.GREEN);
+        popup.add(label).pad(10);
+        popup.pack();
+        popup.setPosition(
+            (stage.getWidth() - popup.getWidth()) / 2,
+            stage.getHeight() - popup.getHeight() - 20
+        );
+        stage.addActor(popup);
+        displayTime = 4f;
     }
 
     public void update(float delta) {

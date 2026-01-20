@@ -71,25 +71,11 @@ public class MapObjectRenderer {
         activeExtinguishAnimations.add(new FireExtinguishingAnimation(atlas, firePoint, mapTileRenderer, routeRenderer));
     }
 
-    public void renderTrucks(SpriteBatch batch, Map<Truck, FirePoint> trucks) {
-        for (Truck truck : trucks.keySet()) {
-            TextureRegion frame = truck.getCurrentFrame();
-            if (frame == null) continue;
-
-            float width = frame.getRegionWidth() / 400f;  // Scale to world units
-            float height = frame.getRegionHeight() / 400f;
-
-            batch.draw(
-                frame,
-                truck.getX() - width / 2,  // Position at center
-                truck.getY() - height / 2,
-                width / 2,   // Origin X (center)
-                height / 2,  // Origin Y (center)
-                width,
-                height,
-                1f, 1f,      // Scale
-                truck.getRotation()  // Rotation in degrees
-            );
+    public void renderTrucks(SpriteBatch batch, Map<Truck, FirePoint> activeTrucks) {
+        for (Truck truck : activeTrucks.keySet()) {
+            if (truck.hasStarted() && truck.isVisible()) {
+                truck.getSprite().draw(batch);
+            }
         }
     }
 

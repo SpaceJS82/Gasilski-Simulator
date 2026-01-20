@@ -38,19 +38,47 @@ public class GameWorld {
         this.mapTileRenderer = mapTileRenderer;
         this.routeRenderer = routeRenderer;
         this.routingService = new RoutingService();
-        
+
         firePoints = PointsLoader.loadFires("data/fires.json");
         station = PointsLoader.loadStation("data/station.json");
-        
+
         this.dispatchManager = new DispatchManager(atlas, getStationWorldPosition(), station);
         this.dispatchManager.setArrivalListener((truck, fire, numTrucks) -> {
-            // Fire extinguishing starts here when truck arrives
             System.out.println("Trucks arrived at fire: " + fire.name + " (" + numTrucks + " trucks)");
+            if (extinguishAnimationListener != null) {
+                extinguishAnimationListener.onStartExtinguishing(fire);
+            }
         });
         this.dispatchManager.setExtinguishCompleteListener((fire) -> {
             System.out.println("Fire extinguished: " + fire.name);
+            if (extinguishCompleteListener != null) {
+                extinguishCompleteListener.onFireExtinguished(fire);
+            }
         });
     }
+
+    public interface ExtinguishAnimationListener {
+        void onStartExtinguishing(FirePoint fire);
+    }
+
+    private ExtinguishAnimationListener extinguishAnimationListener;
+
+    public void setExtinguishAnimationListener(ExtinguishAnimationListener listener) {
+        this.extinguishAnimationListener = listener;
+    }
+    public interface ExtinguishCompleteListener {
+        void onFireExtinguished(FirePoint fire);
+    }
+
+
+    private ExtinguishCompleteListener extinguishCompleteListener;
+
+    public void setExtinguishCompleteListener(ExtinguishCompleteListener listener) {
+        this.extinguishCompleteListener = listener;
+    }
+
+
+
 
     public float[] getStationWorldPosition() {
         if (station != null) {
@@ -77,14 +105,14 @@ public class GameWorld {
 
     public void handleMapClick(float worldX, float worldY, float screenX, float screenY) {
         float radius = 0.25f;
-        
+
         // Check if station was clicked
         if (station != null) {
             float[] stationWorld = mapTileRenderer.latLonToWorld(station.lat, station.lon);
             float dx = stationWorld[0] - worldX;
             float dy = stationWorld[1] - worldY;
             float d2 = dx*dx + dy*dy;
-            
+
             if (d2 <= radius * radius) {
                 if (stationClickListener != null) {
                     stationClickListener.onStationClicked(station, screenX, screenY);
@@ -92,7 +120,7 @@ public class GameWorld {
                 return;
             }
         }
-        
+
         // Check if fire was clicked
         FirePoint nearest = null;
         float bestDist2 = radius * radius;

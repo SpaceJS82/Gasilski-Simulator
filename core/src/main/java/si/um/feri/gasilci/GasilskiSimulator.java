@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import si.um.feri.gasilci.ui.NotificationManager;
 import si.um.feri.gasilci.assets.Assets;
 import si.um.feri.gasilci.config.GameConfig;
 import si.um.feri.gasilci.data.FirePoint;
@@ -36,6 +37,7 @@ public class GasilskiSimulator extends ApplicationAdapter {
     private Skin skin;
     private FirePopupWindow currentPopup;
     private StationPopupWindow currentStationPopup;
+    private NotificationManager notificationManager;
 
     @Override
     public void create() {
@@ -48,9 +50,15 @@ public class GasilskiSimulator extends ApplicationAdapter {
         gameWorld = new GameWorld(mapTileRenderer, routeRenderer, assets.getAtlas());
         gameObjectRenderer = new MapObjectRenderer(assets.getAtlas(), mapTileRenderer, routeRenderer);
 
+        // Connect extinguish animation listener
+        gameWorld.setExtinguishAnimationListener(fire -> {
+            gameObjectRenderer.startExtinguishAnimation(fire);
+        });
+
         // Setup UI
         skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
         uiStage = new Stage(new ScreenViewport());
+        notificationManager = new NotificationManager(skin);
 
         // Position camera at fire station
         float[] stationPos = gameWorld.getStationWorldPosition();
@@ -67,9 +75,13 @@ public class GasilskiSimulator extends ApplicationAdapter {
 
         // Setup fire click listener
         gameWorld.setFireClickListener((fire, screenX, screenY) -> showFirePopup(fire, screenX, screenY));
-        
+
         // Setup station click listener
         gameWorld.setStationClickListener((station, screenX, screenY) -> showStationPopup(station, screenX, screenY));
+
+        gameWorld.setExtinguishCompleteListener(fire -> {
+            notificationManager.showExtinguishedNotification(fire.name);
+        });
 
         // Use InputMultiplexer to handle both UI and map input
         InputMultiplexer multiplexer = new InputMultiplexer();
@@ -98,7 +110,8 @@ public class GasilskiSimulator extends ApplicationAdapter {
         currentPopup.setOnPutOut(() -> {
             int numTrucks = currentPopup.getSelectedTrucks();
             gameWorld.dispatchToFire(fire, numTrucks);
-            gameObjectRenderer.startExtinguishAnimation(fire);
+            // Remove this line - animation should start when trucks arrive, not on click
+            // gameObjectRenderer.startExtinguishAnimation(fire);
             currentPopup = null;
         });
         currentPopup.show(fireScreenPos.x, fireScreenPos.y, uiStage.getWidth(), uiStage.getHeight());
@@ -134,6 +147,7 @@ public class GasilskiSimulator extends ApplicationAdapter {
         // Update animations
         gameObjectRenderer.update(delta);
         gameWorld.update(delta);
+        notificationManager.update(delta);
 
         // Render game world
         camera.update();
@@ -141,33 +155,30 @@ public class GasilskiSimulator extends ApplicationAdapter {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         mapTileRenderer.render(batch);
-        gameObjectRenderer.renderTrucks(batch, gameWorld.getDispatchManager().getActiveTrucks());
-
-
         gameObjectRenderer.render(batch, camera, gameWorld.getFires(), gameWorld.getStation());
+        gameObjectRenderer.renderTrucks(batch, gameWorld.getDispatchManager().getActiveTrucks());
         batch.end();
-        routeRenderer.render(camera);
 
+        routeRenderer.render(camera);
 
         // Render UI
         uiStage.act(delta);
         uiStage.draw();
+        notificationManager.render();
     }
+
 
     @Override
     public void resize(int width, int height) {
-        // Save current camera position
         float camX = camera.position.x;
-
-        // Update UI stage
-        uiStage.getViewport().update(width, height, true);
         float camY = camera.position.y;
+        uiStage.getViewport().update(width, height, true);
         viewport.update(width, height, false);
-
-        // Restore camera position
+        notificationManager.resize(width, height);
         camera.position.set(camX, camY, 0);
         camera.update();
     }
+
 
     @Override
     public void dispose() {
@@ -177,5 +188,7 @@ public class GasilskiSimulator extends ApplicationAdapter {
         mapTileRenderer.dispose();
         routeRenderer.dispose();
         assets.dispose();
+        notificationManager.dispose();
     }
+
 }

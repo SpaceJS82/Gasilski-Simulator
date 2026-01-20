@@ -1,117 +1,110 @@
 package si.um.feri.gasilci.entities;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.MathUtils;
-
 import java.util.List;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+
 public class Truck {
-    private float x, y;
-    private float rotation = 0; // Angle in degrees
+    private final Sprite sprite;
     private List<float[]> route;
     private int currentWaypoint = 0;
-    private float speed = 2f;
     private boolean arrived = false;
-    private float stateTime = 0;
-
-    private TextureRegion staticTexture;
-    private Animation<TextureRegion> truckAnim;
-    private boolean hasAnimations = false;
+    private static final float SPEED = 1.5f;
+    private float startDelay = 0;
+    private boolean started = false;
+    private boolean visible = true;
 
     public Truck(TextureAtlas atlas, float startX, float startY) {
-        this.x = startX;
-        this.y = startY;
+        this.sprite = atlas.createSprite("images/truck-up-1");
 
-        float frameDuration = 0.1f;
-
-        // Use only the "up" frames and rotate them dynamically
-        TextureRegion[] frames = new TextureRegion[6];
-        boolean allLoaded = true;
-
-        for (int i = 0; i < 6; i++) {
-            frames[i] = atlas.findRegion("images/truck-up-" + (i + 1));
-            if (frames[i] == null) {
-                allLoaded = false;
-                break;
-            }
+        if (this.sprite == null) {
+            throw new RuntimeException("Truck sprite 'images/truck-up-1' not found in atlas");
         }
 
-        if (allLoaded) {
-            truckAnim = new Animation<>(frameDuration, frames);
-            truckAnim.setPlayMode(Animation.PlayMode.LOOP);
-            hasAnimations = true;
-        } else {
-            staticTexture = atlas.findRegion("images/fire-station");
-            hasAnimations = false;
-        }
+        float targetHeight = 0.4f;
+        float aspectRatio = sprite.getRegionWidth() / (float) sprite.getRegionHeight();
+        float targetWidth = targetHeight * aspectRatio;
+
+        sprite.setSize(targetWidth, targetHeight);
+        sprite.setOriginCenter();
+        sprite.setPosition(startX - sprite.getWidth() / 2, startY - sprite.getHeight() / 2);
     }
 
     public void setRoute(List<float[]> route) {
         this.route = route;
         this.currentWaypoint = 0;
         this.arrived = false;
-        if (route != null && !route.isEmpty()) {
-            this.x = route.get(0)[0];
-            this.y = route.get(0)[1];
-        }
+    }
+
+    public void setStartDelay(float delay) {
+        this.startDelay = delay;
+        this.started = (delay <= 0);
     }
 
     public void update(float delta) {
-        if (route == null || arrived || currentWaypoint >= route.size()) {
+        if (arrived || route == null || route.isEmpty()) return;
+
+        if (!started) {
+            startDelay -= delta;
+            if (startDelay <= 0) {
+                started = true;
+            } else {
+                return;
+            }
+        }
+
+        if (currentWaypoint >= route.size()) {
+            arrived = true;
             return;
         }
 
-        stateTime += delta;
-
         float[] target = route.get(currentWaypoint);
-        float dx = target[0] - x;
-        float dy = target[1] - y;
+        float tx = target[0];
+        float ty = target[1];
+        float cx = sprite.getX() + sprite.getWidth() / 2;
+        float cy = sprite.getY() + sprite.getHeight() / 2;
+
+        float dx = tx - cx;
+        float dy = ty - cy;
         float dist = (float) Math.sqrt(dx * dx + dy * dy);
 
-        // Calculate rotation angle (atan2 returns radians, convert to degrees)
-        // atan2 gives 0 = right, 90 = up, so adjust for "up" sprite base
-        float targetRotation = MathUtils.atan2(dy, dx) * MathUtils.radiansToDegrees - 90f;
+        updateSpriteDirection(dx, dy);
 
-        // Smooth rotation interpolation
-        rotation = lerpAngle(rotation, targetRotation, delta * 10f);
-
-        float moveAmount = speed * delta;
-
-        if (dist <= moveAmount) {
-            x = target[0];
-            y = target[1];
+        if (dist < 0.05f) {
             currentWaypoint++;
-
-            if (currentWaypoint >= route.size()) {
-                arrived = true;
-            }
         } else {
-            x += (dx / dist) * moveAmount;
-            y += (dy / dist) * moveAmount;
+            float move = SPEED * delta;
+            if (move > dist) move = dist;
+            float nx = cx + (dx / dist) * move;
+            float ny = cy + (dy / dist) * move;
+            sprite.setPosition(nx - sprite.getWidth() / 2, ny - sprite.getHeight() / 2);
         }
     }
 
-    private float lerpAngle(float from, float to, float t) {
-        float diff = ((to - from + 180) % 360) - 180;
-        if (diff < -180) diff += 360;
-        return from + diff * Math.min(t, 1f);
+    private void updateSpriteDirection(float dx, float dy) {
+        float angle = (float) Math.toDegrees(Math.atan2(dy, dx));
+        if (angle < 0) angle += 360;
+        sprite.setRotation(angle - 90);
     }
 
-    public TextureRegion getCurrentFrame() {
-        if (!hasAnimations) {
-            return staticTexture;
-        }
-        return truckAnim.getKeyFrame(stateTime);
+    public boolean hasArrived() {
+        return arrived;
     }
 
-    public float getRotation() {
-        return rotation;
+    public boolean hasStarted() {
+        return started;
     }
 
-    public float getX() { return x; }
-    public float getY() { return y; }
-    public boolean hasArrived() { return arrived; }
-    public boolean isActive() { return route != null && !arrived; }
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void hide() {
+        this.visible = false;
+    }
+
+    public Sprite getSprite() {
+        return sprite;
+    }
 }
