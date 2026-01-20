@@ -32,9 +32,12 @@ public class FirePopupWindow extends Window {
     }
 
     private void setupUI(Skin skin) {
-        // Set window style
-        setModal(true);
+        // Set window style - NOT modal so map can be moved
+        setModal(false);
         setMovable(false);
+        
+        // Add close button to title bar
+        getTitleTable().add(createCloseButton(skin)).padRight(0);
         
         // Create content table with brown background
         Table contentTable = new Table(skin);
@@ -138,6 +141,17 @@ public class FirePopupWindow extends Window {
         truckSelectionLabel.setText(selectedTrucks + " Truck(s)");
         decreaseButton.setDisabled(selectedTrucks <= 1);
         increaseButton.setDisabled(selectedTrucks >= availableTrucks);
+    }
+
+    private TextButton createCloseButton(Skin skin) {
+        TextButton closeButton = new TextButton("X", skin);
+        closeButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                remove();
+            }
+        });
+        return closeButton;
     }
 
     private Color getSeverityColor(int severity) {

@@ -12,7 +12,6 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import si.um.feri.gasilci.ui.NotificationManager;
 import si.um.feri.gasilci.assets.Assets;
 import si.um.feri.gasilci.config.GameConfig;
 import si.um.feri.gasilci.data.FirePoint;
@@ -22,6 +21,7 @@ import si.um.feri.gasilci.renderers.MapObjectRenderer;
 import si.um.feri.gasilci.renderers.MapTileRenderer;
 import si.um.feri.gasilci.renderers.RouteRenderer;
 import si.um.feri.gasilci.ui.FirePopupWindow;
+import si.um.feri.gasilci.ui.NotificationManager;
 import si.um.feri.gasilci.ui.StationPopupWindow;
 
 public class GasilskiSimulator extends ApplicationAdapter {

@@ -28,9 +28,12 @@ public class StationPopupWindow extends Window {
     }
 
     private void setupUI(Skin skin) {
-        // Set window style
-        setModal(true);
+        // Set window style - NOT modal so map can be moved
+        setModal(false);
         setMovable(false);
+        
+        // Add close button to title bar
+        getTitleTable().add(createCloseButton(skin)).padRight(0);
         
         // Create content table with dark blue/gray background
         Table contentTable = new Table(skin);
@@ -115,5 +118,16 @@ public class StationPopupWindow extends Window {
         y = Math.max(10, y);
         
         setPosition(x, y);
+    }
+
+    private TextButton createCloseButton(Skin skin) {
+        TextButton closeButton = new TextButton("X", skin);
+        closeButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                remove();
+            }
+        });
+        return closeButton;
     }
 }
