@@ -116,6 +116,7 @@ public class GasilskiSimulator extends ApplicationAdapter {
 
         gameWorld.setExtinguishCompleteListener(fire -> {
             notificationManager.showExtinguishedNotification(fire.name);
+            routeRenderer.clearRoute();
         });
 
         // Use InputMultiplexer to handle both UI and map input

@@ -61,7 +61,7 @@ public class DispatchManager {
         }
 
         station.dispatchTrucks(numTrucks);
-        fire.assignTrucks(numTrucks);
+        fire.addAssignedTrucks(numTrucks); // Add to existing assigned trucks
 
         List<Truck> trucks = new ArrayList<>();
         for (int i = 0; i < numTrucks; i++) {
@@ -80,6 +80,7 @@ public class DispatchManager {
 
     public void update(float delta) {
         List<TruckMission> completed = new ArrayList<>();
+        List<FirePoint> justExtinguished = new ArrayList<>();
 
         for (TruckMission mission : activeMissions) {
             // Update all trucks in the mission
@@ -101,29 +102,38 @@ public class DispatchManager {
             }
 
             // Update extinguishing progress
-            // Update extinguishing progress
-            if (mission.arrived) {
+            if (mission.arrived && !justExtinguished.contains(mission.targetFire)) {
                 mission.missionStartTime += delta;
                 boolean extinguished = mission.targetFire.updateExtinguishing(delta);
 
                 if (extinguished) {
                     mission.targetFire.putOut();
-                    station.returnTrucks(mission.trucks.size());
-                    station.addResponseTime(mission.missionStartTime / 60f);
-
-                    // Hide all trucks in the mission
-                    for (Truck truck : mission.trucks) {
-                        truck.hide();
-                    }
-
+                    mission.targetFire.resetAssignedTrucks();
+                    justExtinguished.add(mission.targetFire);
+                    
                     if (extinguishCompleteListener != null) {
                         extinguishCompleteListener.onExtinguishComplete(mission.targetFire);
                     }
+                }
+            }
+        }
 
+        // Remove all missions for extinguished fires
+        for (FirePoint fire : justExtinguished) {
+            for (TruckMission mission : activeMissions) {
+                if (mission.targetFire == fire) {
+                    // Return trucks to station
+                    station.returnTrucks(mission.trucks.size());
+                    station.addResponseTime(mission.missionStartTime / 60f);
+                    
+                    // Hide all trucks
+                    for (Truck truck : mission.trucks) {
+                        truck.hide();
+                    }
+                    
                     completed.add(mission);
                 }
             }
-
         }
 
         activeMissions.removeAll(completed);

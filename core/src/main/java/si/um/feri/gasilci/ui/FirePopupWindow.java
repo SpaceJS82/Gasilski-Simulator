@@ -26,7 +26,9 @@ public class FirePopupWindow extends Window {
         super("Fire Information", skin);
         this.firePoint = firePoint;
         this.availableTrucks = availableTrucks;
-        this.selectedTrucks = Math.min(1, availableTrucks);
+        int remainingNeeded = firePoint.getRemainingTrucksNeeded();
+        int maxCanSend = Math.min(availableTrucks, remainingNeeded);
+        this.selectedTrucks = Math.min(1, maxCanSend);
         
         setupUI(skin);
     }
@@ -64,6 +66,10 @@ public class FirePopupWindow extends Window {
         requiredTrucksLabel.setAlignment(Align.left);
         requiredTrucksLabel.setColor(Color.CYAN);
 
+        Label assignedTrucksLabel = new Label("Already Dispatched: " + firePoint.getAssignedTrucks(), skin);
+        assignedTrucksLabel.setAlignment(Align.left);
+        assignedTrucksLabel.setColor(Color.ORANGE);
+
         Label availableLabel = new Label("Available in Station: " + availableTrucks, skin);
         availableLabel.setAlignment(Align.left);
         availableLabel.setColor(availableTrucks > 0 ? Color.GREEN : Color.RED);
@@ -76,10 +82,14 @@ public class FirePopupWindow extends Window {
         contentTable.add(accessLabel).left().padBottom(10).row();
         contentTable.add(durationLabel).left().padBottom(10).row();
         contentTable.add(requiredTrucksLabel).left().padBottom(10).row();
+        contentTable.add(assignedTrucksLabel).left().padBottom(10).row();
         contentTable.add(availableLabel).left().padBottom(15).row();
 
         // Truck selection section
-        if (availableTrucks > 0) {
+        int remainingNeeded = firePoint.getRemainingTrucksNeeded();
+        int maxCanSend = Math.min(availableTrucks, remainingNeeded);
+        
+        if (availableTrucks > 0 && remainingNeeded > 0) {
             Label selectionTitle = new Label("--- Dispatch Trucks ---", skin);
             selectionTitle.setColor(Color.YELLOW);
             contentTable.add(selectionTitle).center().padBottom(10).row();
@@ -104,7 +114,7 @@ public class FirePopupWindow extends Window {
             increaseButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    if (selectedTrucks < availableTrucks) {
+                    if (selectedTrucks < maxCanSend) {
                         selectedTrucks++;
                         updateTruckSelection();
                     }
@@ -127,6 +137,10 @@ public class FirePopupWindow extends Window {
             });
 
             contentTable.add(putOutButton).width(250).height(50).padTop(10);
+        } else if (remainingNeeded <= 0) {
+            Label maxTrucksLabel = new Label("MAX TRUCKS ALREADY DISPATCHED!", skin);
+            maxTrucksLabel.setColor(Color.ORANGE);
+            contentTable.add(maxTrucksLabel).center().padTop(10);
         } else {
             Label noTrucksLabel = new Label("NO TRUCKS AVAILABLE!", skin);
             noTrucksLabel.setColor(Color.RED);
@@ -139,8 +153,10 @@ public class FirePopupWindow extends Window {
 
     private void updateTruckSelection() {
         truckSelectionLabel.setText(selectedTrucks + " Truck(s)");
+        int remainingNeeded = firePoint.getRemainingTrucksNeeded();
+        int maxCanSend = Math.min(availableTrucks, remainingNeeded);
         decreaseButton.setDisabled(selectedTrucks <= 1);
-        increaseButton.setDisabled(selectedTrucks >= availableTrucks);
+        increaseButton.setDisabled(selectedTrucks >= maxCanSend);
     }
 
     private TextButton createCloseButton(Skin skin) {

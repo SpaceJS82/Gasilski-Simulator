@@ -54,6 +54,21 @@ public class FirePoint extends PointsLoader.Point {
         return assignedTrucks;
     }
 
+    public int getRemainingTrucksNeeded() {
+        return Math.max(0, requiredTrucks - assignedTrucks);
+    }
+
+    public void addAssignedTrucks(int numTrucks) {
+        this.assignedTrucks += numTrucks;
+        // Recalculate extinguish time based on total assigned trucks
+        if (assignedTrucks > 0) {
+            float baseTime = 30f; // seconds
+            float optimalTrucks = (float) requiredTrucks;
+            float truckRatio = Math.max(0.2f, (float) assignedTrucks / optimalTrucks);
+            this.extinguishTime = baseTime / truckRatio;
+        }
+    }
+
     public void assignTrucks(int numTrucks) {
         this.assignedTrucks = numTrucks;
         // Base extinguish time: 30 seconds for full required trucks
@@ -62,6 +77,12 @@ public class FirePoint extends PointsLoader.Point {
         float optimalTrucks = (float) requiredTrucks;
         float truckRatio = Math.max(0.2f, (float) numTrucks / optimalTrucks);
         this.extinguishTime = baseTime / truckRatio;
+        this.elapsedExtinguishTime = 0;
+    }
+
+    public void resetAssignedTrucks() {
+        this.assignedTrucks = 0;
+        this.extinguishTime = 0;
         this.elapsedExtinguishTime = 0;
     }
 
