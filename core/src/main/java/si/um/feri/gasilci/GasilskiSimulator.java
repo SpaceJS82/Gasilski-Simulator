@@ -3,10 +3,16 @@ package si.um.feri.gasilci;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -38,6 +44,9 @@ public class GasilskiSimulator extends ApplicationAdapter {
     private FirePopupWindow currentPopup;
     private StationPopupWindow currentStationPopup;
     private NotificationManager notificationManager;
+    private Label scoreLabel;
+    private TextButton exitButton;
+    private boolean exitRequested = false;
 
     @Override
     public void create() {
@@ -59,6 +68,27 @@ public class GasilskiSimulator extends ApplicationAdapter {
         skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
         uiStage = new Stage(new ScreenViewport());
         notificationManager = new NotificationManager(skin);
+        
+        // Create score display (top left)
+        scoreLabel = new Label("Fires: 0", skin);
+        scoreLabel.setColor(Color.YELLOW);
+        
+        // Create exit button (top right)
+        exitButton = new TextButton("EXIT", skin);
+        exitButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                exitGame();
+            }
+        });
+        
+        // Layout UI elements
+        Table topTable = new Table();
+        topTable.setFillParent(true);
+        topTable.top();
+        topTable.add(scoreLabel).expandX().left().pad(10);
+        topTable.add(exitButton).right().pad(10).width(80).height(40);
+        uiStage.addActor(topTable);
 
         // Position camera at fire station
         float[] stationPos = gameWorld.getStationWorldPosition();
@@ -176,6 +206,11 @@ public class GasilskiSimulator extends ApplicationAdapter {
 
     @Override
     public void render() {
+        if (exitRequested) {
+            Gdx.app.exit();
+            return;
+        }
+
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
 
         float delta = Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f);
@@ -197,6 +232,10 @@ public class GasilskiSimulator extends ApplicationAdapter {
 
         routeRenderer.render(camera);
 
+        // Update score display
+        int score = gameWorld.getStation().getFiresExtinguished();
+        scoreLabel.setText("Fires: " + score);
+
         // Render UI
         uiStage.act(delta);
         uiStage.draw();
@@ -215,6 +254,10 @@ public class GasilskiSimulator extends ApplicationAdapter {
         camera.update();
     }
 
+
+    private void exitGame() {
+        exitRequested = true;
+    }
 
     @Override
     public void dispose() {
