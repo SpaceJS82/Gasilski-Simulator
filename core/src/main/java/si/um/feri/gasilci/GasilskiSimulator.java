@@ -13,6 +13,11 @@ public class GasilskiSimulator extends Game {
 
     @Override
     public void dispose() {
+        // Dispose current screen first
+        if (getScreen() != null) {
+            getScreen().dispose();
+        }
         super.dispose();
+        System.out.println("GasilskiSimulator: Main game disposed");
     }
 }

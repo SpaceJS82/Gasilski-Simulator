@@ -110,11 +110,45 @@ public class PointsLoader {
         return Math.sqrt(dx * dx + dy * dy);
     }
 
+    public static List<FirePoint> filterNearbyFires(List<FirePoint> allFires, double cityLat, double cityLon, double maxDistance) {
+        List<FirePoint> nearby = new ArrayList<>();
+        for (FirePoint fire : allFires) {
+            double dist = distance(fire.lat, fire.lon, cityLat, cityLon);
+            if (dist <= maxDistance) {
+                nearby.add(fire);
+            }
+        }
+        return nearby;
+    }
+
+    public static List<FireStation> filterNearbyStations(List<FireStation> allStations, double cityLat, double cityLon, double maxDistance) {
+        List<FireStation> nearby = new ArrayList<>();
+        for (FireStation station : allStations) {
+            double dist = distance(station.lat, station.lon, cityLat, cityLon);
+            if (dist <= maxDistance) {
+                nearby.add(station);
+            }
+        }
+        return nearby;
+    }
+
     // WIP
     public static List<FirePoint> pickRandom(List<FirePoint> points, int count) {
         if (points.size() <= count) return points;
         List<FirePoint> copy = new ArrayList<>(points);
         Collections.shuffle(copy);
         return new ArrayList<>(copy.subList(0, count));
+    }
+
+    public static FireStation pickRandomStation(List<FireStation> stations) {
+        if (stations.isEmpty()) {
+            throw new RuntimeException("No stations available");
+        }
+        if (stations.size() == 1) {
+            return stations.get(0);
+        }
+        List<FireStation> copy = new ArrayList<>(stations);
+        Collections.shuffle(copy);
+        return copy.get(0);
     }
 }

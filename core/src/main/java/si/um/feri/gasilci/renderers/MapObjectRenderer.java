@@ -62,12 +62,13 @@ public class MapObjectRenderer {
     }
 
     public void startExtinguishAnimation(FirePoint firePoint) {
-        // Check if animation already exists for this fire
+        // Check if animation already exists for THIS specific fire
         for (FireExtinguishingAnimation anim : activeExtinguishAnimations) {
-            if (anim.isComplete() == false) {
-                return; // Don't add duplicate
+            if (anim.getFirePoint() == firePoint && !anim.isComplete()) {
+                return; // Already animating this fire
             }
         }
+        // Add new animation for this fire
         activeExtinguishAnimations.add(new FireExtinguishingAnimation(atlas, firePoint, mapTileRenderer, routeRenderer));
     }
 

@@ -39,9 +39,17 @@ public class GameWorld {
         this.routeRenderer = routeRenderer;
         this.routingService = new RoutingService();
 
-        firePoints = PointsLoader.loadFires("data/fires.json");
+        // Load all fires and filter nearby ones (within 0.05 degrees ~ 5km)
+        List<FirePoint> allFires = PointsLoader.loadFires("data/fires.json");
+        List<FirePoint> nearbyFires = PointsLoader.filterNearbyFires(allFires, cityLat, cityLon, 0.05);
+        // Pick 3 random fires from nearby ones
+        firePoints = PointsLoader.pickRandom(nearbyFires, 3);
+
+        // Load all stations and filter nearby ones
         List<FireStation> allStations = PointsLoader.loadStations("data/station.json");
-        station = PointsLoader.findNearestStation(allStations, cityLat, cityLon);
+        List<FireStation> nearbyStations = PointsLoader.filterNearbyStations(allStations, cityLat, cityLon, 0.05);
+        // Pick 1 random station from nearby ones
+        station = PointsLoader.pickRandomStation(nearbyStations);
 
         this.dispatchManager = new DispatchManager(atlas, getStationWorldPosition(), station);
         this.dispatchManager.setArrivalListener((truck, fire, numTrucks) -> {

@@ -359,6 +359,366 @@
       "lon": 15.0823,
       "severity": 3,
       "accessibility": "poor"
+    },
+    {
+      "id": "fire46",
+      "name": "Poštna ulica Maribor",
+      "lat": 46.5571,
+      "lon": 15.6458,
+      "severity": 2,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire47",
+      "name": "Trg Leona Štuklja",
+      "lat": 46.5532,
+      "lon": 15.6396,
+      "severity": 1,
+      "accessibility": "medium"
+    },
+    {
+      "id": "fire48",
+      "name": "Mariborski grad",
+      "lat": 46.5592,
+      "lon": 15.6479,
+      "severity": 3,
+      "accessibility": "poor"
+    },
+    {
+      "id": "fire49",
+      "name": "Kongresni trg Ljubljana",
+      "lat": 46.0497,
+      "lon": 14.5067,
+      "severity": 2,
+      "accessibility": "medium"
+    },
+    {
+      "id": "fire50",
+      "name": "Šiška Ljubljana",
+      "lat": 46.0703,
+      "lon": 14.4891,
+      "severity": 1,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire51",
+      "name": "Bežigrad Ljubljana",
+      "lat": 46.0762,
+      "lon": 14.5183,
+      "severity": 3,
+      "accessibility": "medium"
+    },
+    {
+      "id": "fire52",
+      "name": "Pecovniška ulica Celje",
+      "lat": 46.2289,
+      "lon": 15.2653,
+      "severity": 2,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire53",
+      "name": "Gubčeva ulica Celje",
+      "lat": 46.2358,
+      "lon": 15.2719,
+      "severity": 1,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire54",
+      "name": "Savinjska nabrežna",
+      "lat": 46.2372,
+      "lon": 15.2598,
+      "severity": 3,
+      "accessibility": "medium"
+    },
+    {
+      "id": "fire55",
+      "name": "Stari most Kranj",
+      "lat": 46.2447,
+      "lon": 14.3562,
+      "severity": 2,
+      "accessibility": "medium"
+    },
+    {
+      "id": "fire56",
+      "name": "Kidričeva ulica Kranj",
+      "lat": 46.2408,
+      "lon": 14.3591,
+      "severity": 1,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire57",
+      "name": "Brdo Kranj",
+      "lat": 46.2329,
+      "lon": 14.3497,
+      "severity": 3,
+      "accessibility": "poor"
+    },
+    {
+      "id": "fire58",
+      "name": "Mestna občina Velenje",
+      "lat": 46.3578,
+      "lon": 15.1093,
+      "severity": 2,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire59",
+      "name": "Šaleška dolina",
+      "lat": 46.3642,
+      "lon": 15.1206,
+      "severity": 1,
+      "accessibility": "medium"
+    },
+    {
+      "id": "fire60",
+      "name": "Škale Velenje",
+      "lat": 46.3519,
+      "lon": 15.1037,
+      "severity": 3,
+      "accessibility": "poor"
+    },
+    {
+      "id": "fire61",
+      "name": "Muzej Koper",
+      "lat": 45.5492,
+      "lon": 13.7289,
+      "severity": 2,
+      "accessibility": "medium"
+    },
+    {
+      "id": "fire62",
+      "name": "Semedelska cesta",
+      "lat": 45.5437,
+      "lon": 13.7368,
+      "severity": 1,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire63",
+      "name": "Muda Koper",
+      "lat": 45.5521,
+      "lon": 13.7256,
+      "severity": 3,
+      "accessibility": "medium"
+    },
+    {
+      "id": "fire64",
+      "name": "Breg Novo Mesto",
+      "lat": 45.8027,
+      "lon": 15.1678,
+      "severity": 2,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire65",
+      "name": "Šmihel Novo Mesto",
+      "lat": 45.8091,
+      "lon": 15.1734,
+      "severity": 1,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire66",
+      "name": "Kristanova ulica",
+      "lat": 45.7987,
+      "lon": 15.1652,
+      "severity": 3,
+      "accessibility": "medium"
+    },
+    {
+      "id": "fire67",
+      "name": "Minoritski samostan Ptuj",
+      "lat": 46.4218,
+      "lon": 15.8703,
+      "severity": 2,
+      "accessibility": "medium"
+    },
+    {
+      "id": "fire68",
+      "name": "Prešernova ulica Ptuj",
+      "lat": 46.4189,
+      "lon": 15.8682,
+      "severity": 1,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire69",
+      "name": "Drava most Ptuj",
+      "lat": 46.4238,
+      "lon": 15.8725,
+      "severity": 3,
+      "accessibility": "medium"
+    },
+    {
+      "id": "fire70",
+      "name": "Šutna Kamnik",
+      "lat": 46.2287,
+      "lon": 14.6135,
+      "severity": 2,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire71",
+      "name": "Cankarjeva cesta Kamnik",
+      "lat": 46.2241,
+      "lon": 14.6091,
+      "severity": 1,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire72",
+      "name": "Motnik Kamnik",
+      "lat": 46.2183,
+      "lon": 14.6152,
+      "severity": 3,
+      "accessibility": "poor"
+    },
+    {
+      "id": "fire73",
+      "name": "Cesta Cirila Tavčarja Jesenice",
+      "lat": 46.4321,
+      "lon": 14.0547,
+      "severity": 2,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire74",
+      "name": "Podmežakla Jesenice",
+      "lat": 46.4273,
+      "lon": 14.0493,
+      "severity": 1,
+      "accessibility": "medium"
+    },
+    {
+      "id": "fire75",
+      "name": "Sava most Jesenice",
+      "lat": 46.4316,
+      "lon": 14.0572,
+      "severity": 3,
+      "accessibility": "medium"
+    },
+    {
+      "id": "fire76",
+      "name": "Ljubljanska cesta Domžale",
+      "lat": 46.1392,
+      "lon": 14.5947,
+      "severity": 2,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire77",
+      "name": "Vir Domžale",
+      "lat": 46.1354,
+      "lon": 14.5982,
+      "severity": 1,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire78",
+      "name": "Rodica Domžale",
+      "lat": 46.1421,
+      "lon": 14.6018,
+      "severity": 3,
+      "accessibility": "medium"
+    },
+    {
+      "id": "fire79",
+      "name": "Kapucinski most Škofja Loka",
+      "lat": 46.1679,
+      "lon": 14.3063,
+      "severity": 2,
+      "accessibility": "medium"
+    },
+    {
+      "id": "fire80",
+      "name": "Poljanska dolina",
+      "lat": 46.1637,
+      "lon": 14.3091,
+      "severity": 1,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire81",
+      "name": "Puštal Škofja Loka",
+      "lat": 46.1701,
+      "lon": 14.3037,
+      "severity": 3,
+      "accessibility": "poor"
+    },
+    {
+      "id": "fire82",
+      "name": "Bevkov trg Nova Gorica",
+      "lat": 45.9581,
+      "lon": 13.6492,
+      "severity": 2,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire83",
+      "name": "Kidričeva ulica Nova Gorica",
+      "lat": 45.9547,
+      "lon": 13.6463,
+      "severity": 1,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire84",
+      "name": "Erjavčeva ulica",
+      "lat": 45.9593,
+      "lon": 13.6508,
+      "severity": 3,
+      "accessibility": "medium"
+    },
+    {
+      "id": "fire85",
+      "name": "Slovenska ulica Murska Sobota",
+      "lat": 46.6637,
+      "lon": 16.1652,
+      "severity": 2,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire86",
+      "name": "Lendavska ulica",
+      "lat": 46.6598,
+      "lon": 16.1683,
+      "severity": 1,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire87",
+      "name": "Rakičan Murska Sobota",
+      "lat": 46.6671,
+      "lon": 16.1712,
+      "severity": 3,
+      "accessibility": "medium"
+    },
+    {
+      "id": "fire88",
+      "name": "Trg svobode Slovenj Gradec",
+      "lat": 46.5118,
+      "lon": 15.0819,
+      "severity": 2,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire89",
+      "name": "Meškova ulica",
+      "lat": 46.5092,
+      "lon": 15.0797,
+      "severity": 1,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire90",
+      "name": "Mislinja Slovenj Gradec",
+      "lat": 46.5137,
+      "lon": 15.0841,
+      "severity": 3,
+      "accessibility": "poor"
     }
   ]
 }

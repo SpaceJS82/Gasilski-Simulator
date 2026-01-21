@@ -18,7 +18,11 @@ public class TileLoaderService {
     private final ConcurrentHashMap<String, Boolean> loading;
 
     public TileLoaderService(Map<String, Texture> tileCache) {
-        this.executor = Executors.newFixedThreadPool(4);
+        this.executor = Executors.newFixedThreadPool(4, runnable -> {
+            Thread thread = new Thread(runnable);
+            thread.setDaemon(true); // Daemon threads won't block JVM shutdown
+            return thread;
+        });
         this.tileCache = tileCache;
         this.loading = new ConcurrentHashMap<>();
     }
@@ -53,22 +57,18 @@ public class TileLoaderService {
     }
 
     public void dispose() {
-        executor.shutdown();
+        System.out.println("TileLoaderService: Starting shutdown...");
+        executor.shutdownNow(); // Immediately cancel all tasks
         try {
-            // Wait for existing tasks to complete
-            if (!executor.awaitTermination(2, TimeUnit.SECONDS)) {
-                // Force shutdown if tasks don't complete in time
-                executor.shutdownNow();
-                // Wait a bit for tasks to respond to being cancelled
-                if (!executor.awaitTermination(1, TimeUnit.SECONDS)) {
-                    System.err.println("TileLoaderService: Executor did not terminate");
-                }
+            if (!executor.awaitTermination(1, TimeUnit.SECONDS)) {
+                System.err.println("TileLoaderService: Executor did not terminate in time");
+            } else {
+                System.out.println("TileLoaderService: Executor terminated successfully");
             }
         } catch (InterruptedException e) {
-            // Re-cancel if current thread is interrupted
             executor.shutdownNow();
-            // Preserve interrupt status
             Thread.currentThread().interrupt();
+            System.err.println("TileLoaderService: Interrupted during shutdown");
         }
     }
 }

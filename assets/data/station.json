@@ -104,6 +104,216 @@
       "lat": 46.5096,
       "lon": 15.0815,
       "totalTrucks": 8
+    },
+    {
+      "id": "station16",
+      "name": "PGD Maribor center",
+      "lat": 46.5589,
+      "lon": 15.6467,
+      "totalTrucks": 6
+    },
+    {
+      "id": "station17",
+      "name": "PGD Tabor Maribor",
+      "lat": 46.5521,
+      "lon": 15.6378,
+      "totalTrucks": 7
+    },
+    {
+      "id": "station18",
+      "name": "GB Ljubljana Vič",
+      "lat": 46.0438,
+      "lon": 14.4913,
+      "totalTrucks": 7
+    },
+    {
+      "id": "station19",
+      "name": "GB Ljubljana Moste",
+      "lat": 46.0782,
+      "lon": 14.5271,
+      "totalTrucks": 6
+    },
+    {
+      "id": "station20",
+      "name": "PGD Celje - Gaberje",
+      "lat": 46.2276,
+      "lon": 15.2582,
+      "totalTrucks": 6
+    },
+    {
+      "id": "station21",
+      "name": "PGD Celje mesto",
+      "lat": 46.2387,
+      "lon": 15.2731,
+      "totalTrucks": 7
+    },
+    {
+      "id": "station22",
+      "name": "PGD Kranj - Stražišče",
+      "lat": 46.2462,
+      "lon": 14.3612,
+      "totalTrucks": 6
+    },
+    {
+      "id": "station23",
+      "name": "PGD Kranj - Primskovo",
+      "lat": 46.2351,
+      "lon": 14.3479,
+      "totalTrucks": 7
+    },
+    {
+      "id": "station24",
+      "name": "PGD Velenje - Šalek",
+      "lat": 46.3543,
+      "lon": 15.0987,
+      "totalTrucks": 6
+    },
+    {
+      "id": "station25",
+      "name": "PGD Velenje - Pesje",
+      "lat": 46.3647,
+      "lon": 15.1218,
+      "totalTrucks": 7
+    },
+    {
+      "id": "station26",
+      "name": "PGD Koper - Semedela",
+      "lat": 45.5423,
+      "lon": 13.7391,
+      "totalTrucks": 6
+    },
+    {
+      "id": "station27",
+      "name": "PGD Koper - Žusterna",
+      "lat": 45.5398,
+      "lon": 13.7512,
+      "totalTrucks": 7
+    },
+    {
+      "id": "station28",
+      "name": "PGD Novo Mesto - Šmihel",
+      "lat": 45.8097,
+      "lon": 15.1749,
+      "totalTrucks": 6
+    },
+    {
+      "id": "station29",
+      "name": "PGD Novo Mesto - Bršljin",
+      "lat": 45.7991,
+      "lon": 15.1638,
+      "totalTrucks": 7
+    },
+    {
+      "id": "station30",
+      "name": "PGD Ptuj - Breg",
+      "lat": 46.4187,
+      "lon": 15.8671,
+      "totalTrucks": 6
+    },
+    {
+      "id": "station31",
+      "name": "PGD Ptuj - Spodnji Breg",
+      "lat": 46.4241,
+      "lon": 15.8729,
+      "totalTrucks": 7
+    },
+    {
+      "id": "station32",
+      "name": "PGD Kamnik - Šutna",
+      "lat": 46.2294,
+      "lon": 14.6142,
+      "totalTrucks": 6
+    },
+    {
+      "id": "station33",
+      "name": "PGD Kamnik - Tunjice",
+      "lat": 46.2231,
+      "lon": 14.6081,
+      "totalTrucks": 7
+    },
+    {
+      "id": "station34",
+      "name": "PGD Jesenice - Sava",
+      "lat": 46.4319,
+      "lon": 14.0578,
+      "totalTrucks": 6
+    },
+    {
+      "id": "station35",
+      "name": "PGD Jesenice - Podmežakla",
+      "lat": 46.4267,
+      "lon": 14.0487,
+      "totalTrucks": 7
+    },
+    {
+      "id": "station36",
+      "name": "PGD Domžale - Vir",
+      "lat": 46.1347,
+      "lon": 14.5991,
+      "totalTrucks": 6
+    },
+    {
+      "id": "station37",
+      "name": "PGD Domžale - Ihan",
+      "lat": 46.1429,
+      "lon": 14.6025,
+      "totalTrucks": 7
+    },
+    {
+      "id": "station38",
+      "name": "PGD Škofja Loka - Puštal",
+      "lat": 46.1708,
+      "lon": 14.3029,
+      "totalTrucks": 6
+    },
+    {
+      "id": "station39",
+      "name": "PGD Škofja Loka - Stara Loka",
+      "lat": 46.1631,
+      "lon": 14.3098,
+      "totalTrucks": 7
+    },
+    {
+      "id": "station40",
+      "name": "PGD Nova Gorica - Solkan",
+      "lat": 45.9667,
+      "lon": 13.6489,
+      "totalTrucks": 6
+    },
+    {
+      "id": "station41",
+      "name": "PGD Nova Gorica - Kromberk",
+      "lat": 45.9541,
+      "lon": 13.6457,
+      "totalTrucks": 7
+    },
+    {
+      "id": "station42",
+      "name": "PGD Murska Sobota - Rakičan",
+      "lat": 46.6677,
+      "lon": 16.1718,
+      "totalTrucks": 6
+    },
+    {
+      "id": "station43",
+      "name": "PGD Murska Sobota - Bakovci",
+      "lat": 46.6591,
+      "lon": 16.1691,
+      "totalTrucks": 7
+    },
+    {
+      "id": "station44",
+      "name": "PGD Slovenj Gradec - Mislinja",
+      "lat": 46.5143,
+      "lon": 15.0847,
+      "totalTrucks": 6
+    },
+    {
+      "id": "station45",
+      "name": "PGD Slovenj Gradec - Pamece",
+      "lat": 46.5087,
+      "lon": 15.0784,
+      "totalTrucks": 7
     }
   ]
 }

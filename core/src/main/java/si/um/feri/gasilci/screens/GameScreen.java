@@ -269,6 +269,8 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
+        System.out.println("GameScreen: Starting dispose...");
+        
         // Close any open popups
         if (currentPopup != null) {
             currentPopup.remove();
@@ -287,5 +289,7 @@ public class GameScreen implements Screen {
         routeRenderer.dispose();
         assets.dispose();
         notificationManager.dispose();
+        
+        System.out.println("GameScreen: All resources disposed");
     }
 }
