@@ -20,12 +20,16 @@ public class MapTileRenderer {
     private Texture placeholderTexture;
     private final int startTileX;
     private final int startTileY;
+    private final double centerLat;
+    private final double centerLon;
 
-    public MapTileRenderer() {
+    public MapTileRenderer(double lat, double lon) {
+        this.centerLat = lat;
+        this.centerLon = lon;
         tileLoaderService = new TileLoaderService(tileCache);
         createPlaceholderTexture();
 
-        int[] centerTile = latLonToTile();
+        int[] centerTile = latLonToTile(lat, lon);
         int centerTileX = centerTile[0];
         int centerTileY = centerTile[1];
 
@@ -73,8 +77,8 @@ public class MapTileRenderer {
         }
     }
 
-    private int[] latLonToTile() {
-        return MapUtil.latLonToTile(GeoapifyConfig.MARIBOR_LAT, GeoapifyConfig.MARIBOR_LON, MAP_ZOOM);
+    private int[] latLonToTile(double lat, double lon) {
+        return MapUtil.latLonToTile(lat, lon, MAP_ZOOM);
     }
 
     public float[] latLonToWorld(double lat, double lon) {
