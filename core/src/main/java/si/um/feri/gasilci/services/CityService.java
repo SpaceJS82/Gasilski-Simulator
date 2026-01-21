@@ -70,7 +70,8 @@ public class CityService {
                                 }
 
                                 if (!exists) {
-                                    cities.add(new CityData(city, lat, lon));
+                                    String normalizedCity = normalizeCityName(city);
+                                    cities.add(new CityData(normalizedCity, lat, lon));
                                 }
                             }
                         }
@@ -101,11 +102,23 @@ public class CityService {
         cities.add(new CityData("Ptuj", 46.4206, 15.8697));
         cities.add(new CityData("Kamnik", 46.2258, 14.6113));
         cities.add(new CityData("Jesenice", 46.4297, 14.0528));
-        cities.add(new CityData("Domžale", 46.1378, 14.5964));
-        cities.add(new CityData("Škofja Loka", 46.1664, 14.3069));
+        cities.add(new CityData("Domzale", 46.1378, 14.5964));
+        cities.add(new CityData("Skofja Loka", 46.1664, 14.3069));
         cities.add(new CityData("Nova Gorica", 45.9564, 13.6478));
         cities.add(new CityData("Murska Sobota", 46.6622, 16.1664));
         cities.add(new CityData("Slovenj Gradec", 46.5103, 15.0808));
         return cities;
+    }
+
+    private String normalizeCityName(String name) {
+        if (name == null) {
+            return null;
+        }
+        return name.replace("č", "c")
+                   .replace("Č", "C")
+                   .replace("š", "s")
+                   .replace("Š", "S")
+                   .replace("ž", "z")
+                   .replace("Ž", "Z");
     }
 }
