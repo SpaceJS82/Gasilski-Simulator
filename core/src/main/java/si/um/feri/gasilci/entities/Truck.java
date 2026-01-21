@@ -2,6 +2,7 @@ package si.um.feri.gasilci.entities;
 
 import java.util.List;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
@@ -14,6 +15,10 @@ public class Truck {
     private float startDelay = 0;
     private boolean started = false;
     private boolean visible = true;
+    private Sound drivingSound;
+    private long drivingSoundId = -1;
+    private Sound sirenSound;
+    private long sirenSoundId = -1;
 
     public Truck(TextureAtlas atlas, float startX, float startY) {
         this.sprite = atlas.createSprite("images/truck-up-1");
@@ -42,6 +47,14 @@ public class Truck {
         this.started = (delay <= 0);
     }
 
+    public void setDrivingSound(Sound sound) {
+        this.drivingSound = sound;
+    }
+
+    public void setSirenSound(Sound sound) {
+        this.sirenSound = sound;
+    }
+
     public void update(float delta) {
         if (arrived || route == null || route.isEmpty()) return;
 
@@ -49,6 +62,13 @@ public class Truck {
             startDelay -= delta;
             if (startDelay <= 0) {
                 started = true;
+                // Start playing driving sound and siren when truck starts moving
+                if (drivingSound != null && drivingSoundId == -1) {
+                    drivingSoundId = drivingSound.loop(0.4f); // 40% volume, looping
+                }
+                if (sirenSound != null && sirenSoundId == -1) {
+                    sirenSoundId = sirenSound.loop(0.35f); // 35% volume, looping
+                }
             } else {
                 return;
             }
@@ -56,6 +76,15 @@ public class Truck {
 
         if (currentWaypoint >= route.size()) {
             arrived = true;
+            // Stop driving sound and siren when truck arrives
+            if (drivingSound != null && drivingSoundId != -1) {
+                drivingSound.stop(drivingSoundId);
+                drivingSoundId = -1;
+            }
+            if (sirenSound != null && sirenSoundId != -1) {
+                sirenSound.stop(sirenSoundId);
+                sirenSoundId = -1;
+            }
             return;
         }
 
@@ -106,5 +135,17 @@ public class Truck {
 
     public Sprite getSprite() {
         return sprite;
+    }
+
+    public void dispose() {
+        // Stop sounds if still playing
+        if (drivingSound != null && drivingSoundId != -1) {
+            drivingSound.stop(drivingSoundId);
+            drivingSoundId = -1;
+        }
+        if (sirenSound != null && sirenSoundId != -1) {
+            sirenSound.stop(sirenSoundId);
+            sirenSoundId = -1;
+        }
     }
 }

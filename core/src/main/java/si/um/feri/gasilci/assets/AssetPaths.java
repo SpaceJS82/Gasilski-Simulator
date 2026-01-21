@@ -8,6 +8,10 @@ public class AssetPaths {
     public static final String MAIN_MENU_MUSIC = "audio/menu_music.mp3";
     public static final String GAMEPLAY_MUSIC = "audio/gameplay_music.mp3";
     public static final String BUTTON_CLICK = "audio/button_click.mp3";
+    public static final String TRUCK_DRIVING = "audio/truck_driving.mp3";
+    public static final String TRUCK_SIREN = "audio/truck_siren.mp3";
+    public static final String WATER_EXTINGUISHING = "audio/water_extinguishing.mp3";
+    public static final String FIRE_AMBIENT = "audio/fire.mp3";
 
     private AssetPaths() {}
 }

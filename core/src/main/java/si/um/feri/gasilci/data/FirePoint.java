@@ -1,5 +1,7 @@
 package si.um.feri.gasilci.data;
 
+import com.badlogic.gdx.audio.Sound;
+
 public class FirePoint extends PointsLoader.Point {
     public final int severity; // 1-3
     public final String accessibility; // "good", "medium", "poor"
@@ -9,6 +11,8 @@ public class FirePoint extends PointsLoader.Point {
     private int assignedTrucks; // Number of trucks currently assigned
     private float extinguishTime; // Time in seconds to extinguish
     private float elapsedExtinguishTime; // Time spent extinguishing
+    private Sound fireAmbientSound;
+    private long fireAmbientSoundId = -1;
 
     public FirePoint(String id, String name, double lat, double lon, int severity, String accessibility) {
         super(id, name, lat, lon);
@@ -38,8 +42,36 @@ public class FirePoint extends PointsLoader.Point {
         return active;
     }
 
+    public void setFireAmbientSound(Sound sound) {
+        this.fireAmbientSound = sound;
+    }
+
+    public void startFireSound() {
+        // Start playing the fire sound during extinguishing
+        if (fireAmbientSound != null && fireAmbientSoundId == -1) {
+            fireAmbientSoundId = fireAmbientSound.loop(0.6f); // 60% volume, looping
+        }
+    }
+
+    public void stopFireSound() {
+        // Stop fire ambient sound
+        if (fireAmbientSound != null && fireAmbientSoundId != -1) {
+            fireAmbientSound.stop(fireAmbientSoundId);
+            fireAmbientSoundId = -1;
+        }
+    }
+
     public void putOut() {
         this.active = false;
+        stopFireSound();
+    }
+
+    public void dispose() {
+        // Stop fire sound if still playing
+        if (fireAmbientSound != null && fireAmbientSoundId != -1) {
+            fireAmbientSound.stop(fireAmbientSoundId);
+            fireAmbientSoundId = -1;
+        }
     }
 
     public String getLocation() {

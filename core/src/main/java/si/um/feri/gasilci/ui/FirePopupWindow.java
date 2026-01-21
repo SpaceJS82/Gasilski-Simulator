@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 
 import si.um.feri.gasilci.data.FirePoint;
+import si.um.feri.gasilci.util.SoundManager;
 
 public class FirePopupWindow extends Window {
     private final FirePoint firePoint;
@@ -104,6 +105,7 @@ public class FirePopupWindow extends Window {
             decreaseButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
+                    SoundManager.playButtonClick();
                     if (selectedTrucks > 1) {
                         selectedTrucks--;
                         updateTruckSelection();
@@ -114,6 +116,7 @@ public class FirePopupWindow extends Window {
             increaseButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
+                    SoundManager.playButtonClick();
                     if (selectedTrucks < maxCanSend) {
                         selectedTrucks++;
                         updateTruckSelection();
@@ -132,6 +135,7 @@ public class FirePopupWindow extends Window {
             putOutButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
+                    SoundManager.playButtonClick();
                     handlePutOut();
                 }
             });
@@ -161,9 +165,12 @@ public class FirePopupWindow extends Window {
 
     private TextButton createCloseButton(Skin skin) {
         TextButton closeButton = new TextButton("X", skin);
+        closeButton.padTop(0).padBottom(0).padLeft(2).padRight(2);
+        closeButton.getLabelCell().pad(0);
         closeButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                SoundManager.playButtonClick();
                 remove();
             }
         });
