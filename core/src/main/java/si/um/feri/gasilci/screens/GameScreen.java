@@ -65,7 +65,7 @@ public class GameScreen implements Screen {
         camera = new OrthographicCamera();
         mapTileRenderer = new MapTileRenderer(selectedCity.lat, selectedCity.lon);
         routeRenderer = new RouteRenderer();
-        gameWorld = new GameWorld(mapTileRenderer, routeRenderer, assets.getAtlas());
+        gameWorld = new GameWorld(mapTileRenderer, routeRenderer, assets.getAtlas(), selectedCity.lat, selectedCity.lon);
         gameObjectRenderer = new MapObjectRenderer(assets.getAtlas(), mapTileRenderer, routeRenderer);
 
         // Connect extinguish animation listener

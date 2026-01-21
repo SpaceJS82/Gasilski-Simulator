@@ -1,9 +1,109 @@
 {
-  "station": {
-    "id": "station1",
-    "name": "Gasilski dom Maribor",
-    "lat": 46.5544,
-    "lon": 15.645,
-    "totalTrucks": 8
-  }
+  "stations": [
+    {
+      "id": "station1",
+      "name": "Gasilski dom Maribor",
+      "lat": 46.5544,
+      "lon": 15.645,
+      "totalTrucks": 8
+    },
+    {
+      "id": "station2",
+      "name": "Gasilska brigada Ljubljana",
+      "lat": 46.0525,
+      "lon": 14.5091,
+      "totalTrucks": 8
+    },
+    {
+      "id": "station3",
+      "name": "Gasilsko društvo Celje",
+      "lat": 46.2348,
+      "lon": 15.2708,
+      "totalTrucks": 8
+    },
+    {
+      "id": "station4",
+      "name": "Gasilska zveza Kranj",
+      "lat": 46.2402,
+      "lon": 14.3543,
+      "totalTrucks": 8
+    },
+    {
+      "id": "station5",
+      "name": "Gasilsko društvo Velenje",
+      "lat": 46.361,
+      "lon": 15.1129,
+      "totalTrucks": 8
+    },
+    {
+      "id": "station6",
+      "name": "Gasilska brigada Koper",
+      "lat": 45.5461,
+      "lon": 13.7315,
+      "totalTrucks": 8
+    },
+    {
+      "id": "station7",
+      "name": "Gasilsko društvo Novo Mesto",
+      "lat": 45.8036,
+      "lon": 15.1702,
+      "totalTrucks": 8
+    },
+    {
+      "id": "station8",
+      "name": "Gasilska zveza Ptuj",
+      "lat": 46.4212,
+      "lon": 15.8688,
+      "totalTrucks": 8
+    },
+    {
+      "id": "station9",
+      "name": "Gasilsko društvo Kamnik",
+      "lat": 46.2265,
+      "lon": 14.6105,
+      "totalTrucks": 8
+    },
+    {
+      "id": "station10",
+      "name": "Gasilska brigada Jesenice",
+      "lat": 46.4305,
+      "lon": 14.0541,
+      "totalTrucks": 8
+    },
+    {
+      "id": "station11",
+      "name": "Gasilsko društvo Domžale",
+      "lat": 46.1392,
+      "lon": 14.5971,
+      "totalTrucks": 8
+    },
+    {
+      "id": "station12",
+      "name": "Gasilska zveza Škofja Loka",
+      "lat": 46.1671,
+      "lon": 14.3081,
+      "totalTrucks": 8
+    },
+    {
+      "id": "station13",
+      "name": "Gasilska brigada Nova Gorica",
+      "lat": 45.9571,
+      "lon": 13.6491,
+      "totalTrucks": 8
+    },
+    {
+      "id": "station14",
+      "name": "Gasilsko društvo Murska Sobota",
+      "lat": 46.6615,
+      "lon": 16.1677,
+      "totalTrucks": 8
+    },
+    {
+      "id": "station15",
+      "name": "Gasilska zveza Slovenj Gradec",
+      "lat": 46.5096,
+      "lon": 15.0815,
+      "totalTrucks": 8
+    }
+  ]
 }

@@ -45,12 +45,69 @@ public class PointsLoader {
         FileHandle file = Gdx.files.internal(internalPath);
         JsonValue root = new JsonReader().parse(file);
         JsonValue st = root.get("station");
-        String id = st.getString("id");
-        String name = st.getString("name", id);
-        double lat = st.getDouble("lat");
-        double lon = st.getDouble("lon");
-        int totalTrucks = st.getInt("totalTrucks", 5); // Default 5 trucks
-        return new FireStation(id, name, lat, lon, totalTrucks);
+        if (st != null) {
+            // Old format - single station
+            String id = st.getString("id");
+            String name = st.getString("name", id);
+            double lat = st.getDouble("lat");
+            double lon = st.getDouble("lon");
+            int totalTrucks = st.getInt("totalTrucks", 5);
+            return new FireStation(id, name, lat, lon, totalTrucks);
+        }
+        // New format - first station from array
+        JsonValue stations = root.get("stations");
+        if (stations != null && stations.size > 0) {
+            JsonValue first = stations.get(0);
+            String id = first.getString("id");
+            String name = first.getString("name", id);
+            double lat = first.getDouble("lat");
+            double lon = first.getDouble("lon");
+            int totalTrucks = first.getInt("totalTrucks", 5);
+            return new FireStation(id, name, lat, lon, totalTrucks);
+        }
+        throw new RuntimeException("No station found in " + internalPath);
+    }
+
+    public static List<FireStation> loadStations(String internalPath) {
+        FileHandle file = Gdx.files.internal(internalPath);
+        JsonValue root = new JsonReader().parse(file);
+        List<FireStation> result = new ArrayList<>();
+        
+        JsonValue stations = root.get("stations");
+        if (stations != null) {
+            for (JsonValue st : stations) {
+                String id = st.getString("id");
+                String name = st.getString("name", id);
+                double lat = st.getDouble("lat");
+                double lon = st.getDouble("lon");
+                int totalTrucks = st.getInt("totalTrucks", 5);
+                result.add(new FireStation(id, name, lat, lon, totalTrucks));
+            }
+        }
+        return result;
+    }
+
+    public static FireStation findNearestStation(List<FireStation> stations, double targetLat, double targetLon) {
+        if (stations.isEmpty()) {
+            throw new RuntimeException("No stations available");
+        }
+        FireStation nearest = stations.get(0);
+        double minDistance = distance(nearest.lat, nearest.lon, targetLat, targetLon);
+        
+        for (FireStation station : stations) {
+            double dist = distance(station.lat, station.lon, targetLat, targetLon);
+            if (dist < minDistance) {
+                minDistance = dist;
+                nearest = station;
+            }
+        }
+        return nearest;
+    }
+
+    private static double distance(double lat1, double lon1, double lat2, double lon2) {
+        double dx = lat2 - lat1;
+        double dy = lon2 - lon1;
+        return Math.sqrt(dx * dx + dy * dy);
     }
 
     // WIP

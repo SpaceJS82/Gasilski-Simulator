@@ -34,13 +34,14 @@ public class GameWorld {
         void onStationClicked(FireStation station, float screenX, float screenY);
     }
 
-    public GameWorld(MapTileRenderer mapTileRenderer, RouteRenderer routeRenderer, TextureAtlas atlas) {
+    public GameWorld(MapTileRenderer mapTileRenderer, RouteRenderer routeRenderer, TextureAtlas atlas, double cityLat, double cityLon) {
         this.mapTileRenderer = mapTileRenderer;
         this.routeRenderer = routeRenderer;
         this.routingService = new RoutingService();
 
         firePoints = PointsLoader.loadFires("data/fires.json");
-        station = PointsLoader.loadStation("data/station.json");
+        List<FireStation> allStations = PointsLoader.loadStations("data/station.json");
+        station = PointsLoader.findNearestStation(allStations, cityLat, cityLon);
 
         this.dispatchManager = new DispatchManager(atlas, getStationWorldPosition(), station);
         this.dispatchManager.setArrivalListener((truck, fire, numTrucks) -> {
