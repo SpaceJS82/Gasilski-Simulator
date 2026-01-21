@@ -35,8 +35,8 @@ public class MapObjectRenderer {
 
         // Load fire animation frames (flame4-1 to flame4-5)
         Array<TextureRegion> fireFrames = new Array<>();
-        for (int i = 1; i <= 5; i++) {
-            TextureRegion region = atlas.findRegion("images/flame4-" + i);
+        for (int i = 1; i <= 6; i++) {
+            TextureRegion region = atlas.findRegion("images/fire-1-" + i);
             if (region != null) {
                 fireFrames.add(region);
             }
@@ -101,7 +101,11 @@ public class MapObjectRenderer {
             for (FirePoint p : fires) {
                 if (p.isActive()) {
                     float[] w = mapTileRenderer.latLonToWorld(p.lat, p.lon);
-                    batch.draw(currentFrame, w[0] - fireSize/2f, w[1] - fireSize/2f, fireSize, fireSize);
+                    // Calculate proper aspect ratio
+                    float aspectRatio = (float) currentFrame.getRegionWidth() / currentFrame.getRegionHeight();
+                    float fireHeight = fireSize;
+                    float fireWidth = fireSize * aspectRatio;
+                    batch.draw(currentFrame, w[0] - fireWidth/2f, w[1] - fireHeight/2f, fireWidth, fireHeight);
                 }
             }
         }

@@ -46,6 +46,48 @@ images/fighter-holding-hydrant-5
   orig: 40, 57
   offset: 0, 0
   index: -1
+images/fire-1-1
+  rotate: false
+  xy: 2, 2
+  size: 29, 50
+  orig: 29, 50
+  offset: 0, 0
+  index: -1
+images/fire-1-2
+  rotate: false
+  xy: 184, 58
+  size: 31, 55
+  orig: 31, 55
+  offset: 0, 0
+  index: -1
+images/fire-1-3
+  rotate: false
+  xy: 150, 58
+  size: 32, 55
+  orig: 32, 55
+  offset: 0, 0
+  index: -1
+images/fire-1-4
+  rotate: false
+  xy: 980, 452
+  size: 34, 58
+  orig: 34, 58
+  offset: 0, 0
+  index: -1
+images/fire-1-5
+  rotate: false
+  xy: 813, 380
+  size: 37, 59
+  orig: 37, 59
+  offset: 0, 0
+  index: -1
+images/fire-1-6
+  rotate: false
+  xy: 217, 62
+  size: 31, 51
+  orig: 31, 51
+  offset: 0, 0
+  index: -1
 images/fire-station
   rotate: false
   xy: 2, 270
@@ -69,14 +111,14 @@ images/flame1-2
   index: -1
 images/flame1-3
   rotate: false
-  xy: 896, 446
+  xy: 250, 108
   size: 8, 5
   orig: 8, 5
   offset: 0, 0
   index: -1
 images/flame1-4
   rotate: false
-  xy: 1007, 505
+  xy: 291, 119
   size: 8, 5
   orig: 8, 5
   offset: 0, 0
@@ -90,35 +132,35 @@ images/flame1-5
   index: -1
 images/flame2-1
   rotate: false
-  xy: 60, 42
+  xy: 120, 42
   size: 22, 10
   orig: 22, 10
   offset: 0, 0
   index: -1
 images/flame2-2
   rotate: false
-  xy: 320, 129
+  xy: 397, 129
   size: 21, 10
   orig: 21, 10
   offset: 0, 0
   index: -1
 images/flame2-3
   rotate: false
-  xy: 2, 2
+  xy: 350, 128
   size: 22, 11
   orig: 22, 11
   offset: 0, 0
   index: -1
 images/flame2-4
   rotate: false
-  xy: 26, 2
+  xy: 374, 128
   size: 21, 11
   orig: 21, 11
   offset: 0, 0
   index: -1
 images/flame2-5
   rotate: false
-  xy: 813, 338
+  xy: 896, 442
   size: 21, 9
   orig: 21, 9
   offset: 0, 0
@@ -132,63 +174,63 @@ images/flame3-1
   index: -1
 images/flame3-2
   rotate: false
-  xy: 30, 40
+  xy: 61, 40
   size: 28, 12
   orig: 28, 12
   offset: 0, 0
   index: -1
 images/flame3-3
   rotate: false
-  xy: 291, 126
+  xy: 321, 126
   size: 27, 13
   orig: 27, 13
   offset: 0, 0
   index: -1
 images/flame3-4
   rotate: false
-  xy: 813, 362
+  xy: 291, 126
   size: 28, 13
   orig: 28, 13
   offset: 0, 0
   index: -1
 images/flame3-5
   rotate: false
-  xy: 813, 349
+  xy: 91, 41
   size: 27, 11
   orig: 27, 11
   offset: 0, 0
   index: -1
 images/flame4-1
   rotate: false
-  xy: 2, 15
+  xy: 33, 18
   size: 24, 14
   orig: 24, 14
   offset: 0, 0
   index: -1
 images/flame4-2
   rotate: false
-  xy: 263, 121
+  xy: 33, 34
   size: 26, 18
   orig: 26, 18
   offset: 0, 0
   index: -1
 images/flame4-3
   rotate: false
-  xy: 980, 492
+  xy: 813, 296
   size: 25, 18
   orig: 25, 18
   offset: 0, 0
   index: -1
 images/flame4-4
   rotate: false
-  xy: 2, 31
+  xy: 263, 118
   size: 26, 21
   orig: 26, 21
   offset: 0, 0
   index: -1
 images/flame4-5
   rotate: false
-  xy: 980, 476
+  xy: 33, 2
   size: 22, 14
   orig: 22, 14
   offset: 0, 0
@@ -209,7 +251,7 @@ images/stream-2
   index: -1
 images/stream-3
   rotate: false
-  xy: 813, 377
+  xy: 813, 316
   size: 31, 62
   orig: 31, 62
   offset: 0, 0
