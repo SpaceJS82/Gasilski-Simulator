@@ -5,6 +5,7 @@ import java.util.List;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+
 import si.um.feri.gasilci.util.SoundManager;
 
 public class Truck {

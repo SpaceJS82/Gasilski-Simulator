@@ -1,6 +1,7 @@
 package si.um.feri.gasilci.data;
 
 import com.badlogic.gdx.audio.Sound;
+
 import si.um.feri.gasilci.util.SoundManager;
 
 public class FirePoint extends PointsLoader.Point {
