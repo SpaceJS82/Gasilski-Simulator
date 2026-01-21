@@ -6,9 +6,11 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+
 import si.um.feri.gasilci.config.GeoapifyConfig;
 import si.um.feri.gasilci.util.HttpUtil;
 
