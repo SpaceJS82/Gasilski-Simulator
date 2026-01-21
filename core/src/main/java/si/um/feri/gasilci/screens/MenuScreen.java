@@ -25,6 +25,7 @@ import si.um.feri.gasilci.GasilskiSimulator;
 import si.um.feri.gasilci.assets.Assets;
 import si.um.feri.gasilci.data.CityData;
 import si.um.feri.gasilci.data.CityManager;
+import si.um.feri.gasilci.ui.SettingsWindow;
 import si.um.feri.gasilci.util.SoundManager;
 
 public class MenuScreen implements Screen {
@@ -37,6 +38,7 @@ public class MenuScreen implements Screen {
     private SpriteBatch batch;
     private Texture menuBackgroundTexture;
     private Assets assets;
+    private SettingsWindow settingsWindow;
 
     public MenuScreen(GasilskiSimulator game) {
         this.game = game;
@@ -53,6 +55,10 @@ public class MenuScreen implements Screen {
         // Load audio assets
         assets = new Assets();
         assets.load();
+        
+        // Load sound settings
+        SettingsWindow.loadSettings();
+        
         SoundManager.setButtonClickSound(assets.getButtonClickSound());
 
         // Create semi-transparent background for menu
@@ -135,6 +141,7 @@ public class MenuScreen implements Screen {
 
         // Create buttons with default style (rounded corners like game EXIT button)
         TextButton playButton = new TextButton("PLAY", skin);
+        TextButton settingsButton = new TextButton("SETTINGS", skin);
         TextButton exitButton = new TextButton("EXIT", skin);
 
         // Add click listeners
@@ -145,6 +152,14 @@ public class MenuScreen implements Screen {
                 CityData selectedCity = citySelectBox.getSelected();
                 cityManager.setSelectedCity(selectedCity.name);
                 game.setScreen(new GameScreen(game, selectedCity));
+            }
+        });
+        
+        settingsButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                SoundManager.playButtonClick();
+                showSettingsWindow();
             }
         });
 
@@ -162,10 +177,20 @@ public class MenuScreen implements Screen {
         table.add(cityLabel).padBottom(10).row();
         table.add(citySelectBox).width(200).height(40).padBottom(30).row();
         table.add(playButton).width(200).height(60).padBottom(20).row();
+        table.add(settingsButton).width(200).height(60).padBottom(20).row();
         table.add(exitButton).width(200).height(60);
 
         stage.addActor(table);
         Gdx.input.setInputProcessor(stage);
+    }
+    
+    private void showSettingsWindow() {
+        if (settingsWindow != null) {
+            settingsWindow.remove();
+        }
+        settingsWindow = new SettingsWindow(skin);
+        settingsWindow.show(stage.getWidth(), stage.getHeight());
+        stage.addActor(settingsWindow);
     }
 
     @Override

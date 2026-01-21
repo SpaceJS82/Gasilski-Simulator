@@ -31,6 +31,7 @@ import si.um.feri.gasilci.renderers.MapTileRenderer;
 import si.um.feri.gasilci.renderers.RouteRenderer;
 import si.um.feri.gasilci.ui.FirePopupWindow;
 import si.um.feri.gasilci.ui.NotificationManager;
+import si.um.feri.gasilci.ui.SettingsWindow;
 import si.um.feri.gasilci.ui.StationPopupWindow;
 import si.um.feri.gasilci.util.SoundManager;
 
@@ -49,9 +50,11 @@ public class GameScreen implements Screen {
     private Skin skin;
     private FirePopupWindow currentPopup;
     private StationPopupWindow currentStationPopup;
+    private SettingsWindow settingsWindow;
     private NotificationManager notificationManager;
     private Label scoreLabel;
     private TextButton exitButton;
+    private TextButton settingsButton;
 
     public GameScreen(GasilskiSimulator game, CityData selectedCity) {
         this.game = game;
@@ -63,6 +66,10 @@ public class GameScreen implements Screen {
         batch = new SpriteBatch();
         assets = new Assets();
         assets.load();
+        
+        // Load sound settings
+        SettingsWindow.loadSettings();
+        
         SoundManager.setButtonClickSound(assets.getButtonClickSound());
         camera = new OrthographicCamera();
         mapTileRenderer = new MapTileRenderer(selectedCity.lat, selectedCity.lon);
@@ -88,6 +95,16 @@ public class GameScreen implements Screen {
         scoreLabel = new Label("Fires: 0", skin);
         scoreLabel.setColor(Color.YELLOW);
 
+        // Create settings button
+        settingsButton = new TextButton("SETTINGS", skin);
+        settingsButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                SoundManager.playButtonClick();
+                showSettingsWindow();
+            }
+        });
+
         // Create exit button (top right)
         exitButton = new TextButton("EXIT", skin);
         exitButton.addListener(new ClickListener() {
@@ -105,6 +122,7 @@ public class GameScreen implements Screen {
         topTable.setFillParent(true);
         topTable.top();
         topTable.add(scoreLabel).expandX().left().pad(10);
+        topTable.add(settingsButton).right().pad(10).width(120).height(40);
         topTable.add(exitButton).right().pad(10).width(80).height(40);
         uiStage.addActor(topTable);
 
@@ -218,6 +236,15 @@ public class GameScreen implements Screen {
         currentStationPopup = new StationPopupWindow(station, skin);
         currentStationPopup.show(stationScreenPos.x, stationScreenPos.y, uiStage.getWidth(), uiStage.getHeight());
         uiStage.addActor(currentStationPopup);
+    }
+    
+    private void showSettingsWindow() {
+        if (settingsWindow != null) {
+            settingsWindow.remove();
+        }
+        settingsWindow = new SettingsWindow(skin);
+        settingsWindow.show(uiStage.getWidth(), uiStage.getHeight());
+        uiStage.addActor(settingsWindow);
     }
 
     @Override

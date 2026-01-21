@@ -1,6 +1,7 @@
 package si.um.feri.gasilci.data;
 
 import com.badlogic.gdx.audio.Sound;
+import si.um.feri.gasilci.util.SoundManager;
 
 public class FirePoint extends PointsLoader.Point {
     public final int severity; // 1-3
@@ -49,7 +50,18 @@ public class FirePoint extends PointsLoader.Point {
     public void startFireSound() {
         // Start playing the fire sound during extinguishing
         if (fireAmbientSound != null && fireAmbientSoundId == -1) {
-            fireAmbientSoundId = fireAmbientSound.loop(0.6f); // 60% volume, looping
+            float fireVolume = SoundManager.calculateFireAmbientVolume();
+            if (fireVolume > 0) {
+                fireAmbientSoundId = fireAmbientSound.loop(fireVolume);
+            }
+        }
+    }
+    
+    public void updateFireSoundVolume() {
+        // Update fire sound volume dynamically
+        if (fireAmbientSound != null && fireAmbientSoundId != -1) {
+            float fireVolume = SoundManager.calculateFireAmbientVolume();
+            fireAmbientSound.setVolume(fireAmbientSoundId, fireVolume);
         }
     }
 

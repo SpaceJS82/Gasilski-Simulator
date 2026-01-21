@@ -5,6 +5,7 @@ import java.util.List;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import si.um.feri.gasilci.util.SoundManager;
 
 public class Truck {
     private final Sprite sprite;
@@ -64,14 +65,30 @@ public class Truck {
                 started = true;
                 // Start playing driving sound and siren when truck starts moving
                 if (drivingSound != null && drivingSoundId == -1) {
-                    drivingSoundId = drivingSound.loop(0.4f); // 40% volume, looping
+                    float drivingVolume = SoundManager.calculateTruckDrivingVolume();
+                    if (drivingVolume > 0) {
+                        drivingSoundId = drivingSound.loop(drivingVolume);
+                    }
                 }
                 if (sirenSound != null && sirenSoundId == -1) {
-                    sirenSoundId = sirenSound.loop(0.35f); // 35% volume, looping
+                    float sirenVolume = SoundManager.calculateTruckSirenVolume();
+                    if (sirenVolume > 0) {
+                        sirenSoundId = sirenSound.loop(sirenVolume);
+                    }
                 }
             } else {
                 return;
             }
+        }
+        
+        // Update sound volumes dynamically
+        if (drivingSoundId != -1 && drivingSound != null) {
+            float drivingVolume = SoundManager.calculateTruckDrivingVolume();
+            drivingSound.setVolume(drivingSoundId, drivingVolume);
+        }
+        if (sirenSoundId != -1 && sirenSound != null) {
+            float sirenVolume = SoundManager.calculateTruckSirenVolume();
+            sirenSound.setVolume(sirenSoundId, sirenVolume);
         }
 
         if (currentWaypoint >= route.size()) {

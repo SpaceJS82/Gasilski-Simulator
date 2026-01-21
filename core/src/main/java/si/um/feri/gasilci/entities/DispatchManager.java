@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 import si.um.feri.gasilci.data.FirePoint;
 import si.um.feri.gasilci.data.FireStation;
+import si.um.feri.gasilci.util.SoundManager;
 
 public class DispatchManager {
 
@@ -117,12 +118,26 @@ public class DispatchManager {
                 mission.missionStartTime = 0;
                 // Start playing water extinguishing sound and fire sound
                 if (waterExtinguishingSound != null && mission.waterSoundId == -1) {
-                    mission.waterSoundId = waterExtinguishingSound.loop(0.3f); // 30% volume, looping
+                    float waterVolume = SoundManager.calculateWaterExtinguishingVolume();
+                    if (waterVolume > 0) {
+                        mission.waterSoundId = waterExtinguishingSound.loop(waterVolume);
+                    }
                 }
                 mission.targetFire.startFireSound();
                 if (arrivalListener != null) {
                     arrivalListener.onTruckArrived(mission.trucks.get(0), mission.targetFire, mission.trucks.size());
                 }
+            }
+            
+            // Update water sound volume dynamically
+            if (mission.waterSoundId != -1 && waterExtinguishingSound != null) {
+                float waterVolume = SoundManager.calculateWaterExtinguishingVolume();
+                waterExtinguishingSound.setVolume(mission.waterSoundId, waterVolume);
+            }
+            
+            // Update fire sound volume dynamically
+            if (mission.arrived) {
+                mission.targetFire.updateFireSoundVolume();
             }
 
             // Update extinguishing progress
