@@ -23,6 +23,18 @@ public class AssetDescriptors {
     public static final AssetDescriptor<Sound> BUTTON_CLICK =
         new AssetDescriptor<>(AssetPaths.BUTTON_CLICK, Sound.class);
 
+    public static final AssetDescriptor<Sound> TRUCK_DRIVING =
+        new AssetDescriptor<>(AssetPaths.TRUCK_DRIVING, Sound.class);
+
+    public static final AssetDescriptor<Sound> TRUCK_SIREN =
+        new AssetDescriptor<>(AssetPaths.TRUCK_SIREN, Sound.class);
+
+    public static final AssetDescriptor<Sound> WATER_EXTINGUISHING =
+        new AssetDescriptor<>(AssetPaths.WATER_EXTINGUISHING, Sound.class);
+
+    public static final AssetDescriptor<Sound> FIRE_AMBIENT =
+        new AssetDescriptor<>(AssetPaths.FIRE_AMBIENT, Sound.class);
+
     public static final AssetDescriptor<Music> MAIN_MENU_MUSIC =
         new AssetDescriptor<>(AssetPaths.MAIN_MENU_MUSIC, Music.class);
 

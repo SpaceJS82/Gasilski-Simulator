@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 import si.um.feri.gasilci.data.FirePoint;
@@ -23,12 +24,16 @@ public class DispatchManager {
     private ArrivalListener arrivalListener;
     private ExtinguishCompleteListener extinguishCompleteListener;
     private final FireStation station;
+    private Sound truckDrivingSound;
+    private Sound truckSirenSound;
+    private Sound waterExtinguishingSound;
 
     private static class TruckMission {
         List<Truck> trucks;
         FirePoint targetFire;
         boolean arrived = false;
         float missionStartTime;
+        long waterSoundId = -1;
 
         TruckMission(List<Truck> trucks, FirePoint fire) {
             this.trucks = trucks;
@@ -51,6 +56,18 @@ public class DispatchManager {
         this.extinguishCompleteListener = listener;
     }
 
+    public void setTruckDrivingSound(Sound sound) {
+        this.truckDrivingSound = sound;
+    }
+
+    public void setTruckSirenSound(Sound sound) {
+        this.truckSirenSound = sound;
+    }
+
+    public void setWaterExtinguishingSound(Sound sound) {
+        this.waterExtinguishingSound = sound;
+    }
+
     public interface ArrivalListener {
         void onTruckArrived(Truck truck, FirePoint fire, int numTrucks);
     }
@@ -70,6 +87,8 @@ public class DispatchManager {
             Truck truck = new Truck(atlas, stationPos[0] + offsetX, stationPos[1] + offsetY);
             truck.setRoute(route);
             truck.setStartDelay(i * 0.5f); // First truck (i=0) has 0 delay
+            truck.setDrivingSound(truckDrivingSound);
+            truck.setSirenSound(truckSirenSound);
             trucks.add(truck);
         }
 
@@ -96,6 +115,11 @@ public class DispatchManager {
             if (allArrived && !mission.arrived) {
                 mission.arrived = true;
                 mission.missionStartTime = 0;
+                // Start playing water extinguishing sound and fire sound
+                if (waterExtinguishingSound != null && mission.waterSoundId == -1) {
+                    mission.waterSoundId = waterExtinguishingSound.loop(0.3f); // 30% volume, looping
+                }
+                mission.targetFire.startFireSound();
                 if (arrivalListener != null) {
                     arrivalListener.onTruckArrived(mission.trucks.get(0), mission.targetFire, mission.trucks.size());
                 }
@@ -107,10 +131,16 @@ public class DispatchManager {
                 boolean extinguished = mission.targetFire.updateExtinguishing(delta);
 
                 if (extinguished) {
-                    mission.targetFire.putOut();
+                    mission.targetFire.putOut(); // This also stops fire sound
                     mission.targetFire.resetAssignedTrucks();
                     justExtinguished.add(mission.targetFire);
-                    
+
+                    // Stop water extinguishing sound
+                    if (waterExtinguishingSound != null && mission.waterSoundId != -1) {
+                        waterExtinguishingSound.stop(mission.waterSoundId);
+                        mission.waterSoundId = -1;
+                    }
+
                     if (extinguishCompleteListener != null) {
                         extinguishCompleteListener.onExtinguishComplete(mission.targetFire);
                     }
@@ -125,12 +155,20 @@ public class DispatchManager {
                     // Return trucks to station
                     station.returnTrucks(mission.trucks.size());
                     station.addResponseTime(mission.missionStartTime / 60f);
-                    
-                    // Hide all trucks
+
+                    // Stop water extinguishing sound and fire sound if still playing
+                    if (waterExtinguishingSound != null && mission.waterSoundId != -1) {
+                        waterExtinguishingSound.stop(mission.waterSoundId);
+                        mission.waterSoundId = -1;
+                    }
+                    mission.targetFire.stopFireSound();
+
+                    // Hide and dispose all trucks
                     for (Truck truck : mission.trucks) {
                         truck.hide();
+                        truck.dispose();
                     }
-                    
+
                     completed.add(mission);
                 }
             }
@@ -153,6 +191,23 @@ public class DispatchManager {
 
     public FireStation getStation() {
         return station;
+    }
+
+    public void stopAllSounds() {
+        // Stop all active mission sounds
+        for (TruckMission mission : activeMissions) {
+            // Stop water extinguishing sound
+            if (waterExtinguishingSound != null && mission.waterSoundId != -1) {
+                waterExtinguishingSound.stop(mission.waterSoundId);
+                mission.waterSoundId = -1;
+            }
+            // Stop fire sound
+            mission.targetFire.stopFireSound();
+            // Dispose all trucks (stops siren sounds)
+            for (Truck truck : mission.trucks) {
+                truck.dispose();
+            }
+        }
     }
 
 }

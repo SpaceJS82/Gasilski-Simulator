@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
@@ -21,8 +22,10 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import si.um.feri.gasilci.GasilskiSimulator;
+import si.um.feri.gasilci.assets.Assets;
 import si.um.feri.gasilci.data.CityData;
 import si.um.feri.gasilci.data.CityManager;
+import si.um.feri.gasilci.util.SoundManager;
 
 public class MenuScreen implements Screen {
     private final GasilskiSimulator game;
@@ -33,6 +36,7 @@ public class MenuScreen implements Screen {
     private Texture backgroundTexture;
     private SpriteBatch batch;
     private Texture menuBackgroundTexture;
+    private Assets assets;
 
     public MenuScreen(GasilskiSimulator game) {
         this.game = game;
@@ -45,6 +49,11 @@ public class MenuScreen implements Screen {
         backgroundTexture = new Texture(Gdx.files.internal("images/background.png"));
         stage = new Stage(new ScreenViewport());
         skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
+
+        // Load audio assets
+        assets = new Assets();
+        assets.load();
+        SoundManager.setButtonClickSound(assets.getButtonClickSound());
 
         // Create semi-transparent background for menu
         Pixmap bgPixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
@@ -99,6 +108,22 @@ public class MenuScreen implements Screen {
         }
         citySelectBox.setItems(citiesArray);
 
+        // Add click listener to dropdown
+        citySelectBox.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                SoundManager.playButtonClick();
+            }
+        });
+
+        // Add change listener for when dropdown items are selected
+        citySelectBox.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, com.badlogic.gdx.scenes.scene2d.Actor actor) {
+                SoundManager.playButtonClick();
+            }
+        });
+
         // Set previously selected city
         String selectedCityName = cityManager.getSelectedCity();
         for (CityData city : citiesArray) {
@@ -116,6 +141,7 @@ public class MenuScreen implements Screen {
         playButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                SoundManager.playButtonClick();
                 CityData selectedCity = citySelectBox.getSelected();
                 cityManager.setSelectedCity(selectedCity.name);
                 game.setScreen(new GameScreen(game, selectedCity));
@@ -125,6 +151,8 @@ public class MenuScreen implements Screen {
         exitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                SoundManager.playButtonClick();
+                SoundManager.stopAllSounds();
                 Gdx.app.exit();
             }
         });
@@ -177,5 +205,8 @@ public class MenuScreen implements Screen {
         backgroundTexture.dispose();
         menuBackgroundTexture.dispose();
         batch.dispose();
+        if (assets != null) {
+            assets.dispose();
+        }
     }
 }

@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 
 import si.um.feri.gasilci.data.FireStation;
+import si.um.feri.gasilci.util.SoundManager;
 
 public class StationPopupWindow extends Window {
     private final FireStation station;
@@ -85,6 +86,7 @@ public class StationPopupWindow extends Window {
         closeButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                SoundManager.playButtonClick();
                 remove();
             }
         });
@@ -122,9 +124,12 @@ public class StationPopupWindow extends Window {
 
     private TextButton createCloseButton(Skin skin) {
         TextButton closeButton = new TextButton("X", skin);
+        closeButton.padTop(0).padBottom(0).padLeft(2).padRight(2);
+        closeButton.getLabelCell().pad(0);
         closeButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                SoundManager.playButtonClick();
                 remove();
             }
         });

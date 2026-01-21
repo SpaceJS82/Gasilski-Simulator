@@ -32,6 +32,7 @@ import si.um.feri.gasilci.renderers.RouteRenderer;
 import si.um.feri.gasilci.ui.FirePopupWindow;
 import si.um.feri.gasilci.ui.NotificationManager;
 import si.um.feri.gasilci.ui.StationPopupWindow;
+import si.um.feri.gasilci.util.SoundManager;
 
 public class GameScreen implements Screen {
     private final GasilskiSimulator game;
@@ -62,10 +63,15 @@ public class GameScreen implements Screen {
         batch = new SpriteBatch();
         assets = new Assets();
         assets.load();
+        SoundManager.setButtonClickSound(assets.getButtonClickSound());
         camera = new OrthographicCamera();
         mapTileRenderer = new MapTileRenderer(selectedCity.lat, selectedCity.lon);
         routeRenderer = new RouteRenderer();
         gameWorld = new GameWorld(mapTileRenderer, routeRenderer, assets.getAtlas(), selectedCity.lat, selectedCity.lon);
+        gameWorld.setTruckDrivingSound(assets.getTruckDrivingSound());
+        gameWorld.setTruckSirenSound(assets.getTruckSirenSound());
+        gameWorld.setWaterExtinguishingSound(assets.getWaterExtinguishingSound());
+        gameWorld.setFireAmbientSound(assets.getFireAmbientSound());
         gameObjectRenderer = new MapObjectRenderer(assets.getAtlas(), mapTileRenderer, routeRenderer);
 
         // Connect extinguish animation listener
@@ -87,6 +93,9 @@ public class GameScreen implements Screen {
         exitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                SoundManager.playButtonClick();
+                // Stop all game sounds before switching screens
+                stopAllGameSounds();
                 game.setScreen(new MenuScreen(game));
             }
         });
@@ -267,10 +276,17 @@ public class GameScreen implements Screen {
     public void hide() {
     }
 
+    private void stopAllGameSounds() {
+        // Stop all game world sounds (trucks, water, fire)
+        gameWorld.stopAllSounds();
+        // Stop button click sounds and music
+        SoundManager.stopAllSounds();
+    }
+
     @Override
     public void dispose() {
-        System.out.println("GameScreen: Starting dispose...");
-        
+        // Stop all sounds when disposing
+        stopAllGameSounds();
         // Close any open popups
         if (currentPopup != null) {
             currentPopup.remove();

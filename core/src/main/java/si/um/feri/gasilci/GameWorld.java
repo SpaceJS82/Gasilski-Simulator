@@ -3,6 +3,7 @@ package si.um.feri.gasilci;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 import si.um.feri.gasilci.config.GameConfig;
@@ -86,6 +87,35 @@ public class GameWorld {
         this.extinguishCompleteListener = listener;
     }
 
+    public void setTruckDrivingSound(Sound sound) {
+        this.dispatchManager.setTruckDrivingSound(sound);
+    }
+
+    public void setTruckSirenSound(Sound sound) {
+        this.dispatchManager.setTruckSirenSound(sound);
+    }
+
+    public void setWaterExtinguishingSound(Sound sound) {
+        this.dispatchManager.setWaterExtinguishingSound(sound);
+    }
+
+    public void setFireAmbientSound(Sound sound) {
+        // Set fire ambient sound on all active fires
+        for (FirePoint fire : firePoints) {
+            if (fire.isActive()) {
+                fire.setFireAmbientSound(sound);
+            }
+        }
+    }
+
+    public void stopAllSounds() {
+        // Stop all dispatch manager sounds (trucks, water, fire)
+        dispatchManager.stopAllSounds();
+        // Stop all fire sounds
+        for (FirePoint fire : firePoints) {
+            fire.stopFireSound();
+        }
+    }
 
 
 
