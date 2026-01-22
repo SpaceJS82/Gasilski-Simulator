@@ -72,6 +72,10 @@ public class MapObjectRenderer {
         activeExtinguishAnimations.add(new FireExtinguishingAnimation(atlas, firePoint, mapTileRenderer, routeRenderer));
     }
 
+    public void clearAllAnimations() {
+        activeExtinguishAnimations.clear();
+    }
+
     public void renderTrucks(SpriteBatch batch, Map<Truck, FirePoint> activeTrucks) {
         for (Truck truck : activeTrucks.keySet()) {
             if (truck.hasStarted() && truck.isVisible()) {

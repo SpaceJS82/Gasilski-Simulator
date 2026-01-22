@@ -44,13 +44,17 @@ public class DispatchManager {
     private static class TruckMission {
         List<Truck> trucks;
         FirePoint targetFire;
+        List<float[]> originalRoute;
         boolean arrived = false;
+        boolean returning = false;
+        boolean returnedToStation = false;
         float missionStartTime;
         long waterSoundId = -1;
 
-        TruckMission(List<Truck> trucks, FirePoint fire) {
+        TruckMission(List<Truck> trucks, FirePoint fire, List<float[]> route) {
             this.trucks = trucks;
             this.targetFire = fire;
+            this.originalRoute = route;
             this.missionStartTime = 0;
         }
     }
@@ -119,7 +123,7 @@ public class DispatchManager {
             trucks.add(truck);
         }
 
-        TruckMission mission = new TruckMission(trucks, fire);
+        TruckMission mission = new TruckMission(trucks, fire, route);
         activeMissions.add(mission);
     }
 
@@ -169,7 +173,7 @@ public class DispatchManager {
             }
 
             // Update extinguishing progress
-            if (mission.arrived && !justExtinguished.contains(mission.targetFire)) {
+            if (mission.arrived && !mission.returning && !justExtinguished.contains(mission.targetFire)) {
                 mission.missionStartTime += delta;
                 boolean extinguished = mission.targetFire.updateExtinguishing(delta);
 
@@ -187,33 +191,52 @@ public class DispatchManager {
                     if (extinguishCompleteListener != null) {
                         extinguishCompleteListener.onExtinguishComplete(mission.targetFire);
                     }
+
+                    // Start return journey to station
+                    mission.returning = true;
+                    // Create reversed route (go backwards along the original path)
+                    List<float[]> returnRoute = new ArrayList<>();
+                    for (int i = mission.originalRoute.size() - 1; i >= 0; i--) {
+                        returnRoute.add(mission.originalRoute.get(i).clone());
+                    }
+
+                    // Set return routes with staggered delays
+                    for (int i = 0; i < mission.trucks.size(); i++) {
+                        Truck truck = mission.trucks.get(i);
+                        truck.setReturnRoute(returnRoute);
+                        truck.setStartDelay(i * 0.5f); // Stagger return by 0.5 seconds each
+                    }
+                }
+            }
+
+            // Check if trucks have returned to station
+            if (mission.returning && !mission.returnedToStation) {
+                boolean allReturned = true;
+                for (Truck truck : mission.trucks) {
+                    if (!truck.hasArrived()) {
+                        allReturned = false;
+                        break;
+                    }
+                }
+
+                if (allReturned) {
+                    mission.returnedToStation = true;
+                    // Return trucks to station availability
+                    station.returnTrucks(mission.trucks.size());
+                    station.addResponseTime(mission.missionStartTime / 60f);
+
+                    // Mark mission for cleanup
+                    completed.add(mission);
                 }
             }
         }
 
-        // Remove all missions for extinguished fires
-        for (FirePoint fire : justExtinguished) {
-            for (TruckMission mission : activeMissions) {
-                if (mission.targetFire == fire) {
-                    // Return trucks to station
-                    station.returnTrucks(mission.trucks.size());
-                    station.addResponseTime(mission.missionStartTime / 60f);
-
-                    // Stop water extinguishing sound and fire sound if still playing
-                    if (waterExtinguishingSound != null && mission.waterSoundId != -1) {
-                        waterExtinguishingSound.stop(mission.waterSoundId);
-                        mission.waterSoundId = -1;
-                    }
-                    mission.targetFire.stopFireSound();
-
-                    // Hide and dispose all trucks
-                    for (Truck truck : mission.trucks) {
-                        truck.hide();
-                        truck.dispose();
-                    }
-
-                    completed.add(mission);
-                }
+        // Clean up completed missions (trucks that have returned to station)
+        for (TruckMission mission : completed) {
+            // Hide and dispose all trucks
+            for (Truck truck : mission.trucks) {
+                truck.hide();
+                truck.dispose();
             }
         }
 

@@ -271,6 +271,7 @@ public class GameScreen implements Screen {
         // Stop all sounds and clear current state
         stopAllGameSounds();
         routeRenderer.clearRoute();
+        gameObjectRenderer.clearAllAnimations();
 
         // Close any open popups
         if (currentPopup != null) {

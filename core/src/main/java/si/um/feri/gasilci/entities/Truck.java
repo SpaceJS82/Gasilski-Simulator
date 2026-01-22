@@ -46,6 +46,13 @@ public class Truck {
         generateFinalOffset();
     }
 
+    public void setReturnRoute(List<float[]> route) {
+        this.route = route;
+        this.currentWaypoint = 0;
+        this.arrived = false;
+        this.finalOffset = null; // No offset when returning to station
+    }
+
     private void generateFinalOffset() {
         // Generate random offset for final position
         // Offset range: 0.3 to 0.6 units away from fire
