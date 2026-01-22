@@ -24,7 +24,9 @@ public class NotificationManager {
 
         this.persistent = persistent;
         popup = new Window("New Fire!", skin);
-        popup.add(new Label("Fire at: " + address, skin)).pad(10);
+        Label label1 = new Label("Fire at: " + address, skin);
+        label1.setColor(Color.RED);
+        popup.add(label1).pad(10);
         popup.pack();
         popup.setPosition(
             (stage.getWidth() - popup.getWidth()) / 2,
