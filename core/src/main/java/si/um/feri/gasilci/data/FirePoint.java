@@ -13,7 +13,7 @@ public class FirePoint extends PointsLoader.Point {
     private int assignedTrucks; // Number of trucks currently assigned
     private float extinguishTime; // Time in seconds to extinguish
     private float elapsedExtinguishTime; // Time spent extinguishing
-    private Sound fireAmbientSound;
+    public Sound fireAmbientSound; // Public for GameWorld access
     private long fireAmbientSoundId = -1;
 
     public FirePoint(String id, String name, double lat, double lon, int severity, String accessibility) {
@@ -107,20 +107,21 @@ public class FirePoint extends PointsLoader.Point {
         this.assignedTrucks += numTrucks;
         // Recalculate extinguish time based on total assigned trucks
         if (assignedTrucks > 0) {
-            float baseTime = 30f; // seconds
+            float baseTime = severity * 5f + (severity - 1) * 5f; // 5s, 10s, 20s for severity 1, 2, 3
             float optimalTrucks = (float) requiredTrucks;
-            float truckRatio = Math.max(0.2f, (float) assignedTrucks / optimalTrucks);
+            float truckRatio = Math.max(0.25f, (float) assignedTrucks / optimalTrucks);
             this.extinguishTime = baseTime / truckRatio;
         }
     }
 
     public void assignTrucks(int numTrucks) {
         this.assignedTrucks = numTrucks;
-        // Base extinguish time: 30 seconds for full required trucks
-        // If we send more or less, adjust accordingly
-        float baseTime = 30f; // seconds
+        // New extinguishing time based on severity:
+        // Severity 1 = 5 seconds, Severity 2 = 10 seconds, Severity 3 = 20 seconds
+        // If we have fewer trucks than required, time increases proportionally
+        float baseTime = severity * 5f + (severity - 1) * 5f; // 5s, 10s, 20s for severity 1, 2, 3
         float optimalTrucks = (float) requiredTrucks;
-        float truckRatio = Math.max(0.2f, (float) numTrucks / optimalTrucks);
+        float truckRatio = Math.max(0.25f, (float) numTrucks / optimalTrucks);
         this.extinguishTime = baseTime / truckRatio;
         this.elapsedExtinguishTime = 0;
     }

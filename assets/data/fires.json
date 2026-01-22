@@ -10,7 +10,7 @@
     },
     {
       "id": "fire2",
-      "name": "Europark Maribor",
+      "name": "Europark",
       "lat": 46.5397,
       "lon": 15.6554,
       "severity": 1,
@@ -26,46 +26,160 @@
     },
     {
       "id": "fire4",
-      "name": "Mestni trg Ljubljana",
-      "lat": 46.0514,
-      "lon": 14.506,
-      "severity": 2,
-      "accessibility": "medium"
-    },
-    {
-      "id": "fire5",
-      "name": "BTC Ljubljana",
-      "lat": 46.0936,
-      "lon": 14.5308,
+      "name": "Stolp Magdalena",
+      "lat": 46.5582,
+      "lon": 15.6308,
       "severity": 1,
       "accessibility": "good"
     },
     {
+      "id": "fire5",
+      "name": "Slomškov trg",
+      "lat": 46.5595,
+      "lon": 15.6455,
+      "severity": 2,
+      "accessibility": "medium"
+    },
+    {
       "id": "fire6",
-      "name": "Tivoli Ljubljana",
-      "lat": 46.0516,
-      "lon": 14.4928,
+      "name": "Tabor Center",
+      "lat": 46.5508,
+      "lon": 15.6412,
       "severity": 3,
-      "accessibility": "poor"
+      "accessibility": "good"
     },
     {
       "id": "fire7",
-      "name": "Stari grad Celje",
-      "lat": 46.2336,
-      "lon": 15.2647,
-      "severity": 3,
-      "accessibility": "poor"
+      "name": "Glavni trg",
+      "lat": 46.5577,
+      "lon": 15.6456,
+      "severity": 2,
+      "accessibility": "medium"
     },
     {
       "id": "fire8",
-      "name": "Mestna hiša Celje",
-      "lat": 46.2307,
-      "lon": 15.2687,
-      "severity": 2,
+      "name": "Studenci",
+      "lat": 46.552,
+      "lon": 15.628,
+      "severity": 1,
       "accessibility": "good"
     },
     {
       "id": "fire9",
+      "name": "Melje Industrijska",
+      "lat": 46.5615,
+      "lon": 15.6625,
+      "severity": 3,
+      "accessibility": "poor"
+    },
+    {
+      "id": "fire10",
+      "name": "Pobrežje",
+      "lat": 46.5485,
+      "lon": 15.6685,
+      "severity": 2,
+      "accessibility": "good"
+    },
+
+    {
+      "id": "fire11",
+      "name": "Mestni trg",
+      "lat": 46.0478,
+      "lon": 14.5068,
+      "severity": 2,
+      "accessibility": "medium"
+    },
+    {
+      "id": "fire12",
+      "name": "BTC City",
+      "lat": 46.068,
+      "lon": 14.542,
+      "severity": 1,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire13",
+      "name": "Tivoli Park",
+      "lat": 46.059,
+      "lon": 14.4965,
+      "severity": 3,
+      "accessibility": "poor"
+    },
+    {
+      "id": "fire14",
+      "name": "NUK Center",
+      "lat": 46.0495,
+      "lon": 14.5065,
+      "severity": 2,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire15",
+      "name": "Šiška Tržnica",
+      "lat": 46.0725,
+      "lon": 14.4895,
+      "severity": 1,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire16",
+      "name": "Vič - Spar",
+      "lat": 46.043,
+      "lon": 14.482,
+      "severity": 3,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire17",
+      "name": "Bežigrad Stadion",
+      "lat": 46.0685,
+      "lon": 14.5125,
+      "severity": 2,
+      "accessibility": "medium"
+    },
+    {
+      "id": "fire18",
+      "name": "Moste Center",
+      "lat": 46.055,
+      "lon": 14.5345,
+      "severity": 3,
+      "accessibility": "poor"
+    },
+    {
+      "id": "fire19",
+      "name": "Kongresni trg",
+      "lat": 46.0505,
+      "lon": 14.5042,
+      "severity": 2,
+      "accessibility": "medium"
+    },
+    {
+      "id": "fire20",
+      "name": "Rudnik Center",
+      "lat": 46.028,
+      "lon": 14.532,
+      "severity": 1,
+      "accessibility": "good"
+    },
+
+    {
+      "id": "fire21",
+      "name": "Stari grad",
+      "lat": 46.2206,
+      "lon": 15.2707,
+      "severity": 3,
+      "accessibility": "poor"
+    },
+    {
+      "id": "fire22",
+      "name": "Mestna hiša",
+      "lat": 46.2307,
+      "lon": 15.2637,
+      "severity": 2,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire23",
       "name": "Celjski sejem",
       "lat": 46.2464,
       "lon": 15.2816,
@@ -73,167 +187,566 @@
       "accessibility": "good"
     },
     {
-      "id": "fire10",
-      "name": "Prešernov trg Kranj",
+      "id": "fire24",
+      "name": "Gaberje",
+      "lat": 46.2389,
+      "lon": 15.2853,
+      "severity": 2,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire25",
+      "name": "Savinjski most",
+      "lat": 46.2312,
+      "lon": 15.2598,
+      "severity": 3,
+      "accessibility": "medium"
+    },
+    {
+      "id": "fire26",
+      "name": "Nova vas",
+      "lat": 46.245,
+      "lon": 15.265,
+      "severity": 1,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire27",
+      "name": "Lava Industrijska",
+      "lat": 46.2415,
+      "lon": 15.252,
+      "severity": 2,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire28",
+      "name": "Gubčeva ulica",
+      "lat": 46.2338,
+      "lon": 15.2759,
+      "severity": 1,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire29",
+      "name": "Glazija",
+      "lat": 46.2365,
+      "lon": 15.2545,
+      "severity": 2,
+      "accessibility": "medium"
+    },
+    {
+      "id": "fire30",
+      "name": "Teharje rob",
+      "lat": 46.228,
+      "lon": 15.295,
+      "severity": 3,
+      "accessibility": "poor"
+    },
+
+    {
+      "id": "fire31",
+      "name": "Prešernov trg",
       "lat": 46.2434,
       "lon": 14.3577,
       "severity": 2,
       "accessibility": "medium"
     },
     {
-      "id": "fire11",
+      "id": "fire32",
       "name": "Gorenjska banka",
       "lat": 46.2371,
-      "lon": 14.3568,
+      "lon": 14.3628,
       "severity": 1,
       "accessibility": "good"
     },
     {
-      "id": "fire12",
-      "name": "Planšarsko jezero",
-      "lat": 46.2283,
-      "lon": 14.3479,
+      "id": "fire33",
+      "name": "Mestna hiša Kranj",
+      "lat": 46.2433,
+      "lon": 14.3508,
       "severity": 3,
       "accessibility": "medium"
     },
     {
-      "id": "fire13",
-      "name": "Vila Bianca Velenje",
-      "lat": 46.3592,
-      "lon": 15.1081,
+      "id": "fire34",
+      "name": "Zlato polje",
+      "lat": 46.2485,
+      "lon": 14.348,
+      "severity": 1,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire35",
+      "name": "Primskovo",
+      "lat": 46.2395,
+      "lon": 14.375,
       "severity": 2,
       "accessibility": "good"
     },
     {
-      "id": "fire14",
-      "name": "Velenjsko jezero",
-      "lat": 46.3697,
-      "lon": 15.1183,
+      "id": "fire36",
+      "name": "Stražišče",
+      "lat": 46.232,
+      "lon": 14.341,
       "severity": 3,
       "accessibility": "poor"
     },
     {
-      "id": "fire15",
-      "name": "Titov trg Velenje",
+      "id": "fire37",
+      "name": "Savski otok",
+      "lat": 46.2398,
+      "lon": 14.3505,
+      "severity": 1,
+      "accessibility": "medium"
+    },
+    {
+      "id": "fire38",
+      "name": "Planina Center",
+      "lat": 46.244,
+      "lon": 14.369,
+      "severity": 2,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire39",
+      "name": "Huje Park",
+      "lat": 46.2405,
+      "lon": 14.3615,
+      "severity": 1,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire40",
+      "name": "Šmarjetna gora",
+      "lat": 46.2455,
+      "lon": 14.325,
+      "severity": 3,
+      "accessibility": "poor"
+    },
+
+    {
+      "id": "fire41",
+      "name": "Titov trg",
       "lat": 46.3585,
       "lon": 15.1145,
       "severity": 1,
       "accessibility": "good"
     },
     {
-      "id": "fire16",
-      "name": "Pristanišče Koper",
-      "lat": 45.5477,
-      "lon": 13.7294,
-      "severity": 3,
-      "accessibility": "medium"
-    },
-    {
-      "id": "fire17",
-      "name": "Carpaccio Koper",
-      "lat": 45.5486,
-      "lon": 13.7305,
+      "id": "fire42",
+      "name": "Vila Bianca",
+      "lat": 46.3592,
+      "lon": 15.1011,
       "severity": 2,
       "accessibility": "good"
     },
     {
-      "id": "fire18",
-      "name": "Plaža Žusterna",
-      "lat": 45.5407,
-      "lon": 13.7492,
+      "id": "fire43",
+      "name": "Velenjski grad",
+      "lat": 46.354,
+      "lon": 15.1098,
+      "severity": 3,
+      "accessibility": "poor"
+    },
+    {
+      "id": "fire44",
+      "name": "Šalek",
+      "lat": 46.3655,
+      "lon": 15.111,
       "severity": 1,
       "accessibility": "good"
     },
     {
-      "id": "fire19",
-      "name": "Glavni trg Novo Mesto",
+      "id": "fire45",
+      "name": "Gorenje Tovarna",
+      "lat": 46.3695,
+      "lon": 15.0945,
+      "severity": 3,
+      "accessibility": "medium"
+    },
+    {
+      "id": "fire46",
+      "name": "Paka most",
+      "lat": 46.3575,
+      "lon": 15.119,
+      "severity": 2,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire47",
+      "name": "Gorica Center",
+      "lat": 46.363,
+      "lon": 15.1265,
+      "severity": 1,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire48",
+      "name": "Škalsko jezero rob",
+      "lat": 46.372,
+      "lon": 15.1055,
+      "severity": 2,
+      "accessibility": "medium"
+    },
+    {
+      "id": "fire49",
+      "name": "Konovo",
+      "lat": 46.3685,
+      "lon": 15.1215,
+      "severity": 3,
+      "accessibility": "poor"
+    },
+    {
+      "id": "fire50",
+      "name": "Mestni stadion",
+      "lat": 46.3535,
+      "lon": 15.1235,
+      "severity": 1,
+      "accessibility": "good"
+    },
+
+    {
+      "id": "fire51",
+      "name": "Titov trg",
+      "lat": 45.5481,
+      "lon": 13.7304,
+      "severity": 3,
+      "accessibility": "medium"
+    },
+    {
+      "id": "fire52",
+      "name": "Muzej Koper",
+      "lat": 45.5492,
+      "lon": 13.7229,
+      "severity": 2,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire53",
+      "name": "Molo",
+      "lat": 45.552,
+      "lon": 13.735,
+      "severity": 1,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire54",
+      "name": "Semedela",
+      "lat": 45.54,
+      "lon": 13.724,
+      "severity": 3,
+      "accessibility": "medium"
+    },
+    {
+      "id": "fire55",
+      "name": "Žusterna",
+      "lat": 45.539,
+      "lon": 13.712,
+      "severity": 2,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire56",
+      "name": "Markovec",
+      "lat": 45.5315,
+      "lon": 13.7155,
+      "severity": 1,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire57",
+      "name": "Bonifika",
+      "lat": 45.5435,
+      "lon": 13.729,
+      "severity": 2,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire58",
+      "name": "Olmo",
+      "lat": 45.5325,
+      "lon": 13.7365,
+      "severity": 3,
+      "accessibility": "medium"
+    },
+    {
+      "id": "fire59",
+      "name": "Luka rob",
+      "lat": 45.556,
+      "lon": 13.741,
+      "severity": 2,
+      "accessibility": "poor"
+    },
+    {
+      "id": "fire60",
+      "name": "Prisoje",
+      "lat": 45.535,
+      "lon": 13.749,
+      "severity": 1,
+      "accessibility": "good"
+    },
+
+    {
+      "id": "fire61",
+      "name": "Glavni trg",
       "lat": 45.8011,
       "lon": 15.1691,
       "severity": 2,
       "accessibility": "medium"
     },
     {
-      "id": "fire20",
+      "id": "fire62",
       "name": "Otočec grad",
       "lat": 45.8332,
-      "lon": 15.1758,
+      "lon": 15.2258,
       "severity": 3,
       "accessibility": "poor"
     },
     {
-      "id": "fire21",
+      "id": "fire63",
       "name": "Kandijski most",
       "lat": 45.8063,
-      "lon": 15.1729,
+      "lon": 15.1789,
       "severity": 1,
       "accessibility": "good"
     },
     {
-      "id": "fire22",
-      "name": "Ptujski grad",
-      "lat": 46.4195,
-      "lon": 15.8709,
-      "severity": 3,
-      "accessibility": "poor"
-    },
-    {
-      "id": "fire23",
-      "name": "Slovenski trg Ptuj",
-      "lat": 46.4206,
-      "lon": 15.8697,
+      "id": "fire64",
+      "name": "Šmihel",
+      "lat": 45.795,
+      "lon": 15.1685,
       "severity": 2,
       "accessibility": "good"
     },
     {
-      "id": "fire24",
-      "name": "Terme Ptuj",
-      "lat": 46.4176,
-      "lon": 15.8806,
+      "id": "fire65",
+      "name": "Bršljin Industrija",
+      "lat": 45.8155,
+      "lon": 15.1555,
+      "severity": 3,
+      "accessibility": "medium"
+    },
+    {
+      "id": "fire66",
+      "name": "Grm grad",
+      "lat": 45.7985,
+      "lon": 15.1745,
       "severity": 1,
       "accessibility": "good"
     },
     {
-      "id": "fire25",
-      "name": "Mali grad Kamnik",
+      "id": "fire67",
+      "name": "Ločna",
+      "lat": 45.812,
+      "lon": 15.179,
+      "severity": 2,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire68",
+      "name": "Drvska ulica",
+      "lat": 45.8055,
+      "lon": 15.1635,
+      "severity": 1,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire69",
+      "name": "Ragov log",
+      "lat": 45.8045,
+      "lon": 15.1825,
+      "severity": 3,
+      "accessibility": "poor"
+    },
+    {
+      "id": "fire70",
+      "name": "Gotna vas",
+      "lat": 45.7895,
+      "lon": 15.1855,
+      "severity": 2,
+      "accessibility": "good"
+    },
+
+    {
+      "id": "fire71",
+      "name": "Ptujski grad",
+      "lat": 46.4215,
+      "lon": 15.8675,
+      "severity": 3,
+      "accessibility": "poor"
+    },
+    {
+      "id": "fire72",
+      "name": "Slovenski trg",
+      "lat": 46.4206,
+      "lon": 15.8757,
+      "severity": 2,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire73",
+      "name": "Terme Ptuj",
+      "lat": 46.4136,
+      "lon": 15.8606,
+      "severity": 1,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire74",
+      "name": "Panorama",
+      "lat": 46.4255,
+      "lon": 15.8645,
+      "severity": 2,
+      "accessibility": "medium"
+    },
+    {
+      "id": "fire75",
+      "name": "Breg Center",
+      "lat": 46.4155,
+      "lon": 15.8755,
+      "severity": 1,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire76",
+      "name": "Minoritski trg",
+      "lat": 46.4185,
+      "lon": 15.8715,
+      "severity": 3,
+      "accessibility": "medium"
+    },
+    {
+      "id": "fire77",
+      "name": "Drava most",
+      "lat": 46.417,
+      "lon": 15.868,
+      "severity": 2,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire78",
+      "name": "Prešernova ulica",
+      "lat": 46.421,
+      "lon": 15.8655,
+      "severity": 1,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire79",
+      "name": "Železniška postaja",
+      "lat": 46.4265,
+      "lon": 15.8775,
+      "severity": 2,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire80",
+      "name": "Turnišče",
+      "lat": 46.4055,
+      "lon": 15.8625,
+      "severity": 3,
+      "accessibility": "poor"
+    },
+
+    {
+      "id": "fire81",
+      "name": "Mali grad",
       "lat": 46.2251,
       "lon": 14.6077,
       "severity": 3,
       "accessibility": "medium"
     },
     {
-      "id": "fire26",
-      "name": "Glavni trg Kamnik",
+      "id": "fire82",
+      "name": "Glavni trg",
       "lat": 46.2258,
-      "lon": 14.6113,
+      "lon": 14.6183,
       "severity": 2,
       "accessibility": "good"
     },
     {
-      "id": "fire27",
-      "name": "Arboretum Volčji Potok",
+      "id": "fire83",
+      "name": "Arboretum",
       "lat": 46.1847,
       "lon": 14.6078,
       "severity": 1,
       "accessibility": "good"
     },
     {
-      "id": "fire28",
-      "name": "Ruard tovarna Jesenice",
+      "id": "fire84",
+      "name": "Šutna",
+      "lat": 46.2225,
+      "lon": 14.6115,
+      "severity": 2,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire85",
+      "name": "Perovo",
+      "lat": 46.2165,
+      "lon": 14.6055,
+      "severity": 1,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire86",
+      "name": "Duplica Center",
+      "lat": 46.2055,
+      "lon": 14.5985,
+      "severity": 3,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire87",
+      "name": "Kamniška Bistrica",
+      "lat": 46.2355,
+      "lon": 14.6155,
+      "severity": 2,
+      "accessibility": "medium"
+    },
+    {
+      "id": "fire88",
+      "name": "Zaprice grad",
+      "lat": 46.2275,
+      "lon": 14.6015,
+      "severity": 1,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire89",
+      "name": "Stari grad Kamnik",
+      "lat": 46.2235,
+      "lon": 14.6245,
+      "severity": 3,
+      "accessibility": "poor"
+    },
+    {
+      "id": "fire90",
+      "name": "Mekinje",
+      "lat": 46.2345,
+      "lon": 14.6045,
+      "severity": 1,
+      "accessibility": "good"
+    },
+
+    {
+      "id": "fire91",
+      "name": "Ruard tovarna",
       "lat": 46.4312,
       "lon": 14.0534,
       "severity": 2,
       "accessibility": "medium"
     },
     {
-      "id": "fire29",
+      "id": "fire92",
       "name": "Triglavska cesta",
       "lat": 46.4297,
-      "lon": 14.0528,
+      "lon": 14.0428,
       "severity": 1,
       "accessibility": "good"
     },
     {
-      "id": "fire30",
+      "id": "fire93",
       "name": "Koroška Bela",
       "lat": 46.4189,
       "lon": 14.0869,
@@ -241,484 +754,465 @@
       "accessibility": "poor"
     },
     {
-      "id": "fire31",
-      "name": "Kamniška cesta Domžale",
+      "id": "fire94",
+      "name": "Sava most",
+      "lat": 46.435,
+      "lon": 14.062,
+      "severity": 2,
+      "accessibility": "medium"
+    },
+    {
+      "id": "fire95",
+      "name": "Podmežakla",
+      "lat": 46.4265,
+      "lon": 14.0505,
+      "severity": 1,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire96",
+      "name": "Cesta železarjev",
+      "lat": 46.4345,
+      "lon": 14.0455,
+      "severity": 3,
+      "accessibility": "medium"
+    },
+    {
+      "id": "fire97",
+      "name": "Stara Sava",
+      "lat": 46.4335,
+      "lon": 14.0585,
+      "severity": 2,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire98",
+      "name": "Hrušica rob",
+      "lat": 46.4425,
+      "lon": 14.0155,
+      "severity": 3,
+      "accessibility": "poor"
+    },
+    {
+      "id": "fire99",
+      "name": "Plavž Center",
+      "lat": 46.4395,
+      "lon": 14.0355,
+      "severity": 1,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire100",
+      "name": "Javornik",
+      "lat": 46.4255,
+      "lon": 14.0755,
+      "severity": 2,
+      "accessibility": "good"
+    },
+
+    {
+      "id": "fire101",
+      "name": "Kamniška cesta",
       "lat": 46.1378,
       "lon": 14.5964,
       "severity": 2,
       "accessibility": "good"
     },
     {
-      "id": "fire32",
-      "name": "Šport park Domžale",
+      "id": "fire102",
+      "name": "Športni park",
       "lat": 46.1416,
-      "lon": 14.5936,
+      "lon": 14.5836,
       "severity": 1,
       "accessibility": "good"
     },
     {
-      "id": "fire33",
+      "id": "fire103",
       "name": "Industrijska cona",
       "lat": 46.1329,
-      "lon": 14.6072,
+      "lon": 14.6172,
       "severity": 3,
       "accessibility": "medium"
     },
     {
-      "id": "fire34",
-      "name": "Mestni trg Škofja Loka",
+      "id": "fire104",
+      "name": "Vir Center",
+      "lat": 46.1354,
+      "lon": 14.6082,
+      "severity": 1,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire105",
+      "name": "Rodica Center",
+      "lat": 46.1475,
+      "lon": 14.6015,
+      "severity": 2,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire106",
+      "name": "Ihan Center",
+      "lat": 46.1255,
+      "lon": 14.6215,
+      "severity": 3,
+      "accessibility": "poor"
+    },
+    {
+      "id": "fire107",
+      "name": "Ljubljanska cesta",
+      "lat": 46.1315,
+      "lon": 14.5945,
+      "severity": 1,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire108",
+      "name": "Bistrica most",
+      "lat": 46.1395,
+      "lon": 14.5915,
+      "severity": 2,
+      "accessibility": "medium"
+    },
+    {
+      "id": "fire109",
+      "name": "Zaboršt",
+      "lat": 46.1265,
+      "lon": 14.6015,
+      "severity": 1,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire110",
+      "name": "Količevo Tovarna",
+      "lat": 46.1485,
+      "lon": 14.6125,
+      "severity": 3,
+      "accessibility": "medium"
+    },
+
+    {
+      "id": "fire111",
+      "name": "Mestni trg",
       "lat": 46.1664,
       "lon": 14.3069,
       "severity": 2,
       "accessibility": "medium"
     },
     {
-      "id": "fire35",
+      "id": "fire112",
       "name": "Loški grad",
       "lat": 46.1673,
-      "lon": 14.3058,
+      "lon": 14.2958,
       "severity": 3,
       "accessibility": "poor"
     },
     {
-      "id": "fire36",
+      "id": "fire113",
       "name": "Sorško polje",
       "lat": 46.1587,
-      "lon": 14.2934,
+      "lon": 14.3134,
       "severity": 1,
       "accessibility": "good"
     },
     {
-      "id": "fire37",
+      "id": "fire114",
+      "name": "Kapucinski most",
+      "lat": 46.1685,
+      "lon": 14.3095,
+      "severity": 2,
+      "accessibility": "medium"
+    },
+    {
+      "id": "fire115",
+      "name": "Puštal",
+      "lat": 46.1645,
+      "lon": 14.3015,
+      "severity": 1,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire116",
+      "name": "Stara Loka",
+      "lat": 46.1725,
+      "lon": 14.3075,
+      "severity": 3,
+      "accessibility": "medium"
+    },
+    {
+      "id": "fire117",
+      "name": "Trata Industrija",
+      "lat": 46.1625,
+      "lon": 14.3315,
+      "severity": 2,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire118",
+      "name": "Podlubnik Center",
+      "lat": 46.1765,
+      "lon": 14.2985,
+      "severity": 1,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire119",
+      "name": "Grenc",
+      "lat": 46.1655,
+      "lon": 14.3215,
+      "severity": 2,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire120",
+      "name": "Vince",
+      "lat": 46.1535,
+      "lon": 14.3055,
+      "severity": 3,
+      "accessibility": "poor"
+    },
+
+    {
+      "id": "fire121",
       "name": "Solkan most",
-      "lat": 45.9658,
+      "lat": 45.9688,
       "lon": 13.6481,
       "severity": 3,
       "accessibility": "medium"
     },
     {
-      "id": "fire38",
-      "name": "Trg Evrope Nova Gorica",
+      "id": "fire122",
+      "name": "Trg Evrope",
       "lat": 45.9564,
-      "lon": 13.6478,
+      "lon": 13.6378,
       "severity": 2,
       "accessibility": "good"
     },
     {
-      "id": "fire39",
-      "name": "Park station",
-      "lat": 45.9538,
-      "lon": 13.6503,
+      "id": "fire123",
+      "name": "Bevkov trg",
+      "lat": 45.9581,
+      "lon": 13.6492,
       "severity": 1,
       "accessibility": "good"
     },
     {
-      "id": "fire40",
-      "name": "Trg zmage Murska Sobota",
+      "id": "fire124",
+      "name": "Kromberk grad",
+      "lat": 45.9535,
+      "lon": 13.6725,
+      "severity": 2,
+      "accessibility": "medium"
+    },
+    {
+      "id": "fire125",
+      "name": "Panovec gozd",
+      "lat": 45.9425,
+      "lon": 13.6555,
+      "severity": 3,
+      "accessibility": "poor"
+    },
+    {
+      "id": "fire126",
+      "name": "Erjavčeva ulica",
+      "lat": 45.9515,
+      "lon": 13.6415,
+      "severity": 1,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire127",
+      "name": "Rožna Dolina",
+      "lat": 45.9395,
+      "lon": 13.6485,
+      "severity": 2,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire128",
+      "name": "Kidričeva ulica",
+      "lat": 45.9585,
+      "lon": 13.6555,
+      "severity": 1,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire129",
+      "name": "Kostanjevica samostan",
+      "lat": 45.9495,
+      "lon": 13.6355,
+      "severity": 3,
+      "accessibility": "poor"
+    },
+    {
+      "id": "fire130",
+      "name": "Rafut park",
+      "lat": 45.9455,
+      "lon": 13.6415,
+      "severity": 2,
+      "accessibility": "medium"
+    },
+
+    {
+      "id": "fire131",
+      "name": "Trg zmage",
       "lat": 46.6622,
       "lon": 16.1664,
       "severity": 2,
       "accessibility": "good"
     },
     {
-      "id": "fire41",
+      "id": "fire132",
       "name": "Fazanerija",
       "lat": 46.6735,
-      "lon": 16.1542,
+      "lon": 16.1442,
       "severity": 1,
       "accessibility": "good"
     },
     {
-      "id": "fire42",
+      "id": "fire133",
       "name": "Soboški park",
       "lat": 46.6584,
-      "lon": 16.1708,
+      "lon": 16.1758,
       "severity": 3,
       "accessibility": "medium"
     },
     {
-      "id": "fire43",
-      "name": "Glavni trg Slovenj Gradec",
+      "id": "fire134",
+      "name": "Lendavska ulica",
+      "lat": 46.6555,
+      "lon": 16.1755,
+      "severity": 1,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire135",
+      "name": "Rakičan grad",
+      "lat": 46.6615,
+      "lon": 16.1955,
+      "severity": 2,
+      "accessibility": "medium"
+    },
+    {
+      "id": "fire136",
+      "name": "Industrijska cona",
+      "lat": 46.6495,
+      "lon": 16.1685,
+      "severity": 3,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire137",
+      "name": "Slovenska ulica",
+      "lat": 46.6645,
+      "lon": 16.1625,
+      "severity": 1,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire138",
+      "name": "Bakovci Center",
+      "lat": 46.6255,
+      "lon": 16.1515,
+      "severity": 2,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire139",
+      "name": "Kopališče",
+      "lat": 46.6685,
+      "lon": 16.1555,
+      "severity": 1,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire140",
+      "name": "BTC Sobota",
+      "lat": 46.6525,
+      "lon": 16.1855,
+      "severity": 2,
+      "accessibility": "good"
+    },
+
+    {
+      "id": "fire141",
+      "name": "Glavni trg",
       "lat": 46.5103,
       "lon": 15.0808,
       "severity": 2,
       "accessibility": "medium"
     },
     {
-      "id": "fire44",
+      "id": "fire142",
       "name": "Mestni park",
-      "lat": 46.5087,
-      "lon": 15.0791,
+      "lat": 46.5027,
+      "lon": 15.0711,
       "severity": 1,
       "accessibility": "good"
     },
     {
-      "id": "fire45",
+      "id": "fire143",
       "name": "Koroški muzej",
       "lat": 46.5116,
-      "lon": 15.0823,
+      "lon": 15.0923,
       "severity": 3,
       "accessibility": "poor"
     },
     {
-      "id": "fire46",
-      "name": "Poštna ulica Maribor",
-      "lat": 46.5571,
-      "lon": 15.6458,
+      "id": "fire144",
+      "name": "Pameče cona",
+      "lat": 46.5285,
+      "lon": 15.1055,
       "severity": 2,
       "accessibility": "good"
     },
     {
-      "id": "fire47",
-      "name": "Trg Leona Štuklja",
-      "lat": 46.5532,
-      "lon": 15.6396,
-      "severity": 1,
-      "accessibility": "medium"
-    },
-    {
-      "id": "fire48",
-      "name": "Mariborski grad",
-      "lat": 46.5592,
-      "lon": 15.6479,
-      "severity": 3,
-      "accessibility": "poor"
-    },
-    {
-      "id": "fire49",
-      "name": "Kongresni trg Ljubljana",
-      "lat": 46.0497,
-      "lon": 14.5067,
-      "severity": 2,
-      "accessibility": "medium"
-    },
-    {
-      "id": "fire50",
-      "name": "Šiška Ljubljana",
-      "lat": 46.0703,
-      "lon": 14.4891,
-      "severity": 1,
-      "accessibility": "good"
-    },
-    {
-      "id": "fire51",
-      "name": "Bežigrad Ljubljana",
-      "lat": 46.0762,
-      "lon": 14.5183,
-      "severity": 3,
-      "accessibility": "medium"
-    },
-    {
-      "id": "fire52",
-      "name": "Pecovniška ulica Celje",
-      "lat": 46.2289,
-      "lon": 15.2653,
-      "severity": 2,
-      "accessibility": "good"
-    },
-    {
-      "id": "fire53",
-      "name": "Gubčeva ulica Celje",
-      "lat": 46.2358,
-      "lon": 15.2719,
-      "severity": 1,
-      "accessibility": "good"
-    },
-    {
-      "id": "fire54",
-      "name": "Savinjska nabrežna",
-      "lat": 46.2372,
-      "lon": 15.2598,
-      "severity": 3,
-      "accessibility": "medium"
-    },
-    {
-      "id": "fire55",
-      "name": "Stari most Kranj",
-      "lat": 46.2447,
-      "lon": 14.3562,
-      "severity": 2,
-      "accessibility": "medium"
-    },
-    {
-      "id": "fire56",
-      "name": "Kidričeva ulica Kranj",
-      "lat": 46.2408,
-      "lon": 14.3591,
-      "severity": 1,
-      "accessibility": "good"
-    },
-    {
-      "id": "fire57",
-      "name": "Brdo Kranj",
-      "lat": 46.2329,
-      "lon": 14.3497,
-      "severity": 3,
-      "accessibility": "poor"
-    },
-    {
-      "id": "fire58",
-      "name": "Mestna občina Velenje",
-      "lat": 46.3578,
-      "lon": 15.1093,
-      "severity": 2,
-      "accessibility": "good"
-    },
-    {
-      "id": "fire59",
-      "name": "Šaleška dolina",
-      "lat": 46.3642,
-      "lon": 15.1206,
-      "severity": 1,
-      "accessibility": "medium"
-    },
-    {
-      "id": "fire60",
-      "name": "Škale Velenje",
-      "lat": 46.3519,
-      "lon": 15.1037,
-      "severity": 3,
-      "accessibility": "poor"
-    },
-    {
-      "id": "fire61",
-      "name": "Muzej Koper",
-      "lat": 45.5492,
-      "lon": 13.7289,
-      "severity": 2,
-      "accessibility": "medium"
-    },
-    {
-      "id": "fire62",
-      "name": "Semedelska cesta",
-      "lat": 45.5437,
-      "lon": 13.7368,
-      "severity": 1,
-      "accessibility": "good"
-    },
-    {
-      "id": "fire63",
-      "name": "Muda Koper",
-      "lat": 45.5521,
-      "lon": 13.7256,
-      "severity": 3,
-      "accessibility": "medium"
-    },
-    {
-      "id": "fire64",
-      "name": "Breg Novo Mesto",
-      "lat": 45.8027,
-      "lon": 15.1678,
-      "severity": 2,
-      "accessibility": "good"
-    },
-    {
-      "id": "fire65",
-      "name": "Šmihel Novo Mesto",
-      "lat": 45.8091,
-      "lon": 15.1734,
-      "severity": 1,
-      "accessibility": "good"
-    },
-    {
-      "id": "fire66",
-      "name": "Kristanova ulica",
-      "lat": 45.7987,
-      "lon": 15.1652,
-      "severity": 3,
-      "accessibility": "medium"
-    },
-    {
-      "id": "fire67",
-      "name": "Minoritski samostan Ptuj",
-      "lat": 46.4218,
-      "lon": 15.8703,
-      "severity": 2,
-      "accessibility": "medium"
-    },
-    {
-      "id": "fire68",
-      "name": "Prešernova ulica Ptuj",
-      "lat": 46.4189,
-      "lon": 15.8682,
-      "severity": 1,
-      "accessibility": "good"
-    },
-    {
-      "id": "fire69",
-      "name": "Drava most Ptuj",
-      "lat": 46.4238,
-      "lon": 15.8725,
-      "severity": 3,
-      "accessibility": "medium"
-    },
-    {
-      "id": "fire70",
-      "name": "Šutna Kamnik",
-      "lat": 46.2287,
-      "lon": 14.6135,
-      "severity": 2,
-      "accessibility": "good"
-    },
-    {
-      "id": "fire71",
-      "name": "Cankarjeva cesta Kamnik",
-      "lat": 46.2241,
-      "lon": 14.6091,
-      "severity": 1,
-      "accessibility": "good"
-    },
-    {
-      "id": "fire72",
-      "name": "Motnik Kamnik",
-      "lat": 46.2183,
-      "lon": 14.6152,
-      "severity": 3,
-      "accessibility": "poor"
-    },
-    {
-      "id": "fire73",
-      "name": "Cesta Cirila Tavčarja Jesenice",
-      "lat": 46.4321,
-      "lon": 14.0547,
-      "severity": 2,
-      "accessibility": "good"
-    },
-    {
-      "id": "fire74",
-      "name": "Podmežakla Jesenice",
-      "lat": 46.4273,
-      "lon": 14.0493,
-      "severity": 1,
-      "accessibility": "medium"
-    },
-    {
-      "id": "fire75",
-      "name": "Sava most Jesenice",
-      "lat": 46.4316,
-      "lon": 14.0572,
-      "severity": 3,
-      "accessibility": "medium"
-    },
-    {
-      "id": "fire76",
-      "name": "Ljubljanska cesta Domžale",
-      "lat": 46.1392,
-      "lon": 14.5947,
-      "severity": 2,
-      "accessibility": "good"
-    },
-    {
-      "id": "fire77",
-      "name": "Vir Domžale",
-      "lat": 46.1354,
-      "lon": 14.5982,
-      "severity": 1,
-      "accessibility": "good"
-    },
-    {
-      "id": "fire78",
-      "name": "Rodica Domžale",
-      "lat": 46.1421,
-      "lon": 14.6018,
-      "severity": 3,
-      "accessibility": "medium"
-    },
-    {
-      "id": "fire79",
-      "name": "Kapucinski most Škofja Loka",
-      "lat": 46.1679,
-      "lon": 14.3063,
-      "severity": 2,
-      "accessibility": "medium"
-    },
-    {
-      "id": "fire80",
-      "name": "Poljanska dolina",
-      "lat": 46.1637,
-      "lon": 14.3091,
-      "severity": 1,
-      "accessibility": "good"
-    },
-    {
-      "id": "fire81",
-      "name": "Puštal Škofja Loka",
-      "lat": 46.1701,
-      "lon": 14.3037,
-      "severity": 3,
-      "accessibility": "poor"
-    },
-    {
-      "id": "fire82",
-      "name": "Bevkov trg Nova Gorica",
-      "lat": 45.9581,
-      "lon": 13.6492,
-      "severity": 2,
-      "accessibility": "good"
-    },
-    {
-      "id": "fire83",
-      "name": "Kidričeva ulica Nova Gorica",
-      "lat": 45.9547,
-      "lon": 13.6463,
-      "severity": 1,
-      "accessibility": "good"
-    },
-    {
-      "id": "fire84",
-      "name": "Erjavčeva ulica",
-      "lat": 45.9593,
-      "lon": 13.6508,
-      "severity": 3,
-      "accessibility": "medium"
-    },
-    {
-      "id": "fire85",
-      "name": "Slovenska ulica Murska Sobota",
-      "lat": 46.6637,
-      "lon": 16.1652,
-      "severity": 2,
-      "accessibility": "good"
-    },
-    {
-      "id": "fire86",
-      "name": "Lendavska ulica",
-      "lat": 46.6598,
-      "lon": 16.1683,
-      "severity": 1,
-      "accessibility": "good"
-    },
-    {
-      "id": "fire87",
-      "name": "Rakičan Murska Sobota",
-      "lat": 46.6671,
-      "lon": 16.1712,
-      "severity": 3,
-      "accessibility": "medium"
-    },
-    {
-      "id": "fire88",
-      "name": "Trg svobode Slovenj Gradec",
-      "lat": 46.5118,
-      "lon": 15.0819,
-      "severity": 2,
-      "accessibility": "good"
-    },
-    {
-      "id": "fire89",
+      "id": "fire145",
       "name": "Meškova ulica",
-      "lat": 46.5092,
-      "lon": 15.0797,
+      "lat": 46.5075,
+      "lon": 15.0795,
       "severity": 1,
       "accessibility": "good"
     },
     {
-      "id": "fire90",
-      "name": "Mislinja Slovenj Gradec",
-      "lat": 46.5137,
-      "lon": 15.0841,
+      "id": "fire146",
+      "name": "Mislinja most",
+      "lat": 46.5155,
+      "lon": 15.0885,
       "severity": 3,
+      "accessibility": "medium"
+    },
+    {
+      "id": "fire147",
+      "name": "Podgorje",
+      "lat": 46.4895,
+      "lon": 15.0755,
+      "severity": 2,
       "accessibility": "poor"
+    },
+    {
+      "id": "fire148",
+      "name": "Bolnišnica rob",
+      "lat": 46.5055,
+      "lon": 15.0855,
+      "severity": 1,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire149",
+      "name": "Trg svobode",
+      "lat": 46.5118,
+      "lon": 15.0755,
+      "severity": 2,
+      "accessibility": "good"
+    },
+    {
+      "id": "fire150",
+      "name": "Šmartno center",
+      "lat": 46.4955,
+      "lon": 15.1055,
+      "severity": 3,
+      "accessibility": "medium"
     }
   ]
 }

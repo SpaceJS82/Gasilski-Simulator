@@ -36,6 +36,13 @@ import si.um.feri.gasilci.ui.StationPopupWindow;
 import si.um.feri.gasilci.util.SoundManager;
 
 public class GameScreen implements Screen {
+    private enum GameState {
+        PLAYING,
+        GAME_OVER,
+        GAME_COMPLETED
+    }
+    
+    private GameState gameState = GameState.PLAYING;
     private final GasilskiSimulator game;
     private final CityData selectedCity;
     private SpriteBatch batch;
@@ -55,6 +62,9 @@ public class GameScreen implements Screen {
     private Label scoreLabel;
     private TextButton exitButton;
     private TextButton settingsButton;
+    private Label gameOverLabel;
+    private TextButton retryButton;
+    private Table gameOverTable;
 
     public GameScreen(GasilskiSimulator game, CityData selectedCity) {
         this.game = game;
@@ -182,7 +192,7 @@ public class GameScreen implements Screen {
 
         gameWorld.setExtinguishCompleteListener(fire -> {
             notificationManager.showExtinguishedNotification(fire.name);
-            routeRenderer.clearRoute();
+            checkGameState();
         });
 
         // Use InputMultiplexer to handle both UI and map input
@@ -190,6 +200,105 @@ public class GameScreen implements Screen {
         multiplexer.addProcessor(uiStage);
         multiplexer.addProcessor(inputProcessor);
         Gdx.input.setInputProcessor(multiplexer);
+        
+        // Create game over UI (initially hidden)
+        createGameOverUI();
+    }
+    
+    private void createGameOverUI() {
+        gameOverTable = new Table();
+        gameOverTable.setFillParent(true);
+        gameOverTable.center();
+        
+        gameOverLabel = new Label("", skin, "default");
+        gameOverLabel.setFontScale(2.5f);
+        
+        retryButton = new TextButton("RETRY", skin);
+        retryButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                SoundManager.playButtonClick();
+                resetGame();
+            }
+        });
+        
+        gameOverTable.add(gameOverLabel).pad(20).row();
+        gameOverTable.add(retryButton).width(200).height(60).pad(20);
+        gameOverTable.setVisible(false);
+        uiStage.addActor(gameOverTable);
+    }
+    
+    private void checkGameState() {
+        if (gameState != GameState.PLAYING) return;
+        
+        int activeFires = gameWorld.getActiveFireCount();
+        
+        // Game Over: 5 active fires at once
+        if (activeFires >= 5) {
+            gameState = GameState.GAME_OVER;
+            showGameOver("GAME OVER");
+            return;
+        }
+        
+        // Game Completed: all fires spawned and extinguished
+        if (gameWorld.allFiresSpawned() && gameWorld.allFiresExtinguished()) {
+            gameState = GameState.GAME_COMPLETED;
+            showGameOver("GAME COMPLETED");
+        }
+    }
+    
+    private void showGameOver(String message) {
+        gameOverLabel.setText(message);
+        gameOverLabel.setColor(gameState == GameState.GAME_COMPLETED ? Color.GREEN : Color.RED);
+        gameOverTable.setVisible(true);
+        
+        // Stop all game sounds
+        stopAllGameSounds();
+    }
+    
+    private void resetGame() {
+        // Hide game over UI
+        gameOverTable.setVisible(false);
+        gameState = GameState.PLAYING;
+        
+        // Stop all sounds and clear current state
+        stopAllGameSounds();
+        routeRenderer.clearRoute();
+        
+        // Close any open popups
+        if (currentPopup != null) {
+            currentPopup.remove();
+            currentPopup = null;
+        }
+        if (currentStationPopup != null) {
+            currentStationPopup.remove();
+            currentStationPopup = null;
+        }
+        
+        // Recreate game world with same city
+        gameWorld = new GameWorld(mapTileRenderer, routeRenderer, assets.getAtlas(), selectedCity.lat, selectedCity.lon);
+        gameWorld.setTruckDrivingSound(assets.getTruckDrivingSound());
+        gameWorld.setTruckSirenSound(assets.getTruckSirenSound());
+        gameWorld.setWaterExtinguishingSound(assets.getWaterExtinguishingSound());
+        gameWorld.setFireAmbientSound(assets.getFireAmbientSound());
+        
+        // Reconnect listeners
+        gameWorld.setExtinguishAnimationListener(fire -> {
+            gameObjectRenderer.startExtinguishAnimation(fire);
+        });
+        
+        gameWorld.setFireClickListener((fire, screenX, screenY) -> showFirePopup(fire, screenX, screenY));
+        gameWorld.setStationClickListener((station, screenX, screenY) -> showStationPopup(station, screenX, screenY));
+        
+        gameWorld.setExtinguishCompleteListener(fire -> {
+            notificationManager.showExtinguishedNotification(fire.name);
+            checkGameState();
+        });
+        
+        // Reset camera to city position
+        float[] cityWorldPos = mapTileRenderer.latLonToWorld(selectedCity.lat, selectedCity.lon);
+        camera.position.set(cityWorldPos[0], cityWorldPos[1], 0);
+        camera.update();
     }
 
     private void showFirePopup(FirePoint fire, float screenX, float screenY) {
@@ -253,9 +362,15 @@ public class GameScreen implements Screen {
 
         delta = Math.min(delta, 1 / 30f);
 
-        // Update animations
-        gameObjectRenderer.update(delta);
-        gameWorld.update(delta);
+        // Update animations and game world only if playing
+        if (gameState == GameState.PLAYING) {
+            gameObjectRenderer.update(delta);
+            gameWorld.update(delta);
+            
+            // Check for game over condition
+            checkGameState();
+        }
+        
         notificationManager.update(delta);
 
         // Render game world
@@ -271,8 +386,10 @@ public class GameScreen implements Screen {
         routeRenderer.render(camera);
 
         // Update score display
-        int score = gameWorld.getStation().getFiresExtinguished();
-        scoreLabel.setText("Fires: " + score);
+        int score = gameWorld.getTotalFiresExtinguished();
+        int total = gameWorld.getTotalFiresInPool();
+        int active = gameWorld.getActiveFireCount();
+        scoreLabel.setText("Fires: " + score + "/" + total + " (Active: " + active + ")");
 
         // Render UI
         uiStage.act(delta);

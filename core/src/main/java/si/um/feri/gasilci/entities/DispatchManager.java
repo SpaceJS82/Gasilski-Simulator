@@ -18,12 +18,17 @@ public class DispatchManager {
     public interface ExtinguishCompleteListener {
         void onExtinguishComplete(FirePoint fire);
     }
+    
+    public interface AllTrucksArrivedListener {
+        void onAllTrucksArrived(FirePoint fire);
+    }
 
     private final List<TruckMission> activeMissions = new ArrayList<>();
     private final TextureAtlas atlas;
     private final float[] stationPos;
     private ArrivalListener arrivalListener;
     private ExtinguishCompleteListener extinguishCompleteListener;
+    private AllTrucksArrivedListener allTrucksArrivedListener;
     private final FireStation station;
     private Sound truckDrivingSound;
     private Sound truckSirenSound;
@@ -55,6 +60,10 @@ public class DispatchManager {
 
     public void setExtinguishCompleteListener(ExtinguishCompleteListener listener) {
         this.extinguishCompleteListener = listener;
+    }
+    
+    public void setAllTrucksArrivedListener(AllTrucksArrivedListener listener) {
+        this.allTrucksArrivedListener = listener;
     }
 
     public void setTruckDrivingSound(Sound sound) {
@@ -126,6 +135,10 @@ public class DispatchManager {
                 mission.targetFire.startFireSound();
                 if (arrivalListener != null) {
                     arrivalListener.onTruckArrived(mission.trucks.get(0), mission.targetFire, mission.trucks.size());
+                }
+                // Notify that all trucks from this mission have arrived
+                if (allTrucksArrivedListener != null) {
+                    allTrucksArrivedListener.onAllTrucksArrived(mission.targetFire);
                 }
             }
             
