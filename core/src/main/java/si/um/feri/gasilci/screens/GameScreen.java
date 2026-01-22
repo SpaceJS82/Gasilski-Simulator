@@ -381,13 +381,19 @@ public class GameScreen implements Screen {
         camera.update();
         viewport.apply();
         batch.setProjectionMatrix(camera.combined);
+
+
+
         batch.begin();
         mapTileRenderer.render(batch);
         gameObjectRenderer.render(batch, camera, gameWorld.getFires(), gameWorld.getStation());
-        gameObjectRenderer.renderTrucks(batch, gameWorld.getDispatchManager().getActiveTrucks());
         batch.end();
 
         routeRenderer.render(camera);
+
+        batch.begin();
+        gameObjectRenderer.renderTrucks(batch, gameWorld.getDispatchManager().getActiveTrucks());
+        batch.end();
 
         // Update score display
         int score = gameWorld.getTotalFiresExtinguished();

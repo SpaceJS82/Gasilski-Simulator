@@ -128,9 +128,7 @@ public class DispatchManager {
                 // Start playing water extinguishing sound and fire sound
                 if (waterExtinguishingSound != null && mission.waterSoundId == -1) {
                     float waterVolume = SoundManager.calculateWaterExtinguishingVolume();
-                    if (waterVolume > 0) {
-                        mission.waterSoundId = waterExtinguishingSound.loop(waterVolume);
-                    }
+                    mission.waterSoundId = waterExtinguishingSound.loop(waterVolume);
                 }
                 mission.targetFire.startFireSound();
                 if (arrivalListener != null) {

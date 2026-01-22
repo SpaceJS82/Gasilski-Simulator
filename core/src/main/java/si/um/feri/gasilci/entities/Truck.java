@@ -21,6 +21,7 @@ public class Truck {
     private long drivingSoundId = -1;
     private Sound sirenSound;
     private long sirenSoundId = -1;
+    private float[] finalOffset = null;
 
     public Truck(TextureAtlas atlas, float startX, float startY) {
         this.sprite = atlas.createSprite("images/truck-up-1");
@@ -42,11 +43,24 @@ public class Truck {
         this.route = route;
         this.currentWaypoint = 0;
         this.arrived = false;
+        generateFinalOffset();
+    }
+
+    private void generateFinalOffset() {
+        // Generate random offset for final position
+        // Offset range: 0.3 to 0.6 units away from fire
+        float distance = 0.3f + (float)(Math.random() * 0.3f);
+        float angle = (float)(Math.random() * 2 * Math.PI);
+
+        float offsetX = (float)(Math.cos(angle) * distance);
+        float offsetY = (float)(Math.sin(angle) * distance);
+
+        this.finalOffset = new float[]{offsetX, offsetY};
     }
 
     public void setStartDelay(float delay) {
         this.startDelay = delay;
-        this.started = (delay <= 0);
+        this.started = false; // Always start as false, let update() handle the start
     }
 
     public void setDrivingSound(Sound sound) {
@@ -67,15 +81,11 @@ public class Truck {
                 // Start playing driving sound and siren when truck starts moving
                 if (drivingSound != null && drivingSoundId == -1) {
                     float drivingVolume = SoundManager.calculateTruckDrivingVolume();
-                    if (drivingVolume > 0) {
-                        drivingSoundId = drivingSound.loop(drivingVolume);
-                    }
+                    drivingSoundId = drivingSound.loop(drivingVolume);
                 }
                 if (sirenSound != null && sirenSoundId == -1) {
                     float sirenVolume = SoundManager.calculateTruckSirenVolume();
-                    if (sirenVolume > 0) {
-                        sirenSoundId = sirenSound.loop(sirenVolume);
-                    }
+                    sirenSoundId = sirenSound.loop(sirenVolume);
                 }
             } else {
                 return;
@@ -109,6 +119,12 @@ public class Truck {
         float[] target = route.get(currentWaypoint);
         float tx = target[0];
         float ty = target[1];
+
+        // Apply offset to the final waypoint (destination)
+        if (currentWaypoint == route.size() - 1 && finalOffset != null) {
+            tx += finalOffset[0];
+            ty += finalOffset[1];
+        }
         float cx = sprite.getX() + sprite.getWidth() / 2;
         float cy = sprite.getY() + sprite.getHeight() / 2;
 
