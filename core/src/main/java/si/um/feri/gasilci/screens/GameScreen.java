@@ -41,7 +41,7 @@ public class GameScreen implements Screen {
         GAME_OVER,
         GAME_COMPLETED
     }
-    
+
     private GameState gameState = GameState.PLAYING;
     private final GasilskiSimulator game;
     private final CityData selectedCity;
@@ -76,10 +76,10 @@ public class GameScreen implements Screen {
         batch = new SpriteBatch();
         assets = new Assets();
         assets.load();
-        
+
         // Load sound settings
         SettingsWindow.loadSettings();
-        
+
         SoundManager.setButtonClickSound(assets.getButtonClickSound());
         camera = new OrthographicCamera();
         mapTileRenderer = new MapTileRenderer(selectedCity.lat, selectedCity.lon);
@@ -187,6 +187,10 @@ public class GameScreen implements Screen {
         // Setup fire click listener
         gameWorld.setFireClickListener((fire, screenX, screenY) -> showFirePopup(fire, screenX, screenY));
 
+        gameWorld.setFireSpawnListener(fire -> {
+            notificationManager.showFireNotification(fire.name);
+        });
+
         // Setup station click listener
         gameWorld.setStationClickListener((station, screenX, screenY) -> showStationPopup(station, screenX, screenY));
 
@@ -200,19 +204,19 @@ public class GameScreen implements Screen {
         multiplexer.addProcessor(uiStage);
         multiplexer.addProcessor(inputProcessor);
         Gdx.input.setInputProcessor(multiplexer);
-        
+
         // Create game over UI (initially hidden)
         createGameOverUI();
     }
-    
+
     private void createGameOverUI() {
         gameOverTable = new Table();
         gameOverTable.setFillParent(true);
         gameOverTable.center();
-        
+
         gameOverLabel = new Label("", skin, "default");
         gameOverLabel.setFontScale(2.5f);
-        
+
         retryButton = new TextButton("RETRY", skin);
         retryButton.addListener(new ClickListener() {
             @Override
@@ -221,50 +225,50 @@ public class GameScreen implements Screen {
                 resetGame();
             }
         });
-        
+
         gameOverTable.add(gameOverLabel).pad(20).row();
         gameOverTable.add(retryButton).width(200).height(60).pad(20);
         gameOverTable.setVisible(false);
         uiStage.addActor(gameOverTable);
     }
-    
+
     private void checkGameState() {
         if (gameState != GameState.PLAYING) return;
-        
+
         int activeFires = gameWorld.getActiveFireCount();
-        
+
         // Game Over: 5 active fires at once
         if (activeFires >= 5) {
             gameState = GameState.GAME_OVER;
             showGameOver("GAME OVER");
             return;
         }
-        
+
         // Game Completed: all fires spawned and extinguished
         if (gameWorld.allFiresSpawned() && gameWorld.allFiresExtinguished()) {
             gameState = GameState.GAME_COMPLETED;
             showGameOver("GAME COMPLETED");
         }
     }
-    
+
     private void showGameOver(String message) {
         gameOverLabel.setText(message);
         gameOverLabel.setColor(gameState == GameState.GAME_COMPLETED ? Color.GREEN : Color.RED);
         gameOverTable.setVisible(true);
-        
+
         // Stop all game sounds
         stopAllGameSounds();
     }
-    
+
     private void resetGame() {
         // Hide game over UI
         gameOverTable.setVisible(false);
         gameState = GameState.PLAYING;
-        
+
         // Stop all sounds and clear current state
         stopAllGameSounds();
         routeRenderer.clearRoute();
-        
+
         // Close any open popups
         if (currentPopup != null) {
             currentPopup.remove();
@@ -274,27 +278,27 @@ public class GameScreen implements Screen {
             currentStationPopup.remove();
             currentStationPopup = null;
         }
-        
+
         // Recreate game world with same city
         gameWorld = new GameWorld(mapTileRenderer, routeRenderer, assets.getAtlas(), selectedCity.lat, selectedCity.lon);
         gameWorld.setTruckDrivingSound(assets.getTruckDrivingSound());
         gameWorld.setTruckSirenSound(assets.getTruckSirenSound());
         gameWorld.setWaterExtinguishingSound(assets.getWaterExtinguishingSound());
         gameWorld.setFireAmbientSound(assets.getFireAmbientSound());
-        
+
         // Reconnect listeners
         gameWorld.setExtinguishAnimationListener(fire -> {
             gameObjectRenderer.startExtinguishAnimation(fire);
         });
-        
+
         gameWorld.setFireClickListener((fire, screenX, screenY) -> showFirePopup(fire, screenX, screenY));
         gameWorld.setStationClickListener((station, screenX, screenY) -> showStationPopup(station, screenX, screenY));
-        
+
         gameWorld.setExtinguishCompleteListener(fire -> {
             notificationManager.showExtinguishedNotification(fire.name);
             checkGameState();
         });
-        
+
         // Reset camera to city position
         float[] cityWorldPos = mapTileRenderer.latLonToWorld(selectedCity.lat, selectedCity.lon);
         camera.position.set(cityWorldPos[0], cityWorldPos[1], 0);
@@ -346,7 +350,7 @@ public class GameScreen implements Screen {
         currentStationPopup.show(stationScreenPos.x, stationScreenPos.y, uiStage.getWidth(), uiStage.getHeight());
         uiStage.addActor(currentStationPopup);
     }
-    
+
     private void showSettingsWindow() {
         if (settingsWindow != null) {
             settingsWindow.remove();
@@ -366,11 +370,11 @@ public class GameScreen implements Screen {
         if (gameState == GameState.PLAYING) {
             gameObjectRenderer.update(delta);
             gameWorld.update(delta);
-            
+
             // Check for game over condition
             checkGameState();
         }
-        
+
         notificationManager.update(delta);
 
         // Render game world
@@ -449,7 +453,7 @@ public class GameScreen implements Screen {
         routeRenderer.dispose();
         assets.dispose();
         notificationManager.dispose();
-        
+
         System.out.println("GameScreen: All resources disposed");
     }
 }

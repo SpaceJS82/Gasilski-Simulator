@@ -28,16 +28,16 @@ public class GameWorld {
     private FireClickListener fireClickListener;
     private StationClickListener stationClickListener;
     private final DispatchManager dispatchManager;
-    
+
     // Fire spawning system
     private float nextFireSpawnTime;
     private static final float MIN_SPAWN_INTERVAL = 15f; // 15 seconds
     private static final float MAX_SPAWN_INTERVAL = 30f; // 30 seconds
     private float timeSinceLastSpawn = 0;
-    
+
     // Game state tracking
     private int totalFiresExtinguished = 0;
-    
+
     // Route tracking - which fire has active route displayed
     private FirePoint currentRouteTarget = null;
 
@@ -58,18 +58,18 @@ public class GameWorld {
         // Load all fires and filter nearby ones (within 0.05 degrees ~ 5km)
         List<FirePoint> allFires = PointsLoader.loadFires("data/fires.json");
         List<FirePoint> nearbyFires = PointsLoader.filterNearbyFires(allFires, cityLat, cityLon, 0.05);
-        
+
         // Pick 10 random fires from nearby ones as the fire pool
         this.allFirePoints = PointsLoader.pickRandom(nearbyFires, 10);
         this.activeFirePoints = new ArrayList<>();
         this.spawnedFirePoints = new ArrayList<>();
-        
+
         // Shuffle the pool to randomize spawn order
         Collections.shuffle(this.allFirePoints);
-        
+
         // Start with 3 fires
         spawnInitialFires();
-        
+
         // Schedule first new fire spawn
         nextFireSpawnTime = MIN_SPAWN_INTERVAL + (float)(Math.random() * (MAX_SPAWN_INTERVAL - MIN_SPAWN_INTERVAL));
 
@@ -94,6 +94,8 @@ public class GameWorld {
                 extinguishCompleteListener.onFireExtinguished(fire);
             }
         });
+
+
         this.dispatchManager.setAllTrucksArrivedListener((fire) -> {
             // Clear route only if this fire is the current route target
             if (currentRouteTarget == fire) {
@@ -102,7 +104,7 @@ public class GameWorld {
             }
         });
     }
-    
+
     private void spawnInitialFires() {
         // Spawn first 3 fires from the pool
         for (int i = 0; i < Math.min(3, allFirePoints.size()); i++) {
@@ -130,6 +132,16 @@ public class GameWorld {
 
     public void setExtinguishCompleteListener(ExtinguishCompleteListener listener) {
         this.extinguishCompleteListener = listener;
+    }
+
+    public interface FireSpawnListener {
+        void onFireSpawned(FirePoint fire);
+    }
+
+    private FireSpawnListener fireSpawnListener;
+
+    public void setFireSpawnListener(FireSpawnListener listener) {
+        this.fireSpawnListener = listener;
     }
 
     public void setTruckDrivingSound(Sound sound) {
@@ -161,7 +173,7 @@ public class GameWorld {
             fire.stopFireSound();
         }
     }
-    
+
     private void spawnNextFire() {
         // Find next unspawned fire from the pool
         for (FirePoint fire : allFirePoints) {
@@ -173,35 +185,39 @@ public class GameWorld {
                     fire.setFireAmbientSound(activeFirePoints.get(0).fireAmbientSound);
                 }
                 System.out.println("New fire spawned: " + fire.name);
+
+                if (fireSpawnListener != null) {
+                    fireSpawnListener.onFireSpawned(fire);
+                }
                 break;
             }
         }
-        
+
         // Schedule next spawn
         nextFireSpawnTime = MIN_SPAWN_INTERVAL + (float)(Math.random() * (MAX_SPAWN_INTERVAL - MIN_SPAWN_INTERVAL));
         timeSinceLastSpawn = 0;
     }
-    
+
     public int getActiveFireCount() {
         return activeFirePoints.size();
     }
-    
+
     public int getTotalSpawnedCount() {
         return spawnedFirePoints.size();
     }
-    
+
     public int getTotalFiresExtinguished() {
         return totalFiresExtinguished;
     }
-    
+
     public int getTotalFiresInPool() {
         return allFirePoints.size();
     }
-    
+
     public boolean allFiresSpawned() {
         return spawnedFirePoints.size() >= allFirePoints.size();
     }
-    
+
     public boolean allFiresExtinguished() {
         return totalFiresExtinguished >= allFirePoints.size();
     }
@@ -294,7 +310,7 @@ public class GameWorld {
 
     public void update(float delta) {
         dispatchManager.update(delta);
-        
+
         // Update fire spawning timer (only spawn if not all fires spawned yet and not game over)
         if (!allFiresSpawned() && activeFirePoints.size() < 5) {
             timeSinceLastSpawn += delta;
@@ -303,6 +319,8 @@ public class GameWorld {
             }
         }
     }
+
+
 
     public DispatchManager getDispatchManager() {
         return dispatchManager;
