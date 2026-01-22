@@ -81,6 +81,9 @@ public class GameScreen implements Screen {
         SettingsWindow.loadSettings();
 
         SoundManager.setButtonClickSound(assets.getButtonClickSound());
+
+        // Start gameplay music
+        SoundManager.playMusic(assets.getGameplayMusic(), true);
         camera = new OrthographicCamera();
         mapTileRenderer = new MapTileRenderer(selectedCity.lat, selectedCity.lon);
         routeRenderer = new RouteRenderer();

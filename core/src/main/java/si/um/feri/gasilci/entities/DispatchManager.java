@@ -13,7 +13,14 @@ import si.um.feri.gasilci.util.SoundManager;
 
 public class DispatchManager {
 
-
+    // Available vehicle sprites
+    private static final String[] VEHICLE_SPRITES = {
+        "images/truck-up-1",
+        "images/ambulance-1",
+        "images/ambulance-2",
+        "images/car-red"
+    };
+    private static final String FIRETRUCK_SPRITE = "images/truck-up-1";
 
     public interface ExtinguishCompleteListener {
         void onExtinguishComplete(FirePoint fire);
@@ -94,7 +101,17 @@ public class DispatchManager {
         for (int i = 0; i < numTrucks; i++) {
             float offsetX = (i % 2) * 0.15f - 0.075f;
             float offsetY = (i / 2) * 0.15f;
-            Truck truck = new Truck(atlas, stationPos[0] + offsetX, stationPos[1] + offsetY);
+
+            // First vehicle is always a firetruck, others are random
+            String spriteName;
+            if (i == 0) {
+                spriteName = FIRETRUCK_SPRITE;
+            } else {
+                // Randomly select from all available vehicles
+                spriteName = VEHICLE_SPRITES[(int)(Math.random() * VEHICLE_SPRITES.length)];
+            }
+
+            Truck truck = new Truck(atlas, stationPos[0] + offsetX, stationPos[1] + offsetY, spriteName);
             truck.setRoute(route);
             truck.setStartDelay(i * 0.5f); // First truck (i=0) has 0 delay
             truck.setDrivingSound(truckDrivingSound);

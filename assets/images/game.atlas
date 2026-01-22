@@ -6,448 +6,448 @@ filter: Nearest, Nearest
 repeat: none
 images/ambulance-1
   rotate: false
-  xy: 2, 128
+  xy: 2, 127
   size: 140, 140
   orig: 140, 140
   offset: 0, 0
   index: -1
 images/ambulance-2
   rotate: false
-  xy: 260, 370
+  xy: 260, 369
   size: 140, 140
   orig: 140, 140
   offset: 0, 0
   index: -1
 images/car-red
   rotate: false
-  xy: 260, 288
-  size: 48, 80
-  orig: 48, 80
+  xy: 402, 369
+  size: 140, 140
+  orig: 140, 140
   offset: 0, 0
   index: -1
 images/fighter-holding-hydrant-1
   rotate: false
-  xy: 296, 2
+  xy: 241, 139
   size: 40, 56
   orig: 40, 56
   offset: 0, 0
   index: -1
 images/fighter-holding-hydrant-2
   rotate: false
-  xy: 296, 2
+  xy: 241, 139
   size: 40, 56
   orig: 40, 56
   offset: 0, 0
   index: -1
 images/fighter-holding-hydrant-3
   rotate: false
-  xy: 296, 2
+  xy: 241, 139
   size: 40, 56
   orig: 40, 56
   offset: 0, 0
   index: -1
 images/fighter-holding-hydrant-6
   rotate: false
-  xy: 296, 2
+  xy: 241, 139
   size: 40, 56
   orig: 40, 56
   offset: 0, 0
   index: -1
 images/fighter-holding-hydrant-4
   rotate: false
-  xy: 351, 154
+  xy: 537, 82
   size: 40, 57
   orig: 40, 57
   offset: 0, 0
   index: -1
 images/fighter-holding-hydrant-5
   rotate: false
-  xy: 351, 154
+  xy: 537, 82
   size: 40, 57
   orig: 40, 57
   offset: 0, 0
   index: -1
 images/fire-1-1
   rotate: false
-  xy: 496, 161
+  xy: 35, 3
   size: 29, 50
   orig: 29, 50
   offset: 0, 0
   index: -1
 images/fire-1-2
   rotate: false
-  xy: 463, 156
+  xy: 243, 82
   size: 31, 55
   orig: 31, 55
   offset: 0, 0
   index: -1
 images/fire-1-3
   rotate: false
-  xy: 429, 156
+  xy: 612, 84
   size: 32, 55
   orig: 32, 55
   offset: 0, 0
   index: -1
 images/fire-1-4
   rotate: false
-  xy: 393, 153
+  xy: 988, 379
   size: 34, 58
   orig: 34, 58
   offset: 0, 0
   index: -1
 images/fire-1-5
   rotate: false
-  xy: 351, 93
+  xy: 204, 70
   size: 37, 59
   orig: 37, 59
   offset: 0, 0
   index: -1
 images/fire-1-6
   rotate: false
-  xy: 2, 3
+  xy: 2, 2
   size: 31, 51
   orig: 31, 51
   offset: 0, 0
   index: -1
 images/fire-station
   rotate: false
-  xy: 2, 270
+  xy: 2, 269
   size: 256, 240
   orig: 256, 240
   offset: 0, 0
   index: -1
 images/flame1-1
   rotate: false
-  xy: 1004, 505
+  xy: 641, 360
   size: 9, 5
   orig: 9, 5
   offset: 0, 0
   index: -1
 images/flame1-2
   rotate: false
-  xy: 1015, 505
+  xy: 283, 190
   size: 7, 5
   orig: 7, 5
   offset: 0, 0
   index: -1
 images/flame1-3
   rotate: false
-  xy: 994, 433
+  xy: 659, 142
   size: 8, 5
   orig: 8, 5
   offset: 0, 0
   index: -1
 images/flame1-4
   rotate: false
-  xy: 379, 86
+  xy: 537, 75
   size: 8, 5
   orig: 8, 5
   offset: 0, 0
   index: -1
 images/flame1-5
   rotate: false
-  xy: 290, 282
+  xy: 283, 184
   size: 7, 4
   orig: 7, 4
   offset: 0, 0
   index: -1
 images/flame2-1
   rotate: false
-  xy: 351, 58
+  xy: 988, 367
   size: 22, 10
   orig: 22, 10
   offset: 0, 0
   index: -1
 images/flame2-2
   rotate: false
-  xy: 390, 115
+  xy: 243, 70
   size: 21, 10
   orig: 21, 10
   offset: 0, 0
   index: -1
 images/flame2-3
   rotate: false
-  xy: 390, 140
+  xy: 411, 297
   size: 22, 11
   orig: 22, 11
   offset: 0, 0
   index: -1
 images/flame2-4
   rotate: false
-  xy: 390, 127
+  xy: 995, 461
   size: 21, 11
   orig: 21, 11
   offset: 0, 0
   index: -1
 images/flame2-5
   rotate: false
-  xy: 390, 104
+  xy: 234, 59
   size: 21, 9
   orig: 21, 9
   offset: 0, 0
   index: -1
 images/flame3-1
   rotate: false
-  xy: 92, 47
+  xy: 995, 474
   size: 27, 7
   orig: 27, 7
   offset: 0, 0
   index: -1
 images/flame3-2
   rotate: false
-  xy: 35, 2
+  xy: 494, 60
   size: 28, 12
   orig: 28, 12
   offset: 0, 0
   index: -1
 images/flame3-3
   rotate: false
-  xy: 915, 223
+  xy: 995, 496
   size: 27, 13
   orig: 27, 13
   offset: 0, 0
   index: -1
 images/flame3-4
   rotate: false
-  xy: 260, 273
+  xy: 204, 55
   size: 28, 13
   orig: 28, 13
   offset: 0, 0
   index: -1
 images/flame3-5
   rotate: false
-  xy: 63, 43
+  xy: 995, 483
   size: 27, 11
   orig: 27, 11
   offset: 0, 0
   index: -1
 images/flame4-1
   rotate: false
-  xy: 944, 222
+  xy: 66, 39
   size: 24, 14
   orig: 24, 14
   offset: 0, 0
   index: -1
 images/flame4-2
   rotate: false
-  xy: 35, 36
+  xy: 411, 326
   size: 26, 18
   orig: 26, 18
   offset: 0, 0
   index: -1
 images/flame4-3
   rotate: false
-  xy: 35, 16
+  xy: 260, 277
   size: 25, 18
   orig: 25, 18
   offset: 0, 0
   index: -1
 images/flame4-4
   rotate: false
-  xy: 351, 70
+  xy: 411, 346
   size: 26, 21
   orig: 26, 21
   offset: 0, 0
   index: -1
 images/flame4-5
   rotate: false
-  xy: 970, 222
+  xy: 411, 310
   size: 22, 14
   orig: 22, 14
   offset: 0, 0
   index: -1
 images/stream-1
   rotate: false
-  xy: 915, 301
+  xy: 494, 74
   size: 41, 65
   orig: 41, 65
   offset: 0, 0
   index: -1
 images/stream-2
   rotate: false
-  xy: 915, 238
+  xy: 659, 149
   size: 44, 61
   orig: 44, 61
   offset: 0, 0
   index: -1
 images/stream-3
   rotate: false
-  xy: 961, 238
+  xy: 579, 77
   size: 31, 62
   orig: 31, 62
   offset: 0, 0
   index: -1
 images/stream-4
   rotate: false
-  xy: 958, 302
+  xy: 204, 131
   size: 35, 64
   orig: 35, 64
   offset: 0, 0
   index: -1
 images/truck-down-1
   rotate: false
-  xy: 310, 215
+  xy: 439, 214
   size: 53, 153
   orig: 53, 153
   offset: 0, 0
   index: -1
 images/truck-down-2
   rotate: false
-  xy: 296, 60
+  xy: 494, 141
   size: 53, 153
   orig: 53, 153
   offset: 0, 0
   index: -1
 images/truck-down-3
   rotate: false
-  xy: 365, 213
+  xy: 549, 141
   size: 53, 153
   orig: 53, 153
   offset: 0, 0
   index: -1
 images/truck-down-4
   rotate: false
-  xy: 530, 214
+  xy: 439, 60
   size: 53, 152
   orig: 53, 152
   offset: 0, 0
   index: -1
 images/truck-down-5
   rotate: false
-  xy: 420, 213
+  xy: 604, 141
   size: 53, 153
   orig: 53, 153
   offset: 0, 0
   index: -1
 images/truck-down-6
   rotate: false
-  xy: 475, 213
+  xy: 659, 212
   size: 53, 153
   orig: 53, 153
   offset: 0, 0
   index: -1
 images/truck-left-1
   rotate: false
-  xy: 402, 368
+  xy: 544, 367
   size: 146, 70
   orig: 146, 70
   offset: 0, 0
   index: -1
 images/truck-left-2
   rotate: false
-  xy: 704, 440
+  xy: 695, 439
   size: 148, 70
   orig: 148, 70
   offset: 0, 0
   index: -1
 images/truck-left-3
   rotate: false
-  xy: 149, 127
+  xy: 292, 154
   size: 145, 69
   orig: 145, 69
   offset: 0, 0
   index: -1
 images/truck-left-4
   rotate: false
-  xy: 550, 368
+  xy: 692, 367
   size: 146, 70
   orig: 146, 70
   offset: 0, 0
   index: -1
 images/truck-left-5
   rotate: false
-  xy: 402, 440
+  xy: 260, 297
   size: 149, 70
   orig: 149, 70
   offset: 0, 0
   index: -1
 images/truck-left-6
   rotate: false
-  xy: 2, 56
+  xy: 2, 55
   size: 145, 70
   orig: 145, 70
   offset: 0, 0
   index: -1
 images/truck-right-1
   rotate: false
-  xy: 698, 368
+  xy: 840, 367
   size: 146, 70
   orig: 146, 70
   offset: 0, 0
   index: -1
 images/truck-right-2
   rotate: false
-  xy: 854, 440
+  xy: 845, 439
   size: 148, 70
   orig: 148, 70
   offset: 0, 0
   index: -1
 images/truck-right-3
   rotate: false
-  xy: 149, 56
+  xy: 494, 296
   size: 145, 69
   orig: 145, 69
   offset: 0, 0
   index: -1
 images/truck-right-4
   rotate: false
-  xy: 846, 368
+  xy: 144, 197
   size: 146, 70
   orig: 146, 70
   offset: 0, 0
   index: -1
 images/truck-right-5
   rotate: false
-  xy: 553, 440
+  xy: 544, 439
   size: 149, 70
   orig: 149, 70
   offset: 0, 0
   index: -1
 images/truck-right-6
   rotate: false
-  xy: 144, 198
+  xy: 292, 225
   size: 145, 70
   orig: 145, 70
   offset: 0, 0
   index: -1
 images/truck-up-1
   rotate: false
-  xy: 750, 221
+  xy: 879, 220
   size: 53, 145
   orig: 53, 145
   offset: 0, 0
   index: -1
 images/truck-up-2
   rotate: false
-  xy: 695, 220
+  xy: 824, 219
   size: 53, 146
   orig: 53, 146
   offset: 0, 0
   index: -1
 images/truck-up-3
   rotate: false
-  xy: 585, 216
+  xy: 714, 215
   size: 53, 150
   orig: 53, 150
   offset: 0, 0
   index: -1
 images/truck-up-4
   rotate: false
-  xy: 805, 221
+  xy: 934, 220
   size: 53, 145
   orig: 53, 145
   offset: 0, 0
   index: -1
 images/truck-up-5
   rotate: false
-  xy: 640, 219
+  xy: 769, 218
   size: 53, 147
   orig: 53, 147
   offset: 0, 0
   index: -1
 images/truck-up-6
   rotate: false
-  xy: 860, 221
+  xy: 149, 50
   size: 53, 145
   orig: 53, 145
   offset: 0, 0

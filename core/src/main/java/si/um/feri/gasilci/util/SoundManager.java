@@ -31,7 +31,7 @@ public class SoundManager {
         currentMusic = music;
         if (currentMusic != null && masterSoundEnabled) {
             currentMusic.setLooping(loop);
-            currentMusic.setVolume(masterVolume * 0.3f);
+            currentMusic.setVolume(masterVolume * 0.2f); // 20% volume
             currentMusic.play();
         }
     }
@@ -72,7 +72,7 @@ public class SoundManager {
     public static void setMasterVolume(float volume) {
         masterVolume = Math.max(0f, Math.min(1f, volume));
         if (currentMusic != null && currentMusic.isPlaying()) {
-            currentMusic.setVolume(masterVolume * 0.3f);
+            currentMusic.setVolume(masterVolume * 0.2f); // 20% volume
         }
     }
     

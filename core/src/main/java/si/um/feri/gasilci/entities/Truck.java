@@ -23,14 +23,14 @@ public class Truck {
     private long sirenSoundId = -1;
     private float[] finalOffset = null;
 
-    public Truck(TextureAtlas atlas, float startX, float startY) {
-        this.sprite = atlas.createSprite("images/truck-up-1");
+    public Truck(TextureAtlas atlas, float startX, float startY, String spriteName) {
+        this.sprite = atlas.createSprite(spriteName);
 
         if (this.sprite == null) {
-            throw new RuntimeException("Truck sprite 'images/truck-up-1' not found in atlas");
+            throw new RuntimeException("Vehicle sprite '" + spriteName + "' not found in atlas");
         }
 
-        float targetHeight = 0.4f;
+        float targetHeight = 0.4f; // Reduced to 50% (was 0.4f)
         float aspectRatio = sprite.getRegionWidth() / (float) sprite.getRegionHeight();
         float targetWidth = targetHeight * aspectRatio;
 
@@ -91,7 +91,7 @@ public class Truck {
                 return;
             }
         }
-        
+
         // Update sound volumes dynamically
         if (drivingSoundId != -1 && drivingSound != null) {
             float drivingVolume = SoundManager.calculateTruckDrivingVolume();

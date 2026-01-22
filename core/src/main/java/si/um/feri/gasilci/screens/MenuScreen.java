@@ -77,7 +77,7 @@ public class MenuScreen implements Screen {
         table.pad(40); // Add padding inside the background box
 
         // Title label
-        Label titleLabel = new Label("Gasilski Simulator", skin, "title-white");
+        Label titleLabel = new Label("GaSim", skin, "title-white");
         titleLabel.setColor(Color.ORANGE);
 
         // City selection label
